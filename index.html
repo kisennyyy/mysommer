@@ -150,6 +150,19 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 
 .cloud-bar{display:flex;gap:9px;align-items:center;flex-wrap:wrap;margin:-8px 0 24px;padding:11px 14px;border:1px solid var(--line);background:#ffffffd9;border-radius:15px;font-size:12px}
 .cloud-status{flex:1;min-width:180px;color:var(--deep)}.cloud-hint{font-size:11px;color:var(--muted);margin:0 0 16px}
+
+/* V5 Phase 1: home and archive typography; V4 hero colors retained */
+.v5-home-cover{height:clamp(260px,42vw,510px);border-radius:26px;margin-bottom:20px;background:linear-gradient(140deg,#2b1b45,#594077 55%,#9576b4);background-position:center;background-size:cover;display:flex;align-items:end;overflow:hidden;box-shadow:var(--shadow)}
+.v5-cover-hint{color:#fff9;font-family:Georgia,serif;letter-spacing:.2em;padding:25px;font-size:12px;text-shadow:0 2px 10px #170c28}
+#page-home .hero{min-height:240px;cursor:pointer}
+.v5-home-links{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:20px 0}
+.v5-home-links button{display:flex;justify-content:space-between;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:18px 15px;text-align:left;color:var(--deep);box-shadow:var(--shadow)}
+.v5-home-links button:hover{background:var(--panel);transform:translateY(-2px)}
+.v5-progress{background:var(--paper);border:1px solid var(--line);padding:18px;border-radius:17px;margin:16px 0;color:var(--deep)}
+.v5-progress-bar{height:8px;border-radius:20px;background:var(--panel);overflow:hidden;margin:10px 0}.v5-progress-bar span{height:100%;display:block;background:linear-gradient(90deg,#73529c,#b29bd4);border-radius:20px}
+.v5-section-editor{border-top:1px solid var(--line);margin-top:22px;padding-top:18px}.v5-section-editor h3{font-size:16px;margin:0}.v5-section-editor p{font-size:12px;color:var(--muted)}
+.v5-intro-hidden{display:none}
+@media(max-width:760px){.v5-home-links{grid-template-columns:repeat(2,minmax(0,1fr))}.v5-home-cover{height:320px}.v5-home-links button{padding:14px 12px;font-size:12px}}
 </style>
 <script src="https://js.puter.com/v2/"></script>
 </head>
@@ -157,15 +170,15 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 <div class="intro" id="introScreen" aria-label="网站开屏">
   <div class="intro-photo" id="introPhoto"></div>
   <div class="intro-sparkles" id="introSparkles" aria-hidden="true"></div>
-  <button class="intro-skip" id="introSkip">跳过动画 ↗</button>
-  <div class="intro-content"><div class="intro-apples">🍎 🍏</div><h1 id="introTitle">昼起之时</h1><p id="introSubtitle">两颗心相遇，于是爱在无限时空中蔓延。</p><button class="intro-enter" id="introEnter">进入 ✧</button></div>
+  
+  <div class="intro-content"><div class="intro-apples">🍎 🍏</div><h1 id="introTitle" class="v5-intro-hidden">昼起之时</h1><p id="introSubtitle">两颗心相遇，于是爱在无限时空中蔓延。</p><button class="intro-enter" id="introEnter">进入 ✧</button></div>
   <div class="intro-bottom">OUR LITTLE UNIVERSE · ✦</div>
 </div>
 <div class="shell">
 <aside class="sidebar">
   <div class="brand"><div class="brand-mark">✧</div><div><h1>🍎 🍏</h1><p>MY AU UNIVERSE</p></div></div>
   <div class="nav" id="nav">
-    <button class="active" data-page="home"><span class="nav-icon">⌂</span>总览</button>
+    <button class="active" data-page="home"><span class="nav-icon">⌂</span>首页</button>
     <button data-page="aus"><span class="nav-icon">✦</span>AU 索引</button>
     <button data-page="calendar"><span class="nav-icon">♡</span>日历</button>
     <button data-page="dreams"><span class="nav-icon">☾</span>合照</button>
@@ -183,7 +196,10 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 
   <div class="cloud-bar" aria-live="polite"><span class="cloud-status" id="cloudStatus">☁ 未连接 Puter · 当前仅保存在本机</span><button class="btn primary" id="cloudLogin">连接 Puter</button><button class="btn" id="cloudSync" disabled>立即同步</button><button class="btn" id="cloudReload" disabled>从云端读取</button></div>
   <section class="page active" id="page-home">
-    <div class="hero"><div class="hero-copy"><div class="eyebrow">A LITTLE UNIVERSE OF OUR OWN</div><h3>把我们的<br>共同经历好好收藏。</h3><p>就好像我们的秘密基地一样，收藏和存档着一切。</p></div><div class="hero-symbol">☾✧</div></div>
+    <div class="v5-home-cover" id="v5HomeCover"><div class="v5-cover-hint">✦ OUR LITTLE UNIVERSE · 🍎 🍏</div></div>
+    <div class="hero" id="v5SecretHero" title="我们的秘密基地"><div class="hero-copy"><div class="eyebrow">A LITTLE UNIVERSE OF OUR OWN</div><h3>把我们的<br>共同经历好好收藏。</h3><p>就好像我们的秘密基地一样，收藏和存档着一切。</p></div><div class="hero-symbol">☾✧</div></div>
+    <div class="v5-home-links"><button data-goto="aus">✦ AU 宇宙 <span>↗</span></button><button data-goto="settings">❖ 档案室 <span>↗</span></button><button data-goto="dreams">☾ 梦图收藏 <span>↗</span></button><button data-goto="writing">✎ 文稿 <span>↗</span></button><button data-goto="divination">☽ 梦占 <span>↗</span></button><button data-goto="gacha">✧ 抽卡 <span>↗</span></button><button data-goto="calendar">♡ 日历 <span>↗</span></button><button data-goto="merch">✧ 谷子 <span>↗</span></button></div>
+    <div class="v5-progress" id="v5Progress"></div>
     <div class="stats">
       <div class="stat"><div class="label">AU</div><div class="number" id="statAus">13</div><div class="hint">不同的故事</div></div>
       <div class="stat"><div class="label">纪念日</div><div class="number" id="statEvents">0</div><div class="hint">值得记下的日期</div></div>
@@ -255,10 +271,12 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         <div class="field"><label>网站标题</label><input id="appearanceTitle" placeholder="昼起之时"></div>
         <div class="field"><label>进入按钮文字</label><input id="appearanceButton" placeholder="进入 ✧"></div>
         <div class="field full"><label>副标题</label><textarea id="appearanceSubtitle" rows="2" placeholder="两颗心相遇，于是爱在无限时空中蔓延。"></textarea></div>
+        <div class="field"><label>首页独立大图</label><input id="appearanceHomeFile" type="file" accept="image/*"><button class="btn" id="removeHomeImage">移除首页大图</button></div>
         <div class="field"><label>开屏照片</label><input id="appearanceIntroFile" type="file" accept="image/*"><button class="btn" id="removeIntroImage">移除开屏照片</button></div>
         <div class="field"><label>网站背景照片</label><input id="appearanceBgFile" type="file" accept="image/*"><button class="btn" id="removeBgImage">移除背景照片</button></div>
         <div class="field"><label>首页横幅封面</label><input id="appearanceHeroFile" type="file" accept="image/*"><button class="btn" id="removeHeroImage">移除封面照片</button></div>
       </div>
+      <div class="v5-section-editor"><h3>✧ 页面标题与说明</h3><p>修改每个分区的标题和小字说明，不影响原始档案。</p><div id="v5SectionFields" class="appearance-grid"></div></div>
       <div class="appearance-actions"><button class="btn primary" id="saveAppearance">保存文字设置</button><button class="btn danger" id="resetAppearance">恢复默认外观</button></div>
       <p style="color:var(--muted);font-size:11px">图片上传后自动压缩以节省空间。建议定期导出 JSON 备份，清理浏览器数据会删除本地记录。部分手机浏览器以 file:// 打开时可能不支持持久存储。</p>
     </div>
@@ -296,7 +314,7 @@ const initialAus = [
  {id:uid(),name:"私人博物馆",pair:"读取物品记忆的妹妹 × 搭档哥哥",type:"民俗 / 悬疑",status:"待发展",mark:"物与记忆",desc:"在私人博物馆工作的搭档，妹妹能触摸物品查看它过去的记忆。",icon:"⌘",tags:"民俗,博物馆,悬疑"}
 ];
 function uid(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4)}
-const STORE="purpleArchive_v1";
+const STORE="purpleArchive_v5_dev";
 let db={aus:[],events:[],dreams:[],merch:[],settings:[],writing:[],characters:[],divinations:[],gacha:[],appearance:{}};
 try{const old=JSON.parse(localStorage.getItem(STORE)||"null");db=old&&typeof old==="object"?{...db,...old}:db}catch(e){}
 if(!Array.isArray(db.aus)||!db.aus.length)db.aus=initialAus;
@@ -312,7 +330,7 @@ const pageNames={home:"欢迎回来",aus:"AU ",calendar:"日历",dreams:"梦图"
 function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.getElementById("pageTitle").textContent=pageNames[page]||page;renderAll();window.scrollTo({top:0,behavior:"smooth"})}
 document.getElementById("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-page]");if(b)go(b.dataset.page)});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-goto]");if(b)go(b.dataset.goto)});
-function updateStats(){document.getElementById("statAus").textContent=db.aus.length;document.getElementById("statEvents").textContent=db.events.length;document.getElementById("statDreams").textContent=db.dreams.length;document.getElementById("statWriting").textContent=db.writing.length}
+function updateStats(){renderV5Progress();document.getElementById("statAus").textContent=db.aus.length;document.getElementById("statEvents").textContent=db.events.length;document.getElementById("statDreams").textContent=db.dreams.length;document.getElementById("statWriting").textContent=db.writing.length}
 function statusClass(s){return s==="已完成"?"已完成":s||"待写"}
 function auCard(a){return `<article class="au-card"><div class="au-cover">${esc(a.icon||"✧")}</div><div class="au-content"><div class="au-title">${esc(a.name)}</div><div class="au-pair">${esc(a.pair)}</div><div class="au-meta">${esc(a.type)} · ${esc(a.status)}</div><div class="au-desc">${esc(a.desc||a.mark||"尚未添加简介。")}</div><div class="tag-row">${(a.tags||"").split(/[,，]/).filter(Boolean).slice(0,4).map(t=>`<span class="tag">${esc(t.trim())}</span>`).join("")}</div><div class="card-actions"><button class="btn soft" onclick="editAu('${a.id}')">编辑设定</button><button class="btn" onclick="newSettingFor('${a.id}')">＋存档</button></div></div></article>`}
 function renderAus(){const q=(document.getElementById("auSearch")?.value||"").toLowerCase(),st=document.getElementById("auStatus")?.value||"";const list=db.aus.filter(a=>(!st||a.status===st)&&[a.name,a.pair,a.type,a.desc,a.tags].join(" ").toLowerCase().includes(q));document.getElementById("auGrid").innerHTML=list.map(auCard).join("")||empty("没有找到匹配的 AU","✦");document.getElementById("auCount").textContent=`${list.length} / ${db.aus.length}`;document.getElementById("homeAus").innerHTML=db.aus.slice(0,3).map(auCard).join("")}
@@ -453,7 +471,7 @@ document.getElementById('addGacha').onclick=()=>editSpecialRecord('gacha');
 ['gachaSearch','gachaRarity'].forEach(id=>document.getElementById(id).addEventListener('input',renderGacha));
 
 /* === Appearance: all settings live inside db and are included in JSON backup === */
-const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:""};
+const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:"",homeCover:"",sections:{}};
 function getAppearance(){return {...APPEARANCE_DEFAULTS,...(db.appearance||{})}}
 function cssImage(src){return src?`url("${src}")`:'none'}
 function applyAppearance(){
@@ -466,6 +484,8 @@ function applyAppearance(){
  document.getElementById('appearanceTitle').value=a.title;document.getElementById('appearanceSubtitle').value=a.subtitle;
  document.getElementById('appearanceButton').value=a.button;
  document.getElementById('appearancePreview').textContent='🍎 🍏  '+a.title;
+ document.getElementById('v5HomeCover').style.backgroundImage=a.homeCover?`linear-gradient(180deg,#27183c44,#24133888),url(${JSON.stringify(a.homeCover)})`:'';
+ applyV5Sections(a);
 }
 function closeIntro(){document.getElementById('introScreen').classList.add('hidden')}
 function showIntro(){const el=document.getElementById('introScreen');el.classList.remove('hidden');
@@ -473,13 +493,13 @@ function showIntro(){const el=document.getElementById('introScreen');el.classLis
  [photo,content].forEach(x=>{x.style.animation='none';void x.offsetWidth;x.style.animation=''});
 }
 document.getElementById('introEnter').onclick=closeIntro;
-document.getElementById('introSkip').onclick=closeIntro;
+
 document.getElementById('previewIntro').onclick=showIntro;
 const sparkles=document.getElementById('introSparkles');
 for(let i=0;i<24;i++){const dot=document.createElement('span');dot.style.left=((i*41+17)%97)+'%';dot.style.top=((i*37+9)%94)+'%';dot.style.animationDelay=-(i%7)*.7+'s';sparkles.appendChild(dot)}
 document.getElementById('saveAppearance').onclick=()=>{
  db.appearance={...getAppearance(),title:document.getElementById('appearanceTitle').value.trim()||APPEARANCE_DEFAULTS.title,
- subtitle:document.getElementById('appearanceSubtitle').value.trim(),button:document.getElementById('appearanceButton').value.trim()||APPEARANCE_DEFAULTS.button};
+ subtitle:document.getElementById('appearanceSubtitle').value.trim(),button:document.getElementById('appearanceButton').value.trim()||APPEARANCE_DEFAULTS.button,sections:readV5Sections()};
  persist();applyAppearance();toast('外观文字已保存');
 };
 async function compressAppearanceImage(file){
@@ -498,12 +518,60 @@ function bindImageUpload(inputId,key){document.getElementById(inputId).addEventL
  try{persist()}catch(err){db.appearance=old;throw Error('存储空间不足，请备份并使用更小的照片')}
  applyAppearance();toast('图片已更新并保存');}catch(err){toast(err.message||'图片处理失败')}finally{e.target.value=''}
 })}
-bindImageUpload('appearanceIntroFile','intro');bindImageUpload('appearanceBgFile','background');bindImageUpload('appearanceHeroFile','hero');
-[['removeIntroImage','intro'],['removeBgImage','background'],['removeHeroImage','hero']].forEach(([id,key])=>{
+bindImageUpload('appearanceHomeFile','homeCover');bindImageUpload('appearanceIntroFile','intro');bindImageUpload('appearanceBgFile','background');bindImageUpload('appearanceHeroFile','hero');
+[['removeHomeImage','homeCover'],['removeIntroImage','intro'],['removeBgImage','background'],['removeHeroImage','hero']].forEach(([id,key])=>{
  document.getElementById(id).onclick=()=>{db.appearance={...getAppearance(),[key]:''};persist();applyAppearance();toast('图片已移除')}
 });
 document.getElementById('resetAppearance').onclick=()=>{if(!confirm('恢复默认标题、文字和三张照片？其他档案不会删除。'))return;
  db.appearance={...APPEARANCE_DEFAULTS};persist();applyAppearance();toast('外观已恢复默认')};
+
+
+/* V5 Phase 1: editable section headings and homepage */
+const V5_SECTION_DEFAULTS={
+ aus:['AU 索引','管理世界观、关系设定与创作进度。'],
+ calendar:['纪念日历','纪念日、生日、计划日与倒数日都可以放在这里。'],
+ dreams:['梦图分类','收纳梦图、约稿、截图与视觉灵感。'],
+ merch:['谷子收藏','记录实物收藏、购买状态、价格与入手日期。'],
+ settings:['储藏室','设定与角色资料统一收藏，原有内容全部保留。'],
+ writing:['文稿存档','存放正文、片段、提纲、废稿与尚未命名的句子。'],
+ divination:['梦占存档','收藏塔罗、牌阵、梦占问题、牌面与自己的解读。'],
+ gacha:['抽卡存档','记录卡池、抽数与每一次相遇。'],
+ appearance:['外观与开屏设置','自定义网站外观、首页封面与文字。']
+};
+function applyV5Sections(a){
+ const values=a.sections||{};
+ for(const [page,defaults] of Object.entries(V5_SECTION_DEFAULTS)){
+  const section=document.getElementById('page-'+page),heading=section?.querySelector('.section-head h3'),desc=section?.querySelector('.section-head p');
+  const custom=values[page]||{},title=custom.title||defaults[0],subtitle=custom.subtitle??defaults[1];
+  if(heading)heading.textContent=title;if(desc)desc.textContent=subtitle;
+  const nav=document.querySelector('#nav button[data-page="'+page+'"]');
+  if(nav){const icon=nav.querySelector('.nav-icon')?.outerHTML||'';nav.innerHTML=icon+esc(title);}
+  if(document.getElementById('page-'+page)?.classList.contains('active'))document.getElementById('pageTitle').textContent=title;
+ }
+ const fields=document.getElementById('v5SectionFields');if(!fields)return;
+ fields.innerHTML=Object.entries(V5_SECTION_DEFAULTS).map(([page,defaults])=>{
+ const item=values[page]||{};
+ return '<div class="field"><label>'+esc(defaults[0])+' · 标题</label><input data-v5-page="'+page+'" data-v5-field="title" value="'+esc(item.title||defaults[0])+'"></div>'+
+ '<div class="field"><label>'+esc(defaults[0])+' · 小字说明</label><input data-v5-page="'+page+'" data-v5-field="subtitle" value="'+esc(item.subtitle??defaults[1])+'"></div>';
+ }).join('');
+}
+function readV5Sections(){
+ const result={};document.querySelectorAll('[data-v5-page][data-v5-field]').forEach(input=>{
+ const key=input.dataset.v5Page;result[key]??={};result[key][input.dataset.v5Field]=input.value.trim();
+ });return result;
+}
+function renderV5Progress(){
+ const root=document.getElementById('v5Progress');if(!root||!db?.aus)return;
+ const completed=db.aus.filter(a=>a.status==='已完成').length,total=db.aus.length;
+ const pct=total?Math.round(completed/total*100):0;
+ root.innerHTML='<strong>✦ AU 创作进度</strong><div class="v5-progress-bar"><span style="width:'+pct+'%"></span></div><small>已完成 '+completed+' / '+total+' 个 AU · '+pct+'%</small>';
+}
+let v5SecretClicks=0,v5SecretTimer;
+document.getElementById('v5SecretHero').addEventListener('click',()=>{
+ v5SecretClicks++;clearTimeout(v5SecretTimer);
+ if(v5SecretClicks>=5){v5SecretClicks=0;toast('仅属于我们的秘密基地');}
+ else v5SecretTimer=setTimeout(()=>v5SecretClicks=0,1800);
+});
 
 /* === V4 Puter cloud sync (GitHub Pages + same Puter account on both devices) ===
    GitHub stores ONLY this website source. Your records live in your Puter app drive.
@@ -511,7 +579,7 @@ document.getElementById('resetAppearance').onclick=()=>{if(!confirm('恢复默�
    Same GitHub Pages URL must be used on every device (Puter app origin identity).
 */
 (function(){
- const CLOUD_FILE='archive-v4.json';
+ const CLOUD_FILE='archive-v5-dev.json';
  const status=document.getElementById('cloudStatus');
  const login=document.getElementById('cloudLogin');
  const sync=document.getElementById('cloudSync');
