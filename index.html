@@ -1385,6 +1385,19 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
  const setStatus=(message)=>{status.textContent='☁ '+message};
  const exists=()=>typeof puter!=='undefined' && puter.auth && puter.fs;
  const snapshot=()=>JSON.parse(JSON.stringify(db));
+ const canonical=(v)=>JSON.stringify(v,(key,value)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b))):value);
+ const sameArchive=(a,b)=>canonical(a)===canonical(b);
+ const conflictStatus=()=>setStatus('本机与云端内容不同 · 已暂停同步，请先备份');
+ async function resolveConflict(remote){
+  if(!remote)return false;
+  // Back up both sides before even offering an overwrite.
+  localBackup();downloadBackup(remote.data,'v5-cloud-before-resolution-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json');
+  if(!confirm('已下载本机和云端两份备份。两边内容不同。\n\n确定要以【本机当前档案】覆盖 Puter 云端吗？\n\n取消则保留两边原样。')){conflictStatus();return false;}
+  if(!confirm('最后确认：这将用本机档案替换云端档案。\n\n请确认两份 JSON 备份都已保存。')){conflictStatus();return false;}
+  const latest=await fetchCloud();
+  if(!latest||latest.updatedAt!==remote.updatedAt){setStatus('云端在确认期间发生变化 · 已取消覆盖');toast('云端已更新，请重新核对备份');return false;}
+  lastCloudStamp=remote.updatedAt;dirty=true;await push(false);return true;
+ }
  const isSeedOnly=()=> db.events.length===0 && db.dreams.length===0 && db.merch.length===0 && db.settings.length===0 && db.writing.length===0 && db.characters.length===0 && db.divinations.length===0 && db.gacha.length===0 && db.letters.length===0 && (!db.appearance || Object.values(db.appearance).every(x=>!x));
  function saveLocal(){try{localStorage.setItem(STORE,JSON.stringify(db));updateStats()}catch(e){toast('本地空间不足，请导出备份')}}
  function downloadBackup(data,name){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
@@ -1413,7 +1426,7 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
     dirty=true;setStatus('发现其他设备的更新 · 请先解决冲突');
     toast('云端已变化，已暂停上传。请先下载云端备份');return;
    }
-   if(remote && !lastCloudStamp){dirty=true;setStatus('云端已有档案 · 请先选择读取或覆盖');return;}
+   if(remote && !lastCloudStamp){dirty=true;conflictStatus();return;}
    const stamp=new Date().toISOString();
    await puter.fs.write(CLOUD_FILE,JSON.stringify({version:1,updatedAt:stamp,data:snapshot()}));
    lastCloudStamp=stamp;dirty=editRevision!==revisionAtStart;syncError=false;
@@ -1427,6 +1440,7 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
   try{
    const remote=await fetchCloud();lastPull=Date.now();
    if(!remote){setStatus('云端暂无档案');return null;}
+   if(sameArchive(snapshot(),remote.data)){lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;setStatus('本机与云端内容一致 · 已恢复同步');return remote;}
    if(remote.updatedAt===lastCloudStamp){if(!dirty)setStatus('云端已是最新');return remote;}
    if(dirty && !interactive){setStatus('本地和云端都有改动 · 需要手动处理');return remote;}
    if(dirty && interactive){setStatus('本机有未同步的修改 · 已阻止覆盖，请先导出两份备份');toast('为防止丢失数据，不能直接覆盖未同步的本机档案');return remote;}
@@ -1446,10 +1460,12 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
    if(!remote){
     setStatus('云端暂无档案 · 本机内容尚未上传');
     if(confirm('Puter 云端还没有档案。是否将当前本机档案作为第一份云端档案上传？')){dirty=true;await push(true)}
+   }else if(sameArchive(snapshot(),remote.data)){
+    lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;setStatus('本机与云端内容一致 · 已恢复同步');
    }else if(isSeedOnly()){
     localBackup();loadData(remote.data);lastCloudStamp=remote.updatedAt;dirty=false;setStatus('已读取云端档案');
    }else{
-    lastCloudStamp='';dirty=true;setStatus('本机与云端都有档案 · 已暂停同步，避免覆盖');toast('请先导出本机备份，再决定如何合并档案');
+    lastCloudStamp='';dirty=true;conflictStatus();toast('两边资料不同。请先保存本机和云端备份，再点击立即同步选择是否覆盖');
    }
   }catch(e){console.error('Puter login error',e);setStatus('连接失败 · 请允许登录弹窗并重试');toast('Puter 登录失败或已取消')}
  }
@@ -1458,9 +1474,11 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
   if(!connected)return;
   try{
    const remote=await fetchCloud();
+   if(remote && sameArchive(snapshot(),remote.data)){
+    lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;setStatus('本机与云端内容一致 · 已恢复同步');return;
+   }
    if(remote && remote.updatedAt!==lastCloudStamp){
-    dirty=true;setStatus('检测到云端不同版本 · 已阻止覆盖');
-    toast('存在同步冲突，请先分别备份本机与云端数据');return;
+    dirty=true;conflictStatus();await resolveConflict(remote);return;
    }
    await push(false);
   }catch(e){setStatus('同步前检查失败 · 请重试');toast('云端读取失败，未覆盖任何数据')}
