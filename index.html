@@ -489,9 +489,9 @@ const initialAus = [
  {id:uid(),name:"私人博物馆",pair:"读取物品记忆的妹妹 × 搭档哥哥",type:"民俗 / 悬疑",status:"待发展",mark:"物与记忆",desc:"在私人博物馆工作的搭档，妹妹能触摸物品查看它过去的记忆。",icon:"⌘",tags:"民俗,博物馆,悬疑"}
 ];
 function uid(){return Math.random().toString(36).slice(2,9)+Date.now().toString(36).slice(-4)}
-const STORE="purpleArchive_v5";
+const STORE="purpleArchive_v5_dev";
 let db={aus:[],events:[],dreams:[],merch:[],settings:[],writing:[],characters:[],divinations:[],gacha:[],appearance:{},letters:[]};
-try{const saved=localStorage.getItem(STORE);const old=JSON.parse(saved||localStorage.getItem("purpleArchive_v1")||"null");db=old&&typeof old==="object"?{...db,...old}:db;if(!saved&&old&&typeof old==="object")localStorage.setItem(STORE,JSON.stringify(db));}catch(e){}
+try{const old=JSON.parse(localStorage.getItem(STORE)||"null");db=old&&typeof old==="object"?{...db,...old}:db}catch(e){}
 if(!Array.isArray(db.aus)||!db.aus.length)db.aus=initialAus;
 // Keep the same localStorage key and all previous record collections.
 // Older backups automatically receive the two new empty collections.
@@ -1375,7 +1375,7 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
    Same GitHub Pages URL must be used on every device (Puter app origin identity).
 */
 (function(){
- const CLOUD_FILE='archive-v5.json';
+ const CLOUD_FILE='archive-v5-dev.json';
  const status=document.getElementById('cloudStatus');
  const login=document.getElementById('cloudLogin');
  const sync=document.getElementById('cloudSync');
