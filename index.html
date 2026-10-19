@@ -1670,6 +1670,52 @@ function v60CoverPreview(){const a=v60CoverRead(),el=document.getElementById('v5
 ['Fit','Height','X','Y'].forEach(k=>document.getElementById('v60Cover'+k).addEventListener('input',v60CoverPreview));
 document.getElementById('v60SaveCoverLayout').onclick=()=>{db.appearance={...getAppearance(),...v60CoverRead()};persist();applyAppearance();toast('首页图片尺寸和位置已保存')};
 document.getElementById('v60ResetCoverLayout').onclick=()=>{db.appearance={...getAppearance(),homeCoverFit:'cover',homeCoverHeight:420,homeCoverX:50,homeCoverY:50};persist();applyAppearance();toast('图片布局已重置')};
+
+/* V6.1: Home cover sizing controls. Kept separate from writing HTML export. */
+(function(){
+ const panel=document.getElementById('v61Panel');
+ const open=document.getElementById('v61Open');
+ const close=document.getElementById('v61Close');
+ const width=document.getElementById('v61Width');
+ const height=document.getElementById('v61Height');
+ const cover=document.getElementById('v5HomeCover');
+ if(!panel||!open||!close||!width||!height||!cover)return;
+ open.setAttribute('aria-controls','v61Panel');
+ open.setAttribute('aria-expanded','false');
+ function preview(){
+  const w=Math.min(100,Math.max(50,Number(width.value)||100));
+  const h=Math.min(850,Math.max(180,Number(height.value)||420));
+  cover.style.width=w+'%';
+  cover.style.height=h+'px';
+  document.getElementById('v61WidthText').textContent=w+'%';
+  document.getElementById('v61HeightText').textContent=h+' px';
+ }
+ function restore(){
+  const a=getAppearance();
+  width.value=Math.min(100,Math.max(50,Number(a.homeCoverWidth)||100));
+  height.value=Math.min(850,Math.max(180,Number(a.homeCoverHeight)||420));
+  preview();
+ }
+ function hide(revert){
+  panel.hidden=true;
+  open.setAttribute('aria-expanded','false');
+  if(revert)applyAppearance();
+ }
+ open.addEventListener('click',()=>{
+  if(!panel.hidden){hide(true);return;}
+  restore();panel.hidden=false;open.setAttribute('aria-expanded','true');
+ });
+ close.addEventListener('click',()=>hide(true));
+ width.addEventListener('input',preview);
+ height.addEventListener('input',preview);
+ document.getElementById('v61Reset').addEventListener('click',()=>{
+  width.value=100;height.value=420;preview();
+ });
+ document.getElementById('v61Save').addEventListener('click',()=>{
+  db.appearance={...getAppearance(),homeCoverWidth:Number(width.value),homeCoverHeight:Number(height.value)};
+  persist();applyAppearance();hide(false);toast('首页大屏尺寸已保存 ✧');
+ });
+})();
 bindImageUpload('appearanceHomeFile','homeCover');bindImageUpload('appearanceIntroFile','intro');bindImageUpload('appearanceBgFile','background');bindImageUpload('appearanceHeroFile','hero');
 [['removeHomeImage','homeCover'],['removeIntroImage','intro'],['removeBgImage','background'],['removeHeroImage','hero']].forEach(([id,key])=>{
  document.getElementById(id).onclick=()=>{db.appearance={...getAppearance(),[key]:''};persist();applyAppearance();toast('图片已移除')}
@@ -1866,7 +1912,7 @@ document.getElementById('v5WritingVersionsFromRead').onclick=()=>v5WritingVersio
 document.getElementById('v52ExportHtml').onclick=()=>v52Export('html');
 document.getElementById('v52ExportTxt').onclick=()=>v52Export('txt');
 document.getElementById('v52PrintWriting').onclick=()=>{const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const w=window.open('','_blank');if(!w){toast('请允许弹出窗口以打印或保存 PDF');return;}w.document.write(v52ExportMarkup(item));w.document.close();w.focus();setTimeout(()=>w.print(),250);};
-function v52ExportMarkup(item){const chapters=v52ChapterList(item);return '<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>'+esc(item.title||'文稿')+'</title><style>body{max-width:760px;margin:55px auto;padding:0 25px;font:17px/2 serif;color:#332744}h1,h2{line-height:1.5}img{max-width:100%;height:auto}section{break-before:page}section:first-of-type{break-before:auto}</style></head><body><h1>'+esc(item.title||'文稿')+'</h1>'+chapters.map(c=>'<section><h2>'+esc(c.title||'正文')+'</h2>'+v5SafeHtml(c.html||'')+'</section>').join('')+'<script>(function(){const p=document.getElementById('v61Panel'),w=document.getElementById('v61Width'),h=document.getElementById('v61Height'),c=document.getElementById('v5HomeCover');function preview(){c.style.width=w.value+'%';c.style.height=h.value+'px';document.getElementById('v61WidthText').textContent=w.value+'%';document.getElementById('v61HeightText').textContent=h.value+'px'}document.getElementById('v61Open').onclick=()=>{p.hidden=!p.hidden;if(!p.hidden){const a=getAppearance();w.value=a.homeCoverWidth||100;h.value=a.homeCoverHeight||420;preview()}};document.getElementById('v61Close').onclick=()=>{p.hidden=true;applyAppearance()};document.getElementById('v61Reset').onclick=()=>{w.value=100;h.value=420;preview()};document.getElementById('v61Save').onclick=()=>{db.appearance={...getAppearance(),homeCoverWidth:Number(w.value),homeCoverHeight:Number(h.value)};persist();applyAppearance();p.hidden=true;toast('首页图片尺寸已保存')};w.oninput=preview;h.oninput=preview})();</script></body></html>';}
+function v52ExportMarkup(item){const chapters=v52ChapterList(item);return '<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>'+esc(item.title||'文稿')+'</title><style>body{max-width:760px;margin:55px auto;padding:0 25px;font:17px/2 serif;color:#332744}h1,h2{line-height:1.5}img{max-width:100%;height:auto}section{break-before:page}section:first-of-type{break-before:auto}</style></head><body><h1>'+esc(item.title||'文稿')+'</h1>'+chapters.map(c=>'<section><h2>'+esc(c.title||'正文')+'</h2>'+v5SafeHtml(c.html||'')+'</section>').join('')+'</body></html>';}
 function v52Export(type){const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const filename=(item.title||'文稿').replace(/[\\/:*?"<>|]/g,'_');if(type==='html')v52Download(filename+'.html',v52ExportMarkup(item),'text/html;charset=utf-8');else v52Download(filename+'.txt',item.title+'\n\n'+v52ChapterList(item).map(c=>(c.title||'正文')+'\n\n'+v52Plain(c.html||'')).join('\n\n'),'text/plain;charset=utf-8');}
 function v5EditWriting(id,seed={}){
  const existing=db.writing.find(x=>x.id===id);
