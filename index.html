@@ -917,7 +917,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         <div class="field"><label>网站标题</label><input id="appearanceTitle" placeholder="昼起之时"></div>
         <div class="field"><label>进入按钮文字</label><input id="appearanceButton" placeholder="进入 ✧"></div>
         <div class="field full"><label>副标题</label><textarea id="appearanceSubtitle" rows="2" placeholder="两颗心相遇，于是爱在无限时空中蔓延。"></textarea></div>
-        <div class="field"><label>首页独立大图</label><input id="appearanceHomeFile" type="file" accept="image/*"><button class="btn" id="removeHomeImage">移除首页大图</button></div>
+        <div class="field"><label>首页独立大图</label><input id="appearanceHomeFile" type="file" accept="image/*"><button class="btn" id="removeHomeImage">移除首页大图</button></div><div class="field full v60-cover-controls"><label>✧ 首页大图 DIY 尺寸与构图</label><p style="font-size:12px;color:var(--muted)">修改后立即预览，点击「保存图片布局」永久保存；不会裁剪或覆盖原始图片。</p><div class="appearance-grid"><div class="field"><label>显示方式</label><select id="v60CoverFit"><option value="cover">铺满（可能裁切）</option><option value="contain">完整显示（不裁切）</option></select></div><div class="field"><label>图片框高度：<span id="v60CoverHeightValue">420</span> px</label><input id="v60CoverHeight" type="range" min="180" max="850" step="10" value="420"></div><div class="field"><label>左右位置：<span id="v60CoverXValue">50</span>%</label><input id="v60CoverX" type="range" min="0" max="100" value="50"></div><div class="field"><label>上下位置：<span id="v60CoverYValue">50</span>%</label><input id="v60CoverY" type="range" min="0" max="100" value="50"></div></div><div class="actions"><button class="btn primary" id="v60SaveCoverLayout" type="button">保存图片布局</button><button class="btn" id="v60ResetCoverLayout" type="button">重置构图</button></div></div>
         <div class="field"><label>开屏照片</label><input id="appearanceIntroFile" type="file" accept="image/*"><button class="btn" id="removeIntroImage">移除开屏照片</button></div>
         <div class="field"><label>网站背景照片</label><input id="appearanceBgFile" type="file" accept="image/*"><button class="btn" id="removeBgImage">移除背景照片</button></div>
         <div class="field"><label>首页横幅封面</label><input id="appearanceHeroFile" type="file" accept="image/*"><button class="btn" id="removeHeroImage">移除封面照片</button></div>
@@ -1335,7 +1335,7 @@ document.getElementById('addGacha').onclick=()=>editSpecialRecord('gacha');
 ['gachaSearch','gachaRarity','v5GachaPoolType'].forEach(id=>document.getElementById(id).addEventListener('input',renderGacha));
 
 /* === Appearance: all settings live inside db and are included in JSON backup === */
-const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:"",homeCover:"",sections:{}};
+const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:"",homeCover:"",homeCoverFit:"cover",homeCoverHeight:420,homeCoverX:50,homeCoverY:50,sections:{}};
 function getAppearance(){return {...APPEARANCE_DEFAULTS,...(db.appearance||{})}}
 function cssImage(src){return src?`url("${src}")`:'none'}
 function applyAppearance(){
@@ -1349,7 +1349,15 @@ function applyAppearance(){
  document.getElementById('appearanceTitle').value=a.title;document.getElementById('appearanceSubtitle').value=a.subtitle;
  document.getElementById('appearanceButton').value=a.button;
  document.getElementById('appearancePreview').textContent='🍎 🍏  '+a.title;
- document.getElementById('v5HomeCover').style.backgroundImage=a.homeCover?`linear-gradient(180deg,#27183c44,#24133888),url(${JSON.stringify(a.homeCover)})`:'';
+ const homeCoverEl=document.getElementById('v5HomeCover');
+ homeCoverEl.style.backgroundImage=a.homeCover?`linear-gradient(180deg,#27183c44,#24133888),url(${JSON.stringify(a.homeCover)})`:'';
+ homeCoverEl.style.height=Math.min(850,Math.max(180,Number(a.homeCoverHeight)||420))+'px';
+ homeCoverEl.style.backgroundSize=a.homeCoverFit==='contain'?'100% 100%,contain':'cover';
+ homeCoverEl.style.backgroundRepeat='no-repeat';
+ homeCoverEl.style.backgroundColor='#35233f';
+ homeCoverEl.style.backgroundPosition='center center,'+(Number.isFinite(Number(a.homeCoverX))?a.homeCoverX:50)+'% '+(Number.isFinite(Number(a.homeCoverY))?a.homeCoverY:50)+'%';
+ ['Fit','Height','X','Y'].forEach(k=>{const el=document.getElementById('v60Cover'+k);if(el)el.value=a['homeCover'+k]??({Fit:'cover',Height:420,X:50,Y:50}[k])});
+ ['Height','X','Y'].forEach(k=>{const el=document.getElementById('v60Cover'+k+'Value');if(el)el.textContent=a['homeCover'+k]??({Height:420,X:50,Y:50}[k])});
  applyV5Sections(a);applyV5NavOrder(a);renderV5HomeDecor(a);renderV5MusicSettings(a);
 }
 let v5IntroClosing=false,v5IntroCloseTimer;
@@ -1657,6 +1665,11 @@ async function compressV5Decor(file){
 }
 bindV5Decor('left','v5DecorLeftFile','v5DecorLeftRemove');
 bindV5Decor('right','v5DecorRightFile','v5DecorRightRemove');
+function v60CoverRead(){return {homeCoverFit:document.getElementById('v60CoverFit').value,homeCoverHeight:Number(document.getElementById('v60CoverHeight').value),homeCoverX:Number(document.getElementById('v60CoverX').value),homeCoverY:Number(document.getElementById('v60CoverY').value)}}
+function v60CoverPreview(){const a=v60CoverRead(),el=document.getElementById('v5HomeCover');el.style.height=a.homeCoverHeight+'px';el.style.backgroundSize=a.homeCoverFit==='contain'?'100% 100%,contain':'cover';el.style.backgroundPosition='center center,'+a.homeCoverX+'% '+a.homeCoverY+'%';['Height','X','Y'].forEach(k=>document.getElementById('v60Cover'+k+'Value').textContent=a['homeCover'+k])}
+['Fit','Height','X','Y'].forEach(k=>document.getElementById('v60Cover'+k).addEventListener('input',v60CoverPreview));
+document.getElementById('v60SaveCoverLayout').onclick=()=>{db.appearance={...getAppearance(),...v60CoverRead()};persist();applyAppearance();toast('首页图片尺寸和位置已保存')};
+document.getElementById('v60ResetCoverLayout').onclick=()=>{db.appearance={...getAppearance(),homeCoverFit:'cover',homeCoverHeight:420,homeCoverX:50,homeCoverY:50};persist();applyAppearance();toast('图片布局已重置')};
 bindImageUpload('appearanceHomeFile','homeCover');bindImageUpload('appearanceIntroFile','intro');bindImageUpload('appearanceBgFile','background');bindImageUpload('appearanceHeroFile','hero');
 [['removeHomeImage','homeCover'],['removeIntroImage','intro'],['removeBgImage','background'],['removeHeroImage','hero']].forEach(([id,key])=>{
  document.getElementById(id).onclick=()=>{db.appearance={...getAppearance(),[key]:''};persist();applyAppearance();toast('图片已移除')}
