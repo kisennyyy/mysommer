@@ -1173,7 +1173,7 @@ v52RenderWeatherFields();
 document.getElementById('saveAppearance').onclick=()=>{
  db.appearance={...getAppearance(),title:document.getElementById('appearanceTitle').value.trim()||APPEARANCE_DEFAULTS.title,
  subtitle:document.getElementById('appearanceSubtitle').value.trim(),button:document.getElementById('appearanceButton').value.trim()||APPEARANCE_DEFAULTS.button,sections:readV5Sections(),weatherQuotes:v52ReadWeatherFields(),navOrder:[...document.querySelectorAll("#nav button[data-page]")].map(b=>b.dataset.page)};
- persist();applyAppearance();toast('外观文字已保存');
+ persist();applyAppearance();document.dispatchEvent(new Event('v52-weather-update'));toast('外观文字已保存');
 };
 async function compressAppearanceImage(file){
  if(!file.type.startsWith('image/'))throw Error('请选择图片文件');
@@ -1545,7 +1545,7 @@ function v5EditWriting(id,seed={}){
   const previous=db.writing.find(x=>x.id===item.id);
   const history=Array.isArray(previous?.v5Versions)?[...previous.v5Versions]:[];
   if(previous&&(forceVersion||history.length===0||Date.now()-new Date(history[history.length-1].date).getTime()>300000)){
-   history.push({date:new Date().toISOString(),title:previous.title||'',html:v5WritingHtml(previous)});
+   history.push({date:new Date().toISOString(),title:previous.title||'',html:v5WritingHtml(previous),chapters:previous.v52Chapters?JSON.parse(JSON.stringify(previous.v52Chapters)):null});
   }
   const updated={...item,...previous,...data,v5Versions:history.slice(-30),updated:new Date().toISOString()};
   const index=db.writing.findIndex(x=>x.id===item.id);
@@ -1594,8 +1594,8 @@ function v5WritingVersions(id){
  overlay.querySelectorAll('[data-v5-restore]').forEach(b=>b.onclick=()=>{
   if(!confirm('恢复这个版本？当前内容会保存到历史版本。'))return;
   const version=history[Number(b.dataset.v5Restore)];
-  item.v5Versions=[...history,{date:new Date().toISOString(),title:item.title,html:v5WritingHtml(item)}].slice(-30);
-  item.v5Html=v5SafeHtml(version.html);item.v52Chapters=[{id:uid(),title:'恢复的版本',html:item.v5Html}];item.content=new DOMParser().parseFromString(item.v5Html,'text/html').body.textContent||'';
+  item.v5Versions=[...history,{date:new Date().toISOString(),title:item.title,html:v5WritingHtml(item),chapters:item.v52Chapters?JSON.parse(JSON.stringify(item.v52Chapters)):null}].slice(-30);
+  item.v5Html=v5SafeHtml(version.html);item.v52Chapters=Array.isArray(version.chapters)&&version.chapters.length?version.chapters:[{id:uid(),title:'恢复的版本',html:item.v5Html}];item.content=new DOMParser().parseFromString(item.v5Html,'text/html').body.textContent||'';
   item.title=version.title||item.title;item.updated=new Date().toISOString();
   persist();overlay.remove();v5ReadWriting('writing',id);toast('已恢复历史版本');
  });
@@ -1875,7 +1875,7 @@ applyAppearance();
  const quotes={sun:'今天天气很好，要不要一起去散步？',rain:'妹妹，今天会下雨，记得带伞。',wind:'要多穿一件外套，妹妹。',snow:'下雪了，妹妹，还记得那场初雪吗？',cloud:'今天没什么太阳，正好可以在家多陪我一会儿。',storm:'外面打雷了，妹妹，今天就待在我身边吧。',default:'今天也要好好照顾自己，妹妹。'};
  const conditions={sun:['☀','晴天'],rain:['☂','下雨'],wind:['〰','大风'],snow:['❄','下雪'],cloud:['☁','多云'],storm:['ϟ','雷雨'],default:['✧','天气暂不可用']};
  function updateToday(){const now=new Date(),m=document.getElementById('roomMonth'),d=document.getElementById('roomDay'),w=document.getElementById('todayWeek');if(m)m.textContent=months[now.getMonth()];if(d)d.textContent=now.getDate();if(w)w.textContent=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()];}
- function showWeather(kind,temp){const c=conditions[kind]||conditions.default;document.getElementById('todayWeatherIcon').textContent=c[0];document.getElementById('todayWeatherText').textContent=c[1]+(Number.isFinite(temp)?' · '+Math.round(temp)+'°C':'');document.getElementById('todayQuote').textContent=(db.appearance?.weatherQuotes?.[kind]||quotes[kind]||quotes.default);}
+ let v52LastWeather={kind:'default',temp:NaN};function showWeather(kind,temp){v52LastWeather={kind,temp};const c=conditions[kind]||conditions.default;document.getElementById('todayWeatherIcon').textContent=c[0];document.getElementById('todayWeatherText').textContent=c[1]+(Number.isFinite(temp)?' · '+Math.round(temp)+'°C':'');document.getElementById('todayQuote').textContent=(db.appearance?.weatherQuotes?.[kind]||quotes[kind]||quotes.default);}
  function weatherKind(code,wind){if([95,96,99].includes(code))return 'storm';if([71,73,75,77,85,86].includes(code))return 'snow';if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return 'rain';if(Number(wind)>=35)return 'wind';if([0,1].includes(code))return 'sun';return 'cloud';}
  async function refreshWeather(){try{
   // Brühl, NRW is the initial city. No browser location permission required.
@@ -1884,7 +1884,7 @@ applyAppearance();
   const data=await response.json(),c=data.current;if(!c||!Number.isFinite(c.weather_code))throw Error('missing weather');
   showWeather(weatherKind(c.weather_code,c.wind_speed_10m),c.temperature_2m);
  }catch(e){showWeather('default');}}
- updateToday();showWeather('default');refreshWeather();
+ document.addEventListener('v52-weather-update',()=>showWeather(v52LastWeather.kind,v52LastWeather.temp));updateToday();showWeather('default');refreshWeather();
  document.addEventListener('visibilitychange',()=>{if(!document.hidden){updateToday();refreshWeather();}});
 })();
 </script>
