@@ -763,7 +763,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 #v5LetterGrid:not(.v60-letter-closed) .v5-envelope:nth-child(3n){animation-delay:.2s}
 @keyframes v60Fly{from{opacity:0;transform:translateY(-75px) rotate(-14deg) scale(.65)}to{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){#v5LetterGrid .v5-envelope{animation:none!important}}
-</style></head>
+</style><style>.v5-home-cover{position:relative}.v61-edit{position:absolute;top:12px;right:12px;z-index:5;border-radius:22px;padding:8px 13px;background:#f5eaf4e8;color:#6c4a80;border:1px solid #fff}.v61-panel{max-width:440px;margin:12px auto;padding:17px;border-radius:20px;background:#f8f0fbee;border:1px solid #dac6e8;color:#694d80}.v61-panel[hidden]{display:none!important}.v61-panel label{display:block;margin:14px 0}.v61-panel label span{float:right}.v61-panel input{display:block;width:100%;margin-top:10px;accent-color:#946db3}.v61-panel button{border:1px solid #c7b2d8;border-radius:14px;padding:8px 13px;margin-right:7px;background:white;color:#694d80}.v61-panel #v61Save{background:#8b69ac;color:white}.v61-panel #v61Close{float:right}</style></head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
   <div class="intro-photo" id="introPhoto"></div>
@@ -795,7 +795,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 
   <div class="cloud-bar" aria-live="polite"><span class="cloud-status" id="cloudStatus">☁ 未连接 Puter · 当前仅保存在本机</span><button class="btn primary" id="cloudLogin">连接 Puter</button><button class="btn" id="cloudSync" disabled>立即同步</button><button class="btn" id="cloudReload" disabled>从云端读取</button><button class="btn" id="cloudBackup" disabled>下载云端备份</button></div>
   <section class="page active" id="page-home">
-    <div class="v5-home-decor" id="v5HomeDecor" aria-hidden="true"></div><div class="v5-home-cover" id="v5HomeCover"><div class="v5-cover-hint">✦ OUR LITTLE UNIVERSE · 🍎 🍏</div></div>
+    <div class="v5-home-decor" id="v5HomeDecor" aria-hidden="true"></div><div class="v5-home-cover" id="v5HomeCover"><div class="v5-cover-hint">✦ OUR LITTLE UNIVERSE · 🍎 🍏</div><button type="button" id="v61Open" class="v61-edit">✎ 调整大小</button></div><div id="v61Panel" class="v61-panel" hidden><b>首页图片框尺寸</b><button type="button" id="v61Close">×</button><label>宽度 <span id="v61WidthText"></span><input id="v61Width" type="range" min="50" max="100" value="100"></label><label>高度 <span id="v61HeightText"></span><input id="v61Height" type="range" min="180" max="850" step="10" value="420"></label><button type="button" id="v61Reset">重置</button><button type="button" id="v61Save">保存尺寸 ✓</button></div>
     <div class="hero" id="v5SecretHero" title="我们的秘密基地"><div class="hero-copy"><div class="eyebrow">A LITTLE UNIVERSE OF OUR OWN</div><h3>把我们的<br>共同经历好好收藏。</h3><p>就好像我们的秘密基地一样，收藏和存档着一切。</p></div><div class="hero-symbol">☾✧</div></div>
   <div class="dream-room">
     <p class="room-sub">✧ TUNE INTO OUR LITTLE UNIVERSE ✧</p>
@@ -1335,7 +1335,7 @@ document.getElementById('addGacha').onclick=()=>editSpecialRecord('gacha');
 ['gachaSearch','gachaRarity','v5GachaPoolType'].forEach(id=>document.getElementById(id).addEventListener('input',renderGacha));
 
 /* === Appearance: all settings live inside db and are included in JSON backup === */
-const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:"",homeCover:"",homeCoverFit:"cover",homeCoverHeight:420,homeCoverX:50,homeCoverY:50,sections:{}};
+const APPEARANCE_DEFAULTS={title:"昼起之时",subtitle:"两颗心相遇，于是爱在无限时空中蔓延。",button:"进入 ✧",intro:"",background:"",hero:"",homeCover:"",homeCoverFit:"cover",homeCoverHeight:420,homeCoverWidth:100,homeCoverX:50,homeCoverY:50,sections:{}};
 function getAppearance(){return {...APPEARANCE_DEFAULTS,...(db.appearance||{})}}
 function cssImage(src){return src?`url("${src}")`:'none'}
 function applyAppearance(){
@@ -1351,7 +1351,7 @@ function applyAppearance(){
  document.getElementById('appearancePreview').textContent='🍎 🍏  '+a.title;
  const homeCoverEl=document.getElementById('v5HomeCover');
  homeCoverEl.style.backgroundImage=a.homeCover?`linear-gradient(180deg,#27183c44,#24133888),url(${JSON.stringify(a.homeCover)})`:'';
- homeCoverEl.style.height=Math.min(850,Math.max(180,Number(a.homeCoverHeight)||420))+'px';
+ homeCoverEl.style.height=Math.min(850,Math.max(180,Number(a.homeCoverHeight)||420))+'px';homeCoverEl.style.width=Math.min(100,Math.max(50,Number(a.homeCoverWidth)||100))+'%';homeCoverEl.style.marginInline='auto';
  homeCoverEl.style.backgroundSize=a.homeCoverFit==='contain'?'100% 100%,contain':'cover';
  homeCoverEl.style.backgroundRepeat='no-repeat';
  homeCoverEl.style.backgroundColor='#35233f';
@@ -1866,7 +1866,7 @@ document.getElementById('v5WritingVersionsFromRead').onclick=()=>v5WritingVersio
 document.getElementById('v52ExportHtml').onclick=()=>v52Export('html');
 document.getElementById('v52ExportTxt').onclick=()=>v52Export('txt');
 document.getElementById('v52PrintWriting').onclick=()=>{const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const w=window.open('','_blank');if(!w){toast('请允许弹出窗口以打印或保存 PDF');return;}w.document.write(v52ExportMarkup(item));w.document.close();w.focus();setTimeout(()=>w.print(),250);};
-function v52ExportMarkup(item){const chapters=v52ChapterList(item);return '<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>'+esc(item.title||'文稿')+'</title><style>body{max-width:760px;margin:55px auto;padding:0 25px;font:17px/2 serif;color:#332744}h1,h2{line-height:1.5}img{max-width:100%;height:auto}section{break-before:page}section:first-of-type{break-before:auto}</style></head><body><h1>'+esc(item.title||'文稿')+'</h1>'+chapters.map(c=>'<section><h2>'+esc(c.title||'正文')+'</h2>'+v5SafeHtml(c.html||'')+'</section>').join('')+'</body></html>';}
+function v52ExportMarkup(item){const chapters=v52ChapterList(item);return '<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>'+esc(item.title||'文稿')+'</title><style>body{max-width:760px;margin:55px auto;padding:0 25px;font:17px/2 serif;color:#332744}h1,h2{line-height:1.5}img{max-width:100%;height:auto}section{break-before:page}section:first-of-type{break-before:auto}</style></head><body><h1>'+esc(item.title||'文稿')+'</h1>'+chapters.map(c=>'<section><h2>'+esc(c.title||'正文')+'</h2>'+v5SafeHtml(c.html||'')+'</section>').join('')+'<script>(function(){const p=document.getElementById('v61Panel'),w=document.getElementById('v61Width'),h=document.getElementById('v61Height'),c=document.getElementById('v5HomeCover');function preview(){c.style.width=w.value+'%';c.style.height=h.value+'px';document.getElementById('v61WidthText').textContent=w.value+'%';document.getElementById('v61HeightText').textContent=h.value+'px'}document.getElementById('v61Open').onclick=()=>{p.hidden=!p.hidden;if(!p.hidden){const a=getAppearance();w.value=a.homeCoverWidth||100;h.value=a.homeCoverHeight||420;preview()}};document.getElementById('v61Close').onclick=()=>{p.hidden=true;applyAppearance()};document.getElementById('v61Reset').onclick=()=>{w.value=100;h.value=420;preview()};document.getElementById('v61Save').onclick=()=>{db.appearance={...getAppearance(),homeCoverWidth:Number(w.value),homeCoverHeight:Number(h.value)};persist();applyAppearance();p.hidden=true;toast('首页图片尺寸已保存')};w.oninput=preview;h.oninput=preview})();</script></body></html>';}
 function v52Export(type){const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const filename=(item.title||'文稿').replace(/[\\/:*?"<>|]/g,'_');if(type==='html')v52Download(filename+'.html',v52ExportMarkup(item),'text/html;charset=utf-8');else v52Download(filename+'.txt',item.title+'\n\n'+v52ChapterList(item).map(c=>(c.title||'正文')+'\n\n'+v52Plain(c.html||'')).join('\n\n'),'text/plain;charset=utf-8');}
 function v5EditWriting(id,seed={}){
  const existing=db.writing.find(x=>x.id===id);
