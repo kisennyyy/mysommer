@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#6e4aa1">
-<title>🍎🍏</title>
+<title>🍎🍏 · V5.2</title>
 <style>
 :root{
   --bg:#f7f3fb;--paper:#fffdfd;--panel:#f0e8f8;--panel2:#e8dcf3;
@@ -620,6 +620,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 
 </style>
 <script src="https://js.puter.com/v2/"></script>
+<style id="v52-styles">.v52-chapter-manager{margin:12px 0;padding:12px;border:1px solid #d8c9e7;border-radius:12px}.v52-chapter-manager select{width:100%;margin:7px 0}.v52-chapter-actions,.v52-chapter-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.v52-chapter-actions button{padding:7px 10px;border:1px solid #d8c9e7;background:#faf6ff;color:#614579;border-radius:9px}.v52-word-count{font-size:12px;color:#816b98;margin:12px 0}.v5-writing-article img,.v5-edit-surface img{max-width:100%;height:auto;border-radius:8px;display:block;margin:14px auto}.v52-chapter-tabs button.primary{background:#8260a5;color:white}</style>
 </head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
@@ -764,7 +765,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
   </section>
   <section class="page" id="page-writing-reader">
     <div class="section-head"><div><h3 id="v5WritingHeading">文稿阅读</h3><p id="v5WritingMeta">文字存档</p></div><button class="btn" id="v5WritingBack">← 返回文稿</button></div>
-    <article class="v5-writing-paper"><div class="v5-writing-article" id="v5WritingArticle"></div><div class="v5-writing-buttons"><button class="btn primary" id="v5WritingEditFromRead">✎ 编辑文稿</button><button class="btn soft" id="v5WritingVersionsFromRead">历史版本</button></div></article>
+    <article class="v5-writing-paper"><div id="v52ReaderChapters" class="v52-chapter-tabs"></div><div id="v52ReaderCount" class="v52-word-count"></div><div class="v5-writing-article" id="v5WritingArticle"></div><div class="v5-writing-buttons"><button class="btn primary" id="v5WritingEditFromRead">✎ 编辑文稿</button><button class="btn soft" id="v5WritingVersionsFromRead">历史版本</button><button class="btn soft" id="v52ExportHtml">导出 HTML</button><button class="btn soft" id="v52ExportTxt">导出 TXT</button><button class="btn soft" id="v52PrintWriting">打印 / PDF</button></div></article>
   </section>
   <section class="page" id="page-appearance">
     <div class="section-head"><div><h3>外观与开屏设置</h3><p>上传合照或喜欢的图片，设置开屏、背景、首页封面。更改会保存在本机。</p></div><button class="btn soft" id="previewIntro">预览开屏 ✧</button></div>
@@ -779,7 +780,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         <div class="field"><label>网站背景照片</label><input id="appearanceBgFile" type="file" accept="image/*"><button class="btn" id="removeBgImage">移除背景照片</button></div>
         <div class="field"><label>首页横幅封面</label><input id="appearanceHeroFile" type="file" accept="image/*"><button class="btn" id="removeHeroImage">移除封面照片</button></div>
       </div>
-      <div class="v5-section-editor"><h3>♫ 迷你音乐播放器</h3><p>可填入音频直链，或临时选择手机里的音频文件。打开网站时不会自动播放。</p><div class="appearance-grid"><div class="field full"><label>音乐直链（https:// 音频文件地址）</label><input id="v5MusicUrl" type="url" placeholder="https://example.com/music.mp3"></div><div class="field"><label>音乐名称</label><input id="v5MusicName" placeholder="我们的歌"></div><div class="field"><label>本次播放的本地音频</label><input id="v5MusicFile" type="file" accept="audio/*"></div></div><button class="btn soft" id="v5MusicSave">添加到歌单</button><div class="field full"><label>唱片封面（可上传照片）</label><input id="v5MusicCoverFile" type="file" accept="image/*"></div><div id="v5MusicPlaylist"></div></div><div class="v5-section-editor"><h3>✦ 首页装饰贴图</h3><p>可上传两张装饰图片，分别放在首页左右两侧。透明背景 PNG 更适合做贴纸。</p><div class="appearance-grid"><div class="field"><label>左侧装饰</label><input id="v5DecorLeftFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorLeftRemove">移除左侧装饰</button></div><div class="field"><label>右侧装饰</label><input id="v5DecorRightFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorRightRemove">移除右侧装饰</button></div></div></div><div class="v5-section-editor"><h3>☾ 导航顺序</h3><p>点击上下箭头调整侧边栏顺序，保存后下次打开仍会保留。</p><div id="v5NavOrder"></div></div><div class="v5-section-editor"><h3>✧ 页面标题与说明</h3><p>修改每个分区的标题和小字说明，不影响原始档案。</p><div id="v5SectionFields" class="appearance-grid"></div></div>
+      <div class="v5-section-editor"><h3>♫ 迷你音乐播放器</h3><p>可填入音频直链，或临时选择手机里的音频文件。打开网站时不会自动播放。</p><div class="appearance-grid"><div class="field full"><label>音乐直链（https:// 音频文件地址）</label><input id="v5MusicUrl" type="url" placeholder="https://example.com/music.mp3"></div><div class="field"><label>音乐名称</label><input id="v5MusicName" placeholder="我们的歌"></div><div class="field"><label>本次播放的本地音频</label><input id="v5MusicFile" type="file" accept="audio/*"></div></div><button class="btn soft" id="v5MusicSave">添加到歌单</button><div class="field full"><label>唱片封面（可上传照片）</label><input id="v5MusicCoverFile" type="file" accept="image/*"></div><div id="v5MusicPlaylist"></div></div><div class="v5-section-editor"><h3>✦ 首页装饰贴图</h3><p>可上传两张装饰图片，分别放在首页左右两侧。透明背景 PNG 更适合做贴纸。</p><div class="appearance-grid"><div class="field"><label>左侧装饰</label><input id="v5DecorLeftFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorLeftRemove">移除左侧装饰</button></div><div class="field"><label>右侧装饰</label><input id="v5DecorRightFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorRightRemove">移除右侧装饰</button></div></div></div><div class="v5-section-editor"><h3>☁ 天气台词自定义</h3><p>首页 TODAY 卡片会按实时天气自动显示对应台词。留空时使用默认台词。</p><div class="appearance-grid" id="v52WeatherFields"></div><button class="btn soft" id="v52ResetWeather" type="button">恢复默认天气台词</button></div><div class="v5-section-editor"><h3>☾ 导航顺序</h3><p>点击上下箭头调整侧边栏顺序，保存后下次打开仍会保留。</p><div id="v5NavOrder"></div></div><div class="v5-section-editor"><h3>✧ 页面标题与说明</h3><p>修改每个分区的标题和小字说明，不影响原始档案。</p><div id="v5SectionFields" class="appearance-grid"></div></div>
       <div class="appearance-actions"><button class="btn primary" id="saveAppearance">保存文字设置</button><button class="btn danger" id="resetAppearance">恢复默认外观</button></div>
       <p style="color:var(--muted);font-size:11px">图片上传后自动压缩以节省空间。建议定期导出 JSON 备份，清理浏览器数据会删除本地记录。部分手机浏览器以 file:// 打开时可能不支持持久存储。</p>
     </div>
@@ -1162,9 +1163,16 @@ for(let i=0;i<15;i++){
  star.style.animationDelay=-(i%6)*.83+'s';
  v5Stars.appendChild(star);
 }
+const V52_WEATHER_QUOTES={sun:'今天天气很好，要不要一起去散步？',rain:'妹妹，今天会下雨，记得带伞。',wind:'要多穿一件外套，妹妹。',snow:'下雪了，妹妹，还记得那场初雪吗？',cloud:'今天没什么太阳，正好可以在家多陪我一会儿。',storm:'外面打雷了，妹妹，今天就待在我身边吧。',default:'今天也要好好照顾自己，妹妹。'};
+const V52_WEATHER_LABELS={sun:'☀ 晴天',rain:'☂ 雨天',wind:'〰 大风',snow:'❄ 下雪',cloud:'☁ 阴天 / 多云',storm:'ϟ 雷雨',default:'✧ 无法获取天气'};
+function v52RenderWeatherFields(){const root=document.getElementById('v52WeatherFields');if(!root)return;const saved=getAppearance().weatherQuotes||{};root.innerHTML=Object.entries(V52_WEATHER_LABELS).map(([k,label])=>'<div class="field"><label>'+label+'</label><textarea rows="2" data-v52-weather="'+k+'" placeholder="'+esc(V52_WEATHER_QUOTES[k])+'">'+esc(saved[k]||'')+'</textarea></div>').join('');}
+function v52ReadWeatherFields(){const result={};document.querySelectorAll('[data-v52-weather]').forEach(el=>{result[el.dataset.v52Weather]=el.value.trim()});return result;}
+document.getElementById('v52ResetWeather').onclick=()=>{document.querySelectorAll('[data-v52-weather]').forEach(el=>el.value='');toast('已恢复默认输入，点击「保存文字设置」后生效');};
+v52RenderWeatherFields();
+
 document.getElementById('saveAppearance').onclick=()=>{
  db.appearance={...getAppearance(),title:document.getElementById('appearanceTitle').value.trim()||APPEARANCE_DEFAULTS.title,
- subtitle:document.getElementById('appearanceSubtitle').value.trim(),button:document.getElementById('appearanceButton').value.trim()||APPEARANCE_DEFAULTS.button,sections:readV5Sections(),navOrder:[...document.querySelectorAll("#nav button[data-page]")].map(b=>b.dataset.page)};
+ subtitle:document.getElementById('appearanceSubtitle').value.trim(),button:document.getElementById('appearanceButton').value.trim()||APPEARANCE_DEFAULTS.button,sections:readV5Sections(),weatherQuotes:v52ReadWeatherFields(),navOrder:[...document.querySelectorAll("#nav button[data-page]")].map(b=>b.dataset.page)};
  persist();applyAppearance();toast('外观文字已保存');
 };
 async function compressAppearanceImage(file){
@@ -1460,6 +1468,7 @@ function v5SafeHtml(html){
  function clean(node){
   if(node.nodeType===Node.TEXT_NODE)return document.createTextNode(node.textContent);
   if(node.nodeType!==Node.ELEMENT_NODE)return document.createTextNode('');
+  if(node.tagName==='IMG'){const src=node.getAttribute('src')||'';if(!/^data:image\/(?:png|jpeg|webp|gif);base64,/i.test(src))return document.createTextNode('');const img=document.createElement('img');img.src=src;img.alt=(node.getAttribute('alt')||'插图').slice(0,120);img.style.maxWidth='100%';img.style.height='auto';return img;}
   const name=allowed.has(node.tagName)?node.tagName.toLowerCase():'span';
   const el=document.createElement(name);
   for(const child of [...node.childNodes])el.appendChild(clean(child));
@@ -1469,6 +1478,10 @@ function v5SafeHtml(html){
  for(const node of [...doc.body.firstElementChild.childNodes])out.appendChild(clean(node));
  return out.innerHTML;
 }
+function v52ChapterList(item){return Array.isArray(item.v52Chapters)&&item.v52Chapters.length?item.v52Chapters:[{id:'legacy',title:'正文',html:item.v5Html||esc(item.content||'').replace(/\r?\n/g,'<br>')}];}
+function v52Plain(html){const d=document.createElement('div');d.innerHTML=html;return d.innerText||d.textContent||'';}
+function v52Count(html){return (v52Plain(html).replace(/\s/g,'')).length;}
+function v52Download(filename,content,type){const blob=new Blob([content],{type}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000);}
 function v5WritingHtml(item){
  if(item.v5Html)return v5SafeHtml(item.v5Html);
  return esc(item.content||'').replace(/\r?\n/g,'<br>');
@@ -1478,12 +1491,20 @@ function v5ReadWriting(bucket,id){
  v5WritingCurrentId=id;go('writing-reader');
  document.getElementById('v5WritingHeading').textContent=item.title||'无题文稿';
  document.getElementById('v5WritingMeta').textContent=[item.type,item.au,item.updated?.slice(0,10)].filter(Boolean).join(' · ');
- document.getElementById('v5WritingArticle').innerHTML=v5WritingHtml(item);
+ const chapters=v52ChapterList(item),tabs=document.getElementById('v52ReaderChapters');
+ tabs.innerHTML=chapters.map((ch,i)=>'<button class="btn soft" data-chapter="'+i+'">'+esc(ch.title||'第'+(i+1)+'章')+'</button>').join('');
+ const show=(index)=>{const ch=chapters[index];document.getElementById('v5WritingArticle').innerHTML=v5SafeHtml(ch.html||'');document.getElementById('v52ReaderCount').textContent='本章 '+v52Count(ch.html||'')+' 字 · 全文 '+chapters.reduce((n,c)=>n+v52Count(c.html||''),0)+' 字';tabs.querySelectorAll('button').forEach((b,i)=>b.classList.toggle('primary',i===index));};
+ tabs.querySelectorAll('button').forEach(b=>b.onclick=()=>show(Number(b.dataset.chapter)));show(0);
 }
 window.v5ReadWriting=v5ReadWriting;
 document.getElementById('v5WritingBack').onclick=()=>go('writing');
 document.getElementById('v5WritingEditFromRead').onclick=()=>v5EditWriting(v5WritingCurrentId);
 document.getElementById('v5WritingVersionsFromRead').onclick=()=>v5WritingVersions(v5WritingCurrentId);
+document.getElementById('v52ExportHtml').onclick=()=>v52Export('html');
+document.getElementById('v52ExportTxt').onclick=()=>v52Export('txt');
+document.getElementById('v52PrintWriting').onclick=()=>{const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const w=window.open('','_blank');if(!w){toast('请允许弹出窗口以打印或保存 PDF');return;}w.document.write(v52ExportMarkup(item));w.document.close();w.focus();setTimeout(()=>w.print(),250);};
+function v52ExportMarkup(item){const chapters=v52ChapterList(item);return '<!doctype html><html lang="zh"><head><meta charset="utf-8"><title>'+esc(item.title||'文稿')+'</title><style>body{max-width:760px;margin:55px auto;padding:0 25px;font:17px/2 serif;color:#332744}h1,h2{line-height:1.5}img{max-width:100%;height:auto}section{break-before:page}section:first-of-type{break-before:auto}</style></head><body><h1>'+esc(item.title||'文稿')+'</h1>'+chapters.map(c=>'<section><h2>'+esc(c.title||'正文')+'</h2>'+v5SafeHtml(c.html||'')+'</section>').join('')+'</body></html>';}
+function v52Export(type){const item=db.writing.find(x=>x.id===v5WritingCurrentId);if(!item)return;const filename=(item.title||'文稿').replace(/[\\/:*?"<>|]/g,'_');if(type==='html')v52Download(filename+'.html',v52ExportMarkup(item),'text/html;charset=utf-8');else v52Download(filename+'.txt',item.title+'\n\n'+v52ChapterList(item).map(c=>(c.title||'正文')+'\n\n'+v52Plain(c.html||'')).join('\n\n'),'text/plain;charset=utf-8');}
 function v5EditWriting(id,seed={}){
  const existing=db.writing.find(x=>x.id===id);
  const item=existing||{id:uid(),title:'',type:'正文',au:'',content:'',...seed};
@@ -1492,18 +1513,31 @@ function v5EditWriting(id,seed={}){
  '<label>标题</label><input id="v5EditorTitle" placeholder="文稿标题">'+
  '<label>分类</label><select id="v5EditorType">'+['正文','片段','大纲','设定草稿','废稿回收','其他'].map(x=>'<option>'+x+'</option>').join('')+'</select>'+
  '<label>关联 AU</label><select id="v5EditorAu"><option value="">不关联 AU</option>'+db.aus.map(a=>'<option value="'+esc(a.name)+'">'+esc(a.name)+'</option>').join('')+'</select>'+
- '<div class="v5-editor-toolbar">'+[['h1','大标题'],['h2','小标题'],['bold','粗体'],['italic','斜体'],['underline','下划线'],['insertUnorderedList','• 列表'],['insertOrderedList','1. 列表'],['formatBlock:blockquote','引用'],['formatBlock:p','正文']].map(x=>'<button type="button" data-v5-format="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>'+
+ '<div class="v52-chapter-manager"><label>章节管理</label><select id="v52ChapterSelect"></select><div class="v52-chapter-actions"><button type="button" id="v52AddChapter">＋ 新章节</button><button type="button" id="v52RenameChapter">重命名</button><button type="button" id="v52DeleteChapter">删除章节</button><button type="button" id="v52MoveUp">↑ 上移</button><button type="button" id="v52MoveDown">↓ 下移</button></div></div>'+ 
+ '<div class="v5-editor-toolbar">'+[['h1','大标题'],['h2','小标题'],['bold','粗体'],['italic','斜体'],['underline','下划线'],['insertUnorderedList','• 列表'],['insertOrderedList','1. 列表'],['formatBlock:blockquote','引用'],['formatBlock:p','正文'],['image','插入图片']].map(x=>'<button type="button" data-v5-format="'+x[0]+'">'+x[1]+'</button>').join('')+'</div>'+
  '<div class="v5-edit-surface" id="v5EditorBody" contenteditable="true" role="textbox" aria-label="文稿正文" aria-multiline="true"></div>'+
- '<div class="v5-editor-status" id="v5EditorStatus">编辑中 · 自动保存</div>'+
+ '<input id="v52ImageFile" type="file" accept="image/*" hidden><div class="v52-word-count" id="v52EditorCount">本章 0 字 · 全文 0 字</div><div class="v5-editor-status" id="v5EditorStatus">编辑中 · 自动保存</div>'+
  '<div class="v5-editor-actions"><button class="btn primary" id="v5EditorSave">保存并阅读</button><button class="btn soft" id="v5EditorHistory">历史版本</button><button class="btn" id="v5EditorClose">关闭编辑器</button></div></div>';
  document.body.appendChild(overlay);
  const get=x=>overlay.querySelector('#'+x);
  get('v5EditorTitle').value=item.title||'';
  get('v5EditorType').value=item.type||'正文';
  get('v5EditorAu').value=item.au||'';
- get('v5EditorBody').innerHTML=v5WritingHtml(item);
+ let chapters=v52ChapterList(item).map(c=>({...c,id:c.id||uid(),html:v5SafeHtml(c.html||'')})),activeChapter=0;
+ const chapterSelect=get('v52ChapterSelect');
+ const countWords=()=>{const current=v5SafeHtml(get('v5EditorBody').innerHTML);get('v52EditorCount').textContent='本章 '+v52Count(current)+' 字 · 全文 '+chapters.reduce((n,c,i)=>n+v52Count(i===activeChapter?current:c.html||''),0)+' 字';};
+ const stash=()=>{chapters[activeChapter].html=v5SafeHtml(get('v5EditorBody').innerHTML);};
+ const refreshChapters=()=>{chapterSelect.innerHTML=chapters.map((c,i)=>'<option value="'+i+'">'+esc(c.title||'第'+(i+1)+'章')+'</option>').join('');chapterSelect.value=String(activeChapter);get('v5EditorBody').innerHTML=chapters[activeChapter].html||'';countWords();};
+ refreshChapters();
+ chapterSelect.onchange=()=>{stash();activeChapter=Number(chapterSelect.value);refreshChapters();schedule();};
+ get('v52AddChapter').onclick=()=>{stash();chapters.push({id:uid(),title:'第'+(chapters.length+1)+'章',html:''});activeChapter=chapters.length-1;refreshChapters();schedule();};
+ get('v52RenameChapter').onclick=()=>{const title=prompt('章节名称',chapters[activeChapter].title);if(title===null||!title.trim())return;chapters[activeChapter].title=title.trim();refreshChapters();schedule();};
+ get('v52DeleteChapter').onclick=()=>{if(chapters.length<=1){toast('至少保留一个章节');return;}if(!confirm('确定删除当前章节？请先导出备份。'))return;chapters.splice(activeChapter,1);activeChapter=Math.max(0,activeChapter-1);refreshChapters();schedule();};
+ for(const [key,offset] of [['v52MoveUp',-1],['v52MoveDown',1]])get(key).onclick=()=>{const next=activeChapter+offset;if(next<0||next>=chapters.length)return;stash();[chapters[activeChapter],chapters[next]]=[chapters[next],chapters[activeChapter]];activeChapter=next;refreshChapters();schedule();};
+ get('v5EditorBody').addEventListener('input',countWords);
+ get('v52ImageFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>12*1024*1024)throw Error('图片超过 12MB');const url=await v52CompressImage(file);get('v5EditorBody').focus();document.execCommand('insertHTML',false,'<p><img src="'+url+'" alt="插图"></p>');schedule();countWords();}catch(err){toast('插图失败：'+err.message);}e.target.value='';};
  let timer=null,dirty=false,closed=false;
- const snapshot=()=>({title:get('v5EditorTitle').value.trim(),type:get('v5EditorType').value,au:get('v5EditorAu').value,v5Html:v5SafeHtml(get('v5EditorBody').innerHTML),content:get('v5EditorBody').innerText||''});
+ const snapshot=()=>{stash();return {title:get('v5EditorTitle').value.trim(),type:get('v5EditorType').value,au:get('v5EditorAu').value,v52Chapters:chapters.map(c=>({...c})),v5Html:chapters.map(c=>v5SafeHtml(c.html||'')).join('<br>'),content:chapters.map(c=>v52Plain(c.html||'')).join('\n\n')};};
  function save(forceVersion=false){
   if(closed||!dirty&&!forceVersion)return true;
   const data=snapshot();
@@ -1524,8 +1558,9 @@ function v5EditWriting(id,seed={}){
  overlay.querySelectorAll('[data-v5-format]').forEach(b=>{
   b.onmousedown=e=>e.preventDefault();
   b.onclick=()=>{
-   get('v5EditorBody').focus();
    const command=b.dataset.v5Format;
+   if(command==='image'){get('v52ImageFile').click();return;}
+   get('v5EditorBody').focus();
    if(command.startsWith('formatBlock:'))document.execCommand('formatBlock',false,command.split(':')[1]);
    else if(command==='h1'||command==='h2')document.execCommand('formatBlock',false,command);
    else document.execCommand(command,false,null);
@@ -1546,6 +1581,7 @@ function v5EditWriting(id,seed={}){
  overlay.addEventListener('click',e=>{if(e.target===overlay)close(false)});
 }
 window.v5EditWriting=v5EditWriting;
+async function v52CompressImage(file){const bitmap=await createImageBitmap(file);const scale=Math.min(1,1000/Math.max(bitmap.width,bitmap.height)),canvas=document.createElement('canvas');canvas.width=Math.round(bitmap.width*scale);canvas.height=Math.round(bitmap.height*scale);canvas.getContext('2d').drawImage(bitmap,0,0,canvas.width,canvas.height);bitmap.close?.();return canvas.toDataURL('image/jpeg',.72);}
 function v5WritingVersions(id){
  const item=db.writing.find(x=>x.id===id);if(!item)return;
  const history=item.v5Versions||[];
@@ -1559,7 +1595,7 @@ function v5WritingVersions(id){
   if(!confirm('恢复这个版本？当前内容会保存到历史版本。'))return;
   const version=history[Number(b.dataset.v5Restore)];
   item.v5Versions=[...history,{date:new Date().toISOString(),title:item.title,html:v5WritingHtml(item)}].slice(-30);
-  item.v5Html=v5SafeHtml(version.html);item.content=new DOMParser().parseFromString(item.v5Html,'text/html').body.textContent||'';
+  item.v5Html=v5SafeHtml(version.html);item.v52Chapters=[{id:uid(),title:'恢复的版本',html:item.v5Html}];item.content=new DOMParser().parseFromString(item.v5Html,'text/html').body.textContent||'';
   item.title=version.title||item.title;item.updated=new Date().toISOString();
   persist();overlay.remove();v5ReadWriting('writing',id);toast('已恢复历史版本');
  });
@@ -1839,7 +1875,7 @@ applyAppearance();
  const quotes={sun:'今天天气很好，要不要一起去散步？',rain:'妹妹，今天会下雨，记得带伞。',wind:'要多穿一件外套，妹妹。',snow:'下雪了，妹妹，还记得那场初雪吗？',cloud:'今天没什么太阳，正好可以在家多陪我一会儿。',storm:'外面打雷了，妹妹，今天就待在我身边吧。',default:'今天也要好好照顾自己，妹妹。'};
  const conditions={sun:['☀','晴天'],rain:['☂','下雨'],wind:['〰','大风'],snow:['❄','下雪'],cloud:['☁','多云'],storm:['ϟ','雷雨'],default:['✧','天气暂不可用']};
  function updateToday(){const now=new Date(),m=document.getElementById('roomMonth'),d=document.getElementById('roomDay'),w=document.getElementById('todayWeek');if(m)m.textContent=months[now.getMonth()];if(d)d.textContent=now.getDate();if(w)w.textContent=['星期日','星期一','星期二','星期三','星期四','星期五','星期六'][now.getDay()];}
- function showWeather(kind,temp){const c=conditions[kind]||conditions.default;document.getElementById('todayWeatherIcon').textContent=c[0];document.getElementById('todayWeatherText').textContent=c[1]+(Number.isFinite(temp)?' · '+Math.round(temp)+'°C':'');document.getElementById('todayQuote').textContent=quotes[kind]||quotes.default;}
+ function showWeather(kind,temp){const c=conditions[kind]||conditions.default;document.getElementById('todayWeatherIcon').textContent=c[0];document.getElementById('todayWeatherText').textContent=c[1]+(Number.isFinite(temp)?' · '+Math.round(temp)+'°C':'');document.getElementById('todayQuote').textContent=(db.appearance?.weatherQuotes?.[kind]||quotes[kind]||quotes.default);}
  function weatherKind(code,wind){if([95,96,99].includes(code))return 'storm';if([71,73,75,77,85,86].includes(code))return 'snow';if([51,53,55,56,57,61,63,65,66,67,80,81,82].includes(code))return 'rain';if(Number(wind)>=35)return 'wind';if([0,1].includes(code))return 'sun';return 'cloud';}
  async function refreshWeather(){try{
   // Brühl, NRW is the initial city. No browser location permission required.
