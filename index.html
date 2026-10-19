@@ -941,7 +941,41 @@ if(!Array.isArray(db.aus)||!db.aus.length)db.aus=initialAus;
 for(const bucket of ['events','dreams','merch','settings','writing','characters','divinations','gacha','letters']){
  if(!Array.isArray(db[bucket]))db[bucket]=[];
 }
-function persist(){try{localStorage.setItem(STORE,JSON.stringify(db));updateStats();if(window.archiveCloud)window.archiveCloud.changed()}catch(e){toast("本地保存失败：请导出 JSON 备份。")}}
+/* V5.6: full archive snapshots use IndexedDB; localStorage remains a best-effort compatibility copy. */
+const V56_ARCHIVE_DB='mysommer-archive-v56',V56_ARCHIVE_STORE='snapshots';
+let v56ArchiveRevision=0,v56ArchiveSaved=0,v56ArchiveQueue=Promise.resolve(),v56ArchiveReady=false,v56ArchiveHadQuota=false;
+function v56ArchiveOpen(){return new Promise((resolve,reject)=>{const r=indexedDB.open(V56_ARCHIVE_DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(V56_ARCHIVE_STORE);r.onsuccess=()=>resolve(r.result);r.onerror=()=>reject(r.error)})}
+async function v56ArchiveRead(){const d=await v56ArchiveOpen();return new Promise((resolve,reject)=>{const tx=d.transaction(V56_ARCHIVE_STORE,'readonly'),r=tx.objectStore(V56_ARCHIVE_STORE).get('latest');r.onsuccess=()=>resolve(r.result||null);r.onerror=()=>reject(r.error);tx.oncomplete=()=>d.close()})}
+async function v56ArchiveWrite(payload){const d=await v56ArchiveOpen();return new Promise((resolve,reject)=>{const tx=d.transaction(V56_ARCHIVE_STORE,'readwrite');tx.objectStore(V56_ARCHIVE_STORE).put(payload,'latest');tx.oncomplete=()=>{d.close();resolve()};tx.onerror=()=>{d.close();reject(tx.error)};tx.onabort=()=>{d.close();reject(tx.error)}})}
+function v56ArchiveQueueSave(){const revision=++v56ArchiveRevision;let data;try{data=JSON.stringify(db)}catch(e){toast('档案序列化失败，请立即导出备份');return}
+ const payload={revision,updatedAt:Date.now(),data};
+ v56ArchiveQueue=v56ArchiveQueue.catch(()=>{}).then(()=>v56ArchiveWrite(payload)).then(()=>{v56ArchiveSaved=revision;if(v56ArchiveHadQuota&&revision===v56ArchiveRevision)toast('档案已保存到 IndexedDB；请保留 JSON 备份')}).catch(e=>{console.error('Archive IndexedDB save failed',e);toast('档案保存失败！请立即导出 JSON 备份，不要刷新')});
+}
+function persist(){
+ let localSaved=false;
+ try{localStorage.setItem(STORE,JSON.stringify(db));localSaved=true;v56ArchiveHadQuota=false}
+ catch(e){v56ArchiveHadQuota=true;console.warn('localStorage quota exceeded; saving archive to IndexedDB',e)}
+ v56ArchiveQueueSave();
+ try{updateStats()}catch(e){console.warn(e)}
+ if(window.archiveCloud)window.archiveCloud.changed();
+ if(!localSaved)toast('本地容量不足，正转存 IndexedDB；请导出 JSON 备份');
+}
+async function v56ArchiveRestore(){
+ try{const saved=await v56ArchiveRead();v56ArchiveReady=true;if(!saved?.data||v56ArchiveRevision>0)return;
+  const restored=JSON.parse(saved.data);if(!restored||!Array.isArray(restored.aus))return;
+  const existing=localStorage.getItem(STORE);let existingData=null;
+  try{existingData=existing?JSON.parse(existing):null}catch(e){}
+  const existingText=existingData?JSON.stringify(existingData):'';
+  if(saved.data===existingText)return;
+  // If IndexedDB contains a complete archive, recover it without deleting either copy.
+  // Never overwrite edits made since page load.
+  if(v56ArchiveRevision>0)return;
+  db={...db,...restored};
+  for(const key of ['events','dreams','merch','settings','writing','characters','divinations','gacha','letters'])if(!Array.isArray(db[key]))db[key]=[];
+  renderAll();applyAppearance();toast('已从 IndexedDB 恢复完整档案');
+ }catch(e){console.warn('Archive recovery unavailable',e)}
+}
+v56ArchiveRestore();
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function toast(s){const t=document.getElementById("toast");t.textContent=s;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2500)}
 const pageNames={letters:"书信",home:"欢迎回来",aus:"AU ",calendar:"日历",dreams:"梦图",merch:"谷子",settings:"档案",writing:"文稿",divination:"梦占存档",gacha:"抽卡存档",characters:"角色档案",appearance:"外观设置"};
@@ -2008,7 +2042,7 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
   lastCloudStamp=remote.updatedAt;dirty=true;await push(false);return true;
  }
  const isSeedOnly=()=> db.events.length===0 && db.dreams.length===0 && db.merch.length===0 && db.settings.length===0 && db.writing.length===0 && db.characters.length===0 && db.divinations.length===0 && db.gacha.length===0 && db.letters.length===0 && (!db.appearance || Object.values(db.appearance).every(x=>!x));
- function saveLocal(){try{localStorage.setItem(STORE,JSON.stringify(db));updateStats()}catch(e){toast('本地空间不足，请导出备份')}}
+ function saveLocal(){persist()}
  function downloadBackup(data,name){const blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(url),5000)}
  function localBackup(){downloadBackup(snapshot(),'v5-local-before-cloud-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json')}
  function loadData(data){
