@@ -719,7 +719,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 <circle cx="100" cy="100" r="96" fill="none" stroke="#e4d9ee" stroke-width="1.5"/><ellipse cx="66" cy="47" rx="48" ry="26" fill="#fff" opacity=".075" transform="rotate(-25 66 47)"/>
 </svg></div><strong>INFINITE<br> MOMENTS</strong></div><div class="orbit-window orbit-window-front"><span>✦  CALENDAR / ARCHIVE</span><strong>THE DAYS<br>WE KEEP</strong><small>THE DAYS WE CHOOSE TO REMEMBER</small><div class="orbit-window-stars">✧　·　✦　·　✧</div></div></div><div class="orbit-hero-bottom"><span>✧ EVERY MOMENT IS A LITTLE UNIVERSE</span><span>EST. 02.01</span></div></div>
     <div class="section-head"><div><h3>纪念日历</h3><p>纪念日、生日、计划日与倒数日都可以放在这里。</p></div><button class="btn primary" id="addEvent">＋ 添加日期</button></div>
-    <div class="v5-month-journal panel"><div class="section-head"><div><h3>☾ 月度纪事</h3><p>每个月收藏一段共同经历，不影响 AU 内部时间线。</p></div><button class="btn soft" id="v5EditMonth">✎ 编辑本月</button></div><div id="v5MonthJournal"></div></div><div class="v53-period panel"><div class="section-head"><div><h3>✿ 经期手账</h3><p>仅保存在当前浏览器，不上传 Puter。记录日期，不提供医疗预测。</p></div><button class="btn soft" id="v53PeriodExport">导出经期备份</button></div><div class="v53-period-controls"><label>开始日期 <input type="date" id="v53PeriodStart"></label><label>结束日期 <input type="date" id="v53PeriodEnd"></label><label>备注 <input id="v53PeriodNote" placeholder="可选：状态、感受…"></label><button class="btn primary" id="v53PeriodSave">＋ 保存经期</button></div><div id="v53PeriodList"></div></div><div class="calendar-layout">
+    <div class="v5-month-journal panel"><div class="section-head"><div><h3>☾ 月度纪事</h3><p>每个月收藏一段共同经历，不影响 AU 内部时间线。</p></div><button class="btn soft" id="v5EditMonth">✎ 编辑本月</button></div><div id="v5MonthJournal"></div></div><div class="v53-period panel"><div class="section-head"><div><h3>✿ 经期手账</h3><p>随网站档案同步到 Puter · 不提供医疗预测。</p></div><button class="btn soft" id="v53PeriodExport">导出经期备份</button></div><div class="v53-period-controls"><label>开始日期 <input type="date" id="v53PeriodStart"></label><label>结束日期 <input type="date" id="v53PeriodEnd"></label><label>备注 <input id="v53PeriodNote" placeholder="可选：状态、感受…"></label><button class="btn primary" id="v53PeriodSave">＋ 保存经期</button></div><div id="v53PeriodList"></div></div><div class="calendar-layout">
       <div class="panel"><div class="calendar-head"><button class="btn" id="prevMonth">‹</button><h3 id="monthLabel"></h3><button class="btn" id="nextMonth">›</button></div><div class="calendar-grid" id="calendarGrid"></div></div>
       <div class="panel"><div class="section-head" style="margin:0 0 12px"><div><h3 id="selectedDateTitle">日期记录</h3><p>选择日期查看详情。</p></div></div><div id="selectedEvents"></div><div class="divider"></div><div class="section-head"><div><h3>全部纪念日</h3><p>按日期查看。</p></div></div><div class="list" id="allEvents"></div></div>
     </div>
@@ -925,11 +925,20 @@ function v53RenderCharacterStage(){
  root.querySelector('#v53EditIntro').onclick=()=>{const intro=prompt('人物简介',profile.intro||'');if(intro===null)return;db.v53People=db.v53People||{};db.v53People[v53ActivePerson]={...profile,intro};persist();v53RenderCharacterStage()};
 }
 const V53_PERIOD_KEY='mysommer_v53_private_periods';
-function v53GetPeriods(){try{const a=JSON.parse(localStorage.getItem(V53_PERIOD_KEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
+function v53GetPeriods(){return Array.isArray(db.v53Periods)?db.v53Periods:[]}
+function v53LegacyPeriods(){try{const a=JSON.parse(localStorage.getItem(V53_PERIOD_KEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
+function v53MigratePeriods(){
+ const legacy=v53LegacyPeriods();if(!legacy.length)return;
+ const existing=v53GetPeriods(),seen=new Set(existing.map(x=>x.id||x.start+'|'+x.end+'|'+(x.note||'')));
+ const additions=legacy.filter(x=>!seen.has(x.id||x.start+'|'+x.end+'|'+(x.note||'')));
+ if(additions.length){db.v53Periods=[...existing,...additions];persist();renderCalendar();toast('已将原本机经期记录加入网站档案，等待 Puter 同步');}
+ try{localStorage.removeItem(V53_PERIOD_KEY)}catch(e){}
+}
 function v53PeriodIncludes(day){return v53GetPeriods().some(p=>day>=p.start&&day<=p.end)}
-function v53RenderPeriods(){const root=document.getElementById('v53PeriodList');if(!root)return;root.innerHTML=v53GetPeriods().slice().sort((a,b)=>b.start.localeCompare(a.start)).map(p=>'<div class="v53-period-entry"><span>✿ '+esc(p.start)+' — '+esc(p.end)+' · '+(Math.round((new Date(p.end+'T12:00:00')-new Date(p.start+'T12:00:00'))/86400000)+1)+' 天'+(p.note?' · '+esc(p.note):'')+'</span><button class="btn soft" data-period-delete="'+esc(p.id)+'">删除</button></div>').join('')||'<p class="v53-period-empty">还没有记录。记录会留在这台设备上。</p>';root.querySelectorAll('[data-period-delete]').forEach(b=>b.onclick=()=>{if(!confirm('删除这条经期记录？'))return;localStorage.setItem(V53_PERIOD_KEY,JSON.stringify(v53GetPeriods().filter(p=>p.id!==b.dataset.periodDelete)));renderCalendar()})}
-document.getElementById('v53PeriodSave').onclick=()=>{const start=document.getElementById('v53PeriodStart').value,end=document.getElementById('v53PeriodEnd').value,note=document.getElementById('v53PeriodNote').value.trim();if(!start||!end||end<start){toast('请填写有效的开始与结束日期');return}const list=v53GetPeriods();list.push({id:uid(),start,end,note});try{localStorage.setItem(V53_PERIOD_KEY,JSON.stringify(list));renderCalendar();toast('经期记录已保存在本机')}catch(e){toast('本地存储失败，请检查设备空间')}};
-document.getElementById('v53PeriodExport').onclick=()=>v52Download('经期记录-本机备份.json',JSON.stringify(v53GetPeriods(),null,2),'application/json');
+function v53RenderPeriods(){const root=document.getElementById('v53PeriodList');if(!root)return;root.innerHTML=v53GetPeriods().slice().sort((a,b)=>b.start.localeCompare(a.start)).map(p=>'<div class="v53-period-entry"><span>✿ '+esc(p.start)+' — '+esc(p.end)+' · '+(Math.round((new Date(p.end+'T12:00:00')-new Date(p.start+'T12:00:00'))/86400000)+1)+' 天'+(p.note?' · '+esc(p.note):'')+'</span><button class="btn soft" data-period-delete="'+esc(p.id)+'">删除</button></div>').join('')||'<p class="v53-period-empty">还没有记录。保存后会随网站档案同步。</p>';root.querySelectorAll('[data-period-delete]').forEach(b=>b.onclick=()=>{if(!confirm('删除这条经期记录？'))return;db.v53Periods=v53GetPeriods().filter(p=>p.id!==b.dataset.periodDelete);persist();renderCalendar()})}
+document.getElementById('v53PeriodSave').onclick=()=>{const start=document.getElementById('v53PeriodStart').value,end=document.getElementById('v53PeriodEnd').value,note=document.getElementById('v53PeriodNote').value.trim();if(!start||!end||end<start){toast('请填写有效的开始与结束日期');return}const list=v53GetPeriods();list.push({id:uid(),start,end,note});db.v53Periods=list;persist();renderCalendar();toast('经期记录已保存，Puter 连接后将同步')};
+document.getElementById('v53PeriodExport').onclick=()=>v52Download('经期记录-独立备份.json',JSON.stringify(v53GetPeriods(),null,2),'application/json');
+v53MigratePeriods();
 
 function renderCharacters(){v53RenderCharacterStage();renderNotes("characters","characterGrid","characterSearch","characterAu");const filter=document.getElementById("characterAu").value;if(filter){const list=db.characters.filter(x=>x.au===filter&&[x.title,x.name,x.au,x.content,x.role].join(" ").toLowerCase().includes((document.getElementById("characterSearch").value||"").toLowerCase()));document.getElementById("characterGrid").innerHTML=list.map(x=>noteCard(x,"characters")).join("")||empty("这个 AU 还没有角色档案。")}}
 function renderAll(){if(document.getElementById("page-au-detail").classList.contains("active"))renderV5AuDetail();updateStats();renderAus();renderCalendar();renderPhotos("dreams","dreamGallery","dreamSearch","dreamCategory");renderPhotos("merch","merchGallery","merchSearch","merchStatus");renderNotes("settings","settingGrid","settingSearch","settingType");renderNotes("writing","writingGrid","writingSearch","writingType");renderCharacters();renderDivinations();renderGacha();renderV5Letters()}
@@ -1805,7 +1814,7 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
   if(!data||!Array.isArray(data.aus))throw Error('云端档案格式不正确');
   db={...db,...data};
   for(const key of ['events','dreams','merch','settings','writing','characters','divinations','gacha','letters'])if(!Array.isArray(db[key]))db[key]=[];
-  saveLocal();renderAll();applyAppearance();
+  saveLocal();renderAll();applyAppearance();v53MigratePeriods();
  }
  async function fetchCloud(){
   try{const blob=await puter.fs.read(CLOUD_FILE);const data=JSON.parse(await blob.text());
