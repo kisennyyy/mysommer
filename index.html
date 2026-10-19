@@ -763,6 +763,9 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 #v5LetterGrid:not(.v60-letter-closed) .v5-envelope:nth-child(3n){animation-delay:.2s}
 @keyframes v60Fly{from{opacity:0;transform:translateY(-75px) rotate(-14deg) scale(.65)}to{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){#v5LetterGrid .v5-envelope{animation:none!important}}
+
+/* On narrow screens, fit the cover frame to the actual image; leave tablets unchanged. */
+@media(max-width:760px){#page-home .v5-home-cover{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:var(--mysommer-mobile-cover-ratio,4 / 5)}}
 </style><style>.v5-home-cover{position:relative}.v61-side-edit{display:block;width:100%;margin-top:10px;padding:9px 12px;border:1px solid var(--line);border-radius:13px;background:#fff9;color:var(--muted);font-size:11px;line-height:1.4;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,color .18s}.v61-side-edit:hover{background:var(--panel);border-color:var(--accent2);color:var(--deep)}.v61-side-edit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.v61-side-edit[hidden]{display:none!important}@media(max-width:760px){.v61-side-edit{display:none!important}}.v61-panel{max-width:440px;margin:12px auto;padding:17px;border-radius:20px;background:#f8f0fbee;border:1px solid #dac6e8;color:#694d80}.v61-panel[hidden]{display:none!important}.v61-panel label{display:block;margin:14px 0}.v61-panel label span{float:right}.v61-panel input{display:block;width:100%;margin-top:10px;accent-color:#946db3}.v61-panel button{border:1px solid #c7b2d8;border-radius:14px;padding:8px 13px;margin-right:7px;background:white;color:#694d80}.v61-panel #v61Save{background:#8b69ac;color:white}.v61-panel #v61Close{float:right}</style></head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
@@ -1352,6 +1355,24 @@ function applyAppearance(){
  document.getElementById('appearancePreview').textContent='🍎 🍏  '+a.title;
  const homeCoverEl=document.getElementById('v5HomeCover');
  homeCoverEl.style.backgroundImage=a.homeCover?`linear-gradient(180deg,#27183c44,#24133888),url(${JSON.stringify(a.homeCover)})`:'';
+ // Image-aware mobile sizing never changes the persisted desktop dimensions.
+ if(a.homeCover){
+  const coverSrc=a.homeCover;
+  if(homeCoverEl.dataset.mobileCoverSrc!==coverSrc){
+   homeCoverEl.dataset.mobileCoverSrc=coverSrc;
+   const image=new Image();
+   image.onload=()=>{
+    if(homeCoverEl.dataset.mobileCoverSrc!==coverSrc)return;
+    const ratio=image.naturalWidth/image.naturalHeight;
+    homeCoverEl.style.setProperty('--mysommer-mobile-cover-ratio',String(Number.isFinite(ratio)&&ratio>0?Math.min(2,Math.max(.55,ratio)):.8));
+   };
+   image.onerror=()=>{if(homeCoverEl.dataset.mobileCoverSrc===coverSrc)homeCoverEl.style.setProperty('--mysommer-mobile-cover-ratio','.8')};
+   image.src=coverSrc;
+  }
+ }else{
+  homeCoverEl.dataset.mobileCoverSrc='';
+  homeCoverEl.style.setProperty('--mysommer-mobile-cover-ratio','4 / 5');
+ }
  homeCoverEl.style.height=Math.min(850,Math.max(180,Number(a.homeCoverHeight)||420))+'px';homeCoverEl.style.width=Math.min(100,Math.max(50,Number(a.homeCoverWidth)||100))+'%';homeCoverEl.style.marginInline='auto';
  homeCoverEl.style.backgroundSize=a.homeCoverFit==='contain'?'100% 100%,contain':'cover';
  homeCoverEl.style.backgroundRepeat='no-repeat';
