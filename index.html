@@ -2234,12 +2234,22 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
    const remote=await fetchCloud();lastPull=Date.now();
    if(!remote){setStatus('云端暂无档案');return null;}
    if(sameArchive(snapshot(),remote.data)){lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;setStatus('本机与云端内容一致 · 已恢复同步');return remote;}
+   if(interactive){
+    // Manual cloud read is a deliberate restore, even when the local copy is dirty.
+    if(!confirm('确定从云端读取档案吗？\n\n云端内容将替换本机当前档案，包括尚未同步的修改。\n继续前会自动下载一份本机 JSON 备份。\n\n点击「取消」则保留本机原样。'))return remote;
+    localBackup();
+    // Prevent pending local auto-upload from racing with the explicitly chosen cloud copy.
+    clearTimeout(timer);timer=null;
+    loadData(remote.data);
+    clearTimeout(timer);timer=null;
+    lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;
+    setStatus('已按确认读取云端档案 · 本机备份已下载');toast('云端档案已读取');return remote;
+   }
    if(remote.updatedAt===lastCloudStamp){if(!dirty)setStatus('云端已是最新');return remote;}
-   if(dirty && !interactive){setStatus('本地和云端都有改动 · 需要手动处理');return remote;}
-   if(dirty && interactive){setStatus('本机有未同步的修改 · 已阻止覆盖，请先导出两份备份');toast('为防止丢失数据，不能直接覆盖未同步的本机档案');return remote;}
-   if(interactive)localBackup();
-   loadData(remote.data);lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;
-   setStatus('已读取云端最新档案');if(interactive)toast('已从云端更新');return remote;
+   if(dirty){setStatus('本地和云端都有改动 · 需要手动处理');return remote;}
+   loadData(remote.data);clearTimeout(timer);timer=null;
+   lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;
+   setStatus('已读取云端最新档案');return remote;
   }catch(e){console.error('Puter load error',e);setStatus('读取云端失败 · 请检查网络');if(interactive)toast('读取失败，请稍后重试');return undefined;}
  }
  async function connect(){
