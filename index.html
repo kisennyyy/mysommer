@@ -735,6 +735,34 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 .v5-music-player:not(.compact):not(.expanded) .v5-music-toggle,
 .v5-music-player:not(.compact):not(.expanded) .v5-music-volume{width:25px!important;height:25px!important}
 }
+</style><style id="v60-tarot-mailbox">
+#v60QASection[hidden],#v60ChatSection[hidden]{display:none!important}
+.v60-qa-row{padding:14px;margin:10px 0;border:1px solid #d8c5e8;border-radius:16px;background:#fbf8ff}
+.v60-qa-top{display:flex;align-items:center;justify-content:space-between;color:#8365a3;font:600 12px Georgia,serif;letter-spacing:.1em}
+.v60-qa-row label{display:block;margin-top:10px;color:#72588e;font-size:13px}
+.v60-qa-row textarea{display:block;width:100%;border:1px solid #ddcde9;border-radius:12px;padding:10px;resize:vertical;background:white}
+.v60-tarot-card{padding:20px;border:1px solid #e2d5ed;border-radius:20px;background:#fffafd;margin-bottom:12px;box-shadow:0 8px 20px #6d4d8c13}
+.v60-tarot-type{font-size:12px;letter-spacing:.12em;color:#906ca8}
+.v60-tarot-card h3{margin:7px 0}
+.v60-tarot-image{display:block;width:100%;max-height:240px;object-fit:contain;border-radius:12px;margin:10px 0}
+.v60-tarot-qa{border-left:2px solid #c6acd9;padding:6px 12px;margin:12px 0;white-space:pre-wrap;overflow-wrap:anywhere}
+.v60-tarot-qa strong{font-size:13px}.v60-tarot-qa p,.v60-tarot-preview{white-space:pre-wrap;overflow-wrap:anywhere;color:#675878}
+.v60-mailbox-scene{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:26px 12px 12px;min-height:250px;background:radial-gradient(ellipse at 50% 70%,#ebdff4 0,transparent 70%);border-radius:25px;margin-bottom:10px}
+.v60-mailbox-scene p{font-size:12px;letter-spacing:.12em;color:#977cac;margin:14px 0}
+.v60-mailbox{width:190px;height:178px;position:relative;border:0;background:transparent;filter:drop-shadow(0 14px 12px #60437735);transition:transform .3s;cursor:pointer}
+.v60-mailbox:hover{transform:translateY(-5px)}
+.v60-mailbox-roof{position:absolute;top:9px;left:17px;width:156px;height:78px;background:linear-gradient(145deg,#a887c4,#78549b);border:3px solid #d8c2e9;border-radius:82px 82px 0 0}
+.v60-mailbox-door{position:absolute;top:53px;left:17px;width:156px;height:104px;background:linear-gradient(145deg,#f8efff,#d5bde6);border:3px solid #9d7ab8;border-radius:7px 7px 18px 18px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;box-shadow:inset 0 -9px 14px #ac8ac32b;transform-origin:bottom;transition:transform .5s}
+.v60-mailbox-door span{font-size:53px;color:#79529b;line-height:1.1}.v60-mailbox-door small{font:10px Georgia,serif;letter-spacing:.16em;color:#82669d}
+.v60-mailbox-flag{position:absolute;top:3px;right:9px;background:#d2a2c7;border:2px solid #a878aa;border-radius:7px;padding:5px 9px;color:white;z-index:2}
+.v60-mailbox-foot{position:absolute;bottom:0;left:85px;width:20px;height:26px;background:#9975b4;z-index:-1;border-radius:0 0 5px 5px}
+.v60-mailbox[aria-expanded="true"] .v60-mailbox-door{transform:perspective(250px) rotateX(-18deg) translateY(4px)}
+.v60-letter-closed{display:none!important}
+#v5LetterGrid:not(.v60-letter-closed) .v5-envelope{animation:v60Fly .55s both;transform-origin:center}
+#v5LetterGrid:not(.v60-letter-closed) .v5-envelope:nth-child(2n){animation-delay:.12s}
+#v5LetterGrid:not(.v60-letter-closed) .v5-envelope:nth-child(3n){animation-delay:.2s}
+@keyframes v60Fly{from{opacity:0;transform:translateY(-75px) rotate(-14deg) scale(.65)}to{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
+@media(prefers-reduced-motion:reduce){#v5LetterGrid .v5-envelope{animation:none!important}}
 </style></head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
@@ -875,7 +903,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 
   <section class="page" id="page-letters">
     <div class="section-head"><div><h3>书信收藏</h3><p>写给彼此的信，藏进一只只信封里。</p></div><button class="btn primary" id="v5AddLetter">＋ 写一封信</button></div>
-    <div id="v5LetterGrid" class="v5-letter-grid"></div>
+    <div class="v60-mailbox-scene"><button id="v60Mailbox" type="button" class="v60-mailbox" aria-expanded="false" aria-controls="v5LetterGrid"><span class="v60-mailbox-flag">✦</span><span class="v60-mailbox-roof"></span><span class="v60-mailbox-door"><span>✉</span><small>OUR LETTERS</small></span><span class="v60-mailbox-foot"></span></button><p id="v60MailboxHint">轻触信箱，让收藏的信件飞出来 ✧</p></div><div id="v5LetterGrid" class="v5-letter-grid v60-letter-closed" aria-live="polite"></div>
   </section>
   <section class="page" id="page-writing-reader">
     <div class="section-head"><div><h3 id="v5WritingHeading">文稿阅读</h3><p id="v5WritingMeta">文字存档</p></div><button class="btn" id="v5WritingBack">← 返回文稿</button></div>
@@ -900,8 +928,8 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
     </div>
   </section>
   <section class="page" id="page-divination">
-    <div class="section-head"><div><h3>梦占存档</h3><p>收藏塔罗、牌阵、梦占问题、牌面与自己的解读。</p></div><button class="btn primary" id="addDivination">＋ 新建梦占</button></div>
-    <div class="toolbar"><input class="search" id="divinationSearch" placeholder="搜索问题、牌阵、牌面或解读…"><select id="divinationType" style="max-width:170px"><option value="">全部类型</option><option>塔罗</option><option>神谕卡</option><option>梦境占卜</option><option>其他</option></select><select id="v5DivinationOrder" aria-label="梦占排序"><option value="new">日期最新</option><option value="old">日期最早</option><option value="title">按标题</option></select><div class="grow"></div><span id="divinationCount" class="au-meta"></span></div>
+    <div class="section-head"><div><h3>梦占存档</h3><p>收藏抽牌提问与传讯对话，自由记录每一次回应。</p></div><button class="btn primary" id="addDivination">＋ 新建梦占</button></div>
+    <div class="toolbar"><input class="search" id="divinationSearch" placeholder="搜索问题、牌阵、牌面或解读…"><select id="divinationType" style="max-width:170px"><option value="">全部类型</option><option>抽牌提问</option><option>传讯对话</option></select><select id="v5DivinationOrder" aria-label="梦占排序"><option value="new">日期最新</option><option value="old">日期最早</option><option value="title">按标题</option></select><div class="grow"></div><span id="divinationCount" class="au-meta"></span></div>
     <div class="archive-records" id="divinationGrid"></div>
   </section>
 
@@ -1206,8 +1234,8 @@ function archiveRecordCard(x,bucket){
 function renderDivinations(){
  const q=(document.getElementById('divinationSearch').value||'').toLowerCase();
  const type=document.getElementById('divinationType').value;
- const list=db.divinations.filter(x=>(!type||x.type===type)&&[x.title,x.question,x.spread,x.cards,x.interpretation,x.v5Answer,x.v5Dialogue,x.note,x.au].join(' ').toLowerCase().includes(q));const order=document.getElementById('v5DivinationOrder').value;if(order==='title')list.sort((a,b)=>(a.title||'').localeCompare(b.title||'','zh'));else list.sort((a,b)=>order==='old'?String(a.date||'').localeCompare(String(b.date||'')):String(b.date||'').localeCompare(String(a.date||'')));
- document.getElementById('divinationGrid').innerHTML=list.map(x=>archiveRecordCard(x,'divinations')).join('')||empty('还没有梦占记录，添加一次牌阵或解读吧。','☽');
+ const list=db.divinations.filter(x=>(!type||x.type===type)&&[x.title,x.question,x.spread,x.cards,x.interpretation,x.v5Answer,x.v5Dialogue,x.note,x.au,...(x.qa||[]).flatMap(p=>[p.q,p.a])].join(' ').toLowerCase().includes(q));const order=document.getElementById('v5DivinationOrder').value;if(order==='title')list.sort((a,b)=>(a.title||'').localeCompare(b.title||'','zh'));else list.sort((a,b)=>order==='old'?String(a.date||'').localeCompare(String(b.date||'')):String(b.date||'').localeCompare(String(a.date||'')));
+ document.getElementById('divinationGrid').innerHTML=list.map(x=>'<article class="archive-record-card v60-tarot-card"><div class="v60-tarot-type">'+esc(x.type==='传讯对话'?'☾ 传讯对话':'✧ 抽牌提问')+'</div><h3>'+esc(x.title||'未命名梦占')+'</h3><p>'+esc(x.date||'')+'</p>'+(x.image?'<img class="v60-tarot-image" src="'+esc(x.image)+'" alt="记录图片">':'')+(x.type==='传讯对话'?'<p class="v60-tarot-preview">'+esc((x.v5Dialogue||'').slice(0,150))+'</p>':(x.qa||[{q:x.question||'',a:x.v5Answer||x.interpretation||''}]).map((p,i)=>'<div class="v60-tarot-qa"><strong>Q'+(i+1)+' · '+esc(p.q||'未填写问题')+'</strong><p>'+esc(p.a||'')+'</p></div>').join(''))+'<div class="archive-actions"><button class="btn soft" onclick="editSpecialRecord(\'divinations\',\''+esc(x.id)+'\')">查看 / 编辑</button><button class="btn danger" onclick="deleteItem(\'divinations\',\''+esc(x.id)+'\')">删除</button></div></article>').join('')||empty('还没有梦占记录，添加一次抽牌提问或传讯对话吧。','☽');
  document.getElementById('divinationCount').textContent=`${list.length} 条记录`;
 }
 function renderGacha(){
@@ -1217,7 +1245,50 @@ function renderGacha(){
  document.getElementById('gachaGrid').innerHTML=list.map(x=>archiveRecordCard(x,'gacha')).join('')||empty('还没有抽卡记录，可以先记下第一次出货。','✧');
  document.getElementById('gachaCount').textContent=`${list.length} 条记录`;
 }
+
+function v60EditDivination(id){
+ const old=db.divinations.find(x=>x.id===id);
+ const item=old||{id:uid(),title:'',date:dateOnly(new Date()),type:'抽牌提问',qa:[{q:'',a:''}],image:''};
+ const kind=item.type==='传讯对话'?'传讯对话':item.type==='抽牌提问'?'抽牌提问':(item.v5Dialogue?'传讯对话':'抽牌提问');
+ const pairs=Array.isArray(item.qa)&&item.qa.length?item.qa:[{q:item.question||'',a:item.v5Answer||item.interpretation||''}];
+ const body='<div class="form-grid">'+f('spTitle','标题',item.title||'')+f('spDate','日期',item.date||dateOnly(new Date()),'date')+
+ '<div class="field full"><label>记录类型</label><select id="v60Type"><option value="抽牌提问">抽牌提问</option><option value="传讯对话">传讯对话</option></select></div>'+
+ '<div id="v60QASection" class="field full"><label>抽牌提问 · 问题与回答</label><div id="v60QARows"></div><button type="button" class="btn soft" id="v60AddQA">＋ 添加一个问题</button></div>'+
+ '<div id="v60ChatSection" class="field full">'+ta('v60Dialogue','传讯对话内容',item.v5Dialogue||item.interpretation||'')+'</div>'+
+ imageField('spImage','牌面 / 对话截图（可选）')+'<div class="field full" id="spPreview">'+archiveImagePreview(item.image)+'</div></div>';
+ openModal((id?'编辑':'新建')+'梦占存档',body,()=>{
+  const title=val('spTitle').trim();if(!title){toast('请填写标题');return false}
+  const type=val('v60Type');
+  const qa=Array.from(document.querySelectorAll('#v60QARows .v60-qa-row')).map(row=>({q:row.querySelector('.v60-q').value.trim(),a:row.querySelector('.v60-a').value.trim()})).filter(x=>x.q||x.a);
+  const data={...item,title,date:val('spDate'),type,qa:type==='抽牌提问'?qa:(item.qa||[]),v5Dialogue:type==='传讯对话'?val('v60Dialogue'):(item.v5Dialogue||''),updated:new Date().toISOString()};
+  const file=document.getElementById('spImage').files[0];
+  const finish=image=>{
+   if(image)data.image=image;
+   const index=db.divinations.findIndex(x=>x.id===item.id);
+   if(index>=0)db.divinations[index]=data;else db.divinations.unshift(data);
+   persist();closeModal();renderAll();toast('梦占记录已保存');
+  };
+  if(file){compressAppearanceImage(file).then(finish).catch(e=>toast(e.message||'图片处理失败'));return false}
+  finish('');return false;
+ });
+ const typeEl=document.getElementById('v60Type'),qaEl=document.getElementById('v60QARows');
+ typeEl.value=kind;
+ function addRow(q='',a=''){
+  const row=document.createElement('div');row.className='v60-qa-row';
+  row.innerHTML='<div class="v60-qa-top"><span class="v60-qa-number"></span><button type="button" class="btn soft v60-qa-remove">删除此题</button></div><label>问题</label><textarea class="v60-q" rows="2" placeholder="这次想问什么？"></textarea><label>回答 / 牌面解读</label><textarea class="v60-a" rows="4" placeholder="写下得到的回答……"></textarea>';
+  row.querySelector('.v60-q').value=q;row.querySelector('.v60-a').value=a;
+  row.querySelector('.v60-qa-remove').onclick=()=>{row.remove();renumber()};
+  qaEl.appendChild(row);renumber();
+ }
+ function renumber(){qaEl.querySelectorAll('.v60-qa-number').forEach((el,i)=>el.textContent='QUESTION '+String(i+1).padStart(2,'0'))}
+ pairs.forEach(p=>addRow(p.q||'',p.a||''));if(!pairs.length)addRow();
+ document.getElementById('v60AddQA').onclick=()=>addRow();
+ function switchType(){document.getElementById('v60QASection').hidden=typeEl.value!=='抽牌提问';document.getElementById('v60ChatSection').hidden=typeEl.value!=='传讯对话'}
+ typeEl.onchange=switchType;switchType();
+}
+
 function editSpecialRecord(bucket,id){
+ if(bucket==='divinations')return v60EditDivination(id);
  const isD=bucket==='divinations';
  const item=db[bucket].find(x=>x.id===id)||{id:uid(),title:'',date:dateOnly(new Date()),image:''};
  const title=isD?'梦占':'抽卡';
@@ -2009,7 +2080,12 @@ function v5OpenLetter(id){
  box.querySelector('#v5LetterEdit').onclick=()=>{box.remove();v5EditLetter(id)};
  box.querySelector('#v5LetterDelete').onclick=()=>{if(!confirm('确定删除这封信吗？'))return;db.letters=db.letters.filter(x=>x.id!==id);persist();renderV5Letters();box.remove()};
 }
-document.getElementById('v5AddLetter').onclick=()=>v5EditLetter();
+document.getElementById('v60Mailbox').onclick=()=>{
+ const box=document.getElementById('v60Mailbox'),grid=document.getElementById('v5LetterGrid'),open=box.getAttribute('aria-expanded')!=='true';
+ box.setAttribute('aria-expanded',String(open));grid.classList.toggle('v60-letter-closed',!open);
+ document.getElementById('v60MailboxHint').textContent=open?'选一封信，拆开看看吧 ✧':'轻触信箱，让收藏的信件飞出来 ✧';
+};
+document.getElementById('v5AddLetter').onclick=()=>{const box=document.getElementById('v60Mailbox');box.setAttribute('aria-expanded','true');document.getElementById('v5LetterGrid').classList.remove('v60-letter-closed');v5EditLetter()};
 document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.target.closest('[data-letter-open]');if(b)v5OpenLetter(b.dataset.letterOpen)});
 
 /* === V4 Puter cloud sync (GitHub Pages + same Puter account on both devices) ===
