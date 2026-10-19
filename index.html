@@ -894,7 +894,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         <div class="field"><label>网站背景照片</label><input id="appearanceBgFile" type="file" accept="image/*"><button class="btn" id="removeBgImage">移除背景照片</button></div>
         <div class="field"><label>首页横幅封面</label><input id="appearanceHeroFile" type="file" accept="image/*"><button class="btn" id="removeHeroImage">移除封面照片</button></div>
       </div>
-      <div class="v5-section-editor"><h3>♫ 迷你音乐播放器</h3><p>可填入音频直链，或临时选择手机里的音频文件。打开网站时不会自动播放。</p><div class="appearance-grid"><div class="field full"><label>音乐直链（https:// 音频文件地址）</label><input id="v5MusicUrl" type="url" placeholder="https://example.com/music.mp3"></div><div class="field"><label>音乐名称</label><input id="v5MusicName" placeholder="我们的歌"></div><div class="field"><label>本次播放的本地音频</label><input id="v5MusicFile" type="file" accept="audio/*"></div></div><button class="btn soft" id="v5MusicSave">添加到歌单</button><div class="field full"><label>唱片封面（可上传照片）</label><input id="v5MusicCoverFile" type="file" accept="image/*"></div><div id="v5MusicPlaylist"></div></div><div class="v5-section-editor"><h3>✦ 首页装饰贴图</h3><p>可上传两张装饰图片，分别放在首页左右两侧。透明背景 PNG 更适合做贴纸。</p><div class="appearance-grid"><div class="field"><label>左侧装饰</label><input id="v5DecorLeftFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorLeftRemove">移除左侧装饰</button></div><div class="field"><label>右侧装饰</label><input id="v5DecorRightFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorRightRemove">移除右侧装饰</button></div></div></div><div class="v5-section-editor"><h3>☁ 天气台词自定义</h3><p>首页 TODAY 卡片会按实时天气自动显示对应台词。留空时使用默认台词。</p><div class="appearance-grid" id="v52WeatherFields"></div><button class="btn soft" id="v52ResetWeather" type="button">恢复默认天气台词</button></div><div class="v5-section-editor"><h3>🍎 夏以昼 · 经期互动台词</h3><p>每行一句，保存后在经期限定卡片中随机出现。可以添加、修改或删除台词；全部留空时恢复默认六句。</p><textarea id="v55PeriodQuotes" rows="9" style="width:100%;resize:vertical" placeholder="每行一句台词"></textarea><button class="btn soft" id="v55ResetPeriodQuotes" type="button">恢复默认六句</button></div><div class="v5-section-editor"><h3>☾ 导航顺序</h3><p>点击上下箭头调整侧边栏顺序，保存后下次打开仍会保留。</p><div id="v5NavOrder"></div></div><div class="v5-section-editor"><h3>✧ 页面标题与说明</h3><p>修改每个分区的标题和小字说明，不影响原始档案。</p><div id="v5SectionFields" class="appearance-grid"></div></div>
+      <div class="v5-section-editor"><h3>♫ 迷你音乐播放器</h3><p>支持链接和本地音频。本地 MP3 保存于 IndexedDB，并可备份至 Puter。不会自动播放。</p><div class="appearance-grid"><div class="field full"><label>音乐直链（https:// 音频文件地址）</label><input id="v5MusicUrl" type="url" placeholder="https://example.com/music.mp3"></div><div class="field"><label>音乐名称</label><input id="v5MusicName" placeholder="我们的歌"></div><div class="field"><label>导入本地 MP3 / 音频</label><input id="v5MusicFile" type="file" accept="audio/*"></div></div><button class="btn soft" id="v5MusicSave">添加链接到歌单</button><button class="btn soft" id="v59CloudButton" type="button">☁ 同步音乐到 Puter</button><p id="v59MusicStatus" style="font-size:11px;color:var(--muted)">正在检查存储空间…</p><div class="field full"><label>唱片封面（可上传照片）</label><input id="v5MusicCoverFile" type="file" accept="image/*"></div><div id="v5MusicPlaylist"></div></div><div class="v5-section-editor"><h3>✦ 首页装饰贴图</h3><p>可上传两张装饰图片，分别放在首页左右两侧。透明背景 PNG 更适合做贴纸。</p><div class="appearance-grid"><div class="field"><label>左侧装饰</label><input id="v5DecorLeftFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorLeftRemove">移除左侧装饰</button></div><div class="field"><label>右侧装饰</label><input id="v5DecorRightFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorRightRemove">移除右侧装饰</button></div></div></div><div class="v5-section-editor"><h3>☁ 天气台词自定义</h3><p>首页 TODAY 卡片会按实时天气自动显示对应台词。留空时使用默认台词。</p><div class="appearance-grid" id="v52WeatherFields"></div><button class="btn soft" id="v52ResetWeather" type="button">恢复默认天气台词</button></div><div class="v5-section-editor"><h3>🍎 夏以昼 · 经期互动台词</h3><p>每行一句，保存后在经期限定卡片中随机出现。可以添加、修改或删除台词；全部留空时恢复默认六句。</p><textarea id="v55PeriodQuotes" rows="9" style="width:100%;resize:vertical" placeholder="每行一句台词"></textarea><button class="btn soft" id="v55ResetPeriodQuotes" type="button">恢复默认六句</button></div><div class="v5-section-editor"><h3>☾ 导航顺序</h3><p>点击上下箭头调整侧边栏顺序，保存后下次打开仍会保留。</p><div id="v5NavOrder"></div></div><div class="v5-section-editor"><h3>✧ 页面标题与说明</h3><p>修改每个分区的标题和小字说明，不影响原始档案。</p><div id="v5SectionFields" class="appearance-grid"></div></div>
       <div class="appearance-actions"><button class="btn primary" id="saveAppearance">保存文字设置</button><button class="btn danger" id="resetAppearance">恢复默认外观</button></div>
       <p style="color:var(--muted);font-size:11px">图片上传后自动压缩以节省空间。建议定期导出 JSON 备份，清理浏览器数据会删除本地记录。部分手机浏览器以 file:// 打开时可能不支持持久存储。</p>
     </div>
@@ -1381,6 +1381,21 @@ function renderV5HomeDecor(a){
 }
 
 let v5MusicObjectUrl='',v5MusicIndex=0,v5MusicTempTrack=null,v5MusicPendingCover='';
+const V59_DB='mysommer-music-v1',V59_STORE='audio',V59_PREFIX='mysommer-audio-';
+let v59AudioURL='',v59Busy=false,v59LoadSeq=0;
+function v59Open(){return new Promise((ok,fail)=>{const r=indexedDB.open(V59_DB,1);r.onupgradeneeded=()=>r.result.createObjectStore(V59_STORE);r.onsuccess=()=>ok(r.result);r.onerror=()=>fail(r.error)})}
+async function v59Store(id,file){const d=await v59Open();return new Promise((ok,fail)=>{const tx=d.transaction(V59_STORE,'readwrite');tx.objectStore(V59_STORE).put(file,id);tx.oncomplete=()=>{d.close();ok()};tx.onerror=()=>{d.close();fail(tx.error)}})}
+async function v59Get(id){const d=await v59Open();return new Promise((ok,fail)=>{const tx=d.transaction(V59_STORE,'readonly'),r=tx.objectStore(V59_STORE).get(id);r.onsuccess=()=>ok(r.result||null);r.onerror=()=>fail(r.error);tx.oncomplete=()=>d.close()})}
+async function v59Delete(id){const d=await v59Open();return new Promise((ok,fail)=>{const tx=d.transaction(V59_STORE,'readwrite');tx.objectStore(V59_STORE).delete(id);tx.oncomplete=()=>{d.close();ok()};tx.onerror=()=>{d.close();fail(tx.error)}})}
+function v59Puter(){return typeof puter!=='undefined'&&puter.auth&&puter.fs&&puter.auth.isSignedIn()}
+async function v59File(track){let blob=await v59Get(track.localId);if(!blob&&v59Puter()){blob=await puter.fs.read(V59_PREFIX+track.localId+'.audio');await v59Store(track.localId,blob)}return blob}
+function v59Size(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':Math.round(n/1024)+' KB'}
+async function v59Status(message=''){let local=v5MusicList().filter(t=>t.localId),cloud=local.filter(t=>t.cloudReady).length,usage='';try{const e=await navigator.storage.estimate();usage=' · 浏览器已用 '+v59Size(e.usage||0)+(e.quota?' / 配额 '+v59Size(e.quota):'')}catch(e){}document.getElementById('v59MusicStatus').textContent=(message?message+' · ':'')+'本地歌曲 '+local.length+' 首，Puter 已备份 '+cloud+' 首'+usage+'。清理网站数据可能删除本机音乐，请保留原 MP3。'}
+async function v59Sync(interactive=false){if(v59Busy)return;const list=v5MusicList().filter(t=>t.localId);if(!list.length){if(interactive)toast('还没有本地歌曲');return}if(!v59Puter()){if(!interactive)return;try{if(typeof puter==='undefined')throw Error('Puter unavailable');await puter.auth.signIn()}catch(e){toast('请先连接 Puter');return}}v59Busy=true;let uploaded=0,downloaded=0,errors=0;try{for(const t of list){try{const local=await v59Get(t.localId);if(local&&!t.cloudReady){await puter.fs.write(V59_PREFIX+t.localId+'.audio',local);t.cloudReady=true;uploaded++}else if(!local){const cloud=await puter.fs.read(V59_PREFIX+t.localId+'.audio');await v59Store(t.localId,cloud);t.cloudReady=true;downloaded++}}catch(e){errors++;console.warn('Audio sync',e)}}if(uploaded||downloaded){db.appearance={...getAppearance(),musicPlaylist:v5MusicList()};persist();renderV5MusicSettings(getAppearance())}await v59Status(errors?'部分歌曲同步失败':'云端检查完成');if(interactive)toast(errors?'部分音乐同步失败，请重试':'音乐已同步：上传 '+uploaded+' 首，恢复 '+downloaded+' 首')}finally{v59Busy=false}}
+document.getElementById('v59CloudButton').onclick=()=>v59Sync(true);
+window.addEventListener('load',()=>{v59Status();setTimeout(()=>v59Sync(false),2000)});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)v59Sync(false)});
+
 function v5MusicList(){const a=getAppearance();return Array.isArray(a.musicPlaylist)?a.musicPlaylist:(a.musicUrl?[{id:'legacy',name:a.musicName||'我们的歌',url:a.musicUrl,cover:''}]:[])}
 function renderV5MusicSettings(a){
  const url=document.getElementById('v5MusicUrl'),name=document.getElementById('v5MusicName');
@@ -1401,12 +1416,14 @@ function v5MusicStop(){const audio=document.getElementById('v5MusicAudio');audio
 function v5MusicLoad(){
  const track=v5MusicTempTrack||v5MusicList()[v5MusicIndex],audio=document.getElementById('v5MusicAudio');
  v5MusicStop();audio.removeAttribute('src');
- if(track?.url)audio.src=track.url;
- audio.load();renderV5MusicSettings(getAppearance());return !!track?.url;
+ if(track?.url&&!track.localId)audio.src=track.url;
+ audio.load();renderV5MusicSettings(getAppearance());
+ if(track?.localId){const seq=++v59LoadSeq;v59File(track).then(blob=>{if(seq!==v59LoadSeq)return;if(!blob)throw Error('Missing audio');if(v59AudioURL)URL.revokeObjectURL(v59AudioURL);v59AudioURL=URL.createObjectURL(blob);audio.src=v59AudioURL;audio.load()}).catch(e=>{console.warn(e);toast('音乐未在本机找到，请连接 Puter 并点击同步')});return true}
+ return !!track?.url;
 }
 async function v5MusicPlay(){
  const audio=document.getElementById('v5MusicAudio');
- if(!audio.getAttribute('src')&&!v5MusicLoad()){toast('请先添加歌曲');return}
+ if(!audio.getAttribute('src')){const track=v5MusicTempTrack||v5MusicList()[v5MusicIndex];if(track?.localId){try{const blob=await v59File(track);if(!blob)throw Error('Missing');if(v59AudioURL)URL.revokeObjectURL(v59AudioURL);v59AudioURL=URL.createObjectURL(blob);audio.src=v59AudioURL;audio.load()}catch(e){toast('歌曲尚未恢复，请点击 Puter 同步');return}}else if(!v5MusicLoad()){toast('请先添加歌曲');return}}
  try{await audio.play()}catch(e){toast('无法播放：请检查音频直链或文件格式')}
 }
 async function v5MusicSelect(i,play=true){v5MusicTempTrack=null;v5MusicIndex=i;if(!v5MusicLoad())return;if(play)await v5MusicPlay()}
@@ -1421,16 +1438,17 @@ document.getElementById('v5MusicCoverFile').onchange=async e=>{
  const file=e.target.files?.[0];if(!file)return;
  try{v5MusicPendingCover=await compressAppearanceImage(file);toast('封面已选择，添加歌曲时一起保存')}catch(err){toast('封面处理失败')}
 };
-document.getElementById('v5MusicFile').onchange=e=>{
- const file=e.target.files?.[0];if(!file||!file.type.startsWith('audio/'))return;
- if(v5MusicObjectUrl)URL.revokeObjectURL(v5MusicObjectUrl);
- v5MusicObjectUrl=URL.createObjectURL(file);v5MusicTempTrack={name:file.name,url:v5MusicObjectUrl,cover:v5MusicPendingCover};
- v5MusicLoad();toast('本地音频可试听；刷新后需要重新选择');
+document.getElementById('v5MusicFile').onchange=async e=>{
+ const file=e.target.files?.[0];if(!file)return;
+ if(!file.type.startsWith('audio/')&&!/\.(mp3|m4a|wav|ogg|aac|flac)$/i.test(file.name)){toast('请选择音频文件');return}
+ const id=uid(),name=document.getElementById('v5MusicName').value.trim()||file.name.replace(/\.[^.]+$/,''),track={id,name,localId:id,cloudReady:false,cover:v5MusicPendingCover,size:file.size};
+ try{await v59Store(id,file);const list=v5MusicList();db.appearance={...getAppearance(),musicPlaylist:[...list,track]};v5MusicIndex=list.length;v5MusicTempTrack=null;v5MusicPendingCover='';persist();v5MusicLoad();await v59Status('已保存到本机');toast('本地 MP3 已保存，尝试同步 Puter');v59Sync(false)}
+ catch(err){console.error(err);toast('保存失败：请检查浏览器可用存储空间')}finally{e.target.value=''}
 };
 function v5MusicListClick(e){
  const pick=e.target.closest('[data-music-pick]'),del=e.target.closest('[data-music-delete]');
  if(pick){v5MusicSelect(Number(pick.dataset.musicPick));return}
- if(del){const list=v5MusicList(),i=Number(del.dataset.musicDelete);list.splice(i,1);db.appearance={...getAppearance(),musicPlaylist:list};v5MusicIndex=0;v5MusicTempTrack=null;persist();v5MusicLoad();toast('歌曲已移除')}
+ if(del){const list=v5MusicList(),i=Number(del.dataset.musicDelete),old=list[i];list.splice(i,1);db.appearance={...getAppearance(),musicPlaylist:list};v5MusicIndex=0;v5MusicTempTrack=null;persist();v5MusicLoad();if(old?.localId)v59Delete(old.localId).catch(console.warn);v59Status();toast('歌曲已从歌单移除；云端副本暂保留')}
 }
 document.getElementById('v5MusicPlaylist').addEventListener('click',v5MusicListClick);
 document.getElementById('v5MusicTracks').addEventListener('click',v5MusicListClick);
