@@ -763,7 +763,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 #v5LetterGrid:not(.v60-letter-closed) .v5-envelope:nth-child(3n){animation-delay:.2s}
 @keyframes v60Fly{from{opacity:0;transform:translateY(-75px) rotate(-14deg) scale(.65)}to{opacity:1;transform:translateY(0) rotate(0) scale(1)}}
 @media(prefers-reduced-motion:reduce){#v5LetterGrid .v5-envelope{animation:none!important}}
-</style><style>.v5-home-cover{position:relative}.v61-edit{position:absolute;top:12px;right:12px;z-index:5;border-radius:22px;padding:8px 13px;background:#f5eaf4e8;color:#6c4a80;border:1px solid #fff}.v61-panel{max-width:440px;margin:12px auto;padding:17px;border-radius:20px;background:#f8f0fbee;border:1px solid #dac6e8;color:#694d80}.v61-panel[hidden]{display:none!important}.v61-panel label{display:block;margin:14px 0}.v61-panel label span{float:right}.v61-panel input{display:block;width:100%;margin-top:10px;accent-color:#946db3}.v61-panel button{border:1px solid #c7b2d8;border-radius:14px;padding:8px 13px;margin-right:7px;background:white;color:#694d80}.v61-panel #v61Save{background:#8b69ac;color:white}.v61-panel #v61Close{float:right}</style></head>
+</style><style>.v5-home-cover{position:relative}.v61-side-edit{display:block;width:100%;margin-top:10px;padding:9px 12px;border:1px solid var(--line);border-radius:13px;background:#fff9;color:var(--muted);font-size:11px;line-height:1.4;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,color .18s}.v61-side-edit:hover{background:var(--panel);border-color:var(--accent2);color:var(--deep)}.v61-side-edit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.v61-side-edit[hidden]{display:none!important}@media(max-width:760px){.v61-side-edit{display:none!important}}.v61-panel{max-width:440px;margin:12px auto;padding:17px;border-radius:20px;background:#f8f0fbee;border:1px solid #dac6e8;color:#694d80}.v61-panel[hidden]{display:none!important}.v61-panel label{display:block;margin:14px 0}.v61-panel label span{float:right}.v61-panel input{display:block;width:100%;margin-top:10px;accent-color:#946db3}.v61-panel button{border:1px solid #c7b2d8;border-radius:14px;padding:8px 13px;margin-right:7px;background:white;color:#694d80}.v61-panel #v61Save{background:#8b69ac;color:white}.v61-panel #v61Close{float:right}</style></head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
   <div class="intro-photo" id="introPhoto"></div>
@@ -789,13 +789,14 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
     <button data-page="appearance"><span class="nav-icon">✿</span>外观</button>
   </div>
   <div class="side-note"><strong>✦ 秘密基地</strong>这里保存 AU、灵感、纪念日与收藏。数据默认保存在当前浏览器中。</div>
+   <button type="button" id="v61Open" class="v61-side-edit" aria-label="调整首页大图的宽度和高度">✎ 调整首页大图</button>
 </aside>
 <main>
   <header class="topbar"><div><div class="eyebrow">PERSONAL ARCHIVE · 2026</div><h2 id="pageTitle">欢迎回来</h2></div><div class="top-actions"><button class="btn" id="exportBtn">导出备份</button><button class="btn" id="importBtn">导入备份</button><input type="file" id="importFile" accept=".json,application/json" hidden></div></header>
 
   <div class="cloud-bar" aria-live="polite"><span class="cloud-status" id="cloudStatus">☁ 未连接 Puter · 当前仅保存在本机</span><button class="btn primary" id="cloudLogin">连接 Puter</button><button class="btn" id="cloudSync" disabled>立即同步</button><button class="btn" id="cloudReload" disabled>从云端读取</button><button class="btn" id="cloudBackup" disabled>下载云端备份</button></div>
   <section class="page active" id="page-home">
-    <div class="v5-home-decor" id="v5HomeDecor" aria-hidden="true"></div><div class="v5-home-cover" id="v5HomeCover"><div class="v5-cover-hint">✦ OUR LITTLE UNIVERSE · 🍎 🍏</div><button type="button" id="v61Open" class="v61-edit">✎ 调整大小</button></div><div id="v61Panel" class="v61-panel" hidden><b>首页图片框尺寸</b><button type="button" id="v61Close">×</button><label>宽度 <span id="v61WidthText"></span><input id="v61Width" type="range" min="50" max="100" value="100"></label><label>高度 <span id="v61HeightText"></span><input id="v61Height" type="range" min="180" max="850" step="10" value="420"></label><button type="button" id="v61Reset">重置</button><button type="button" id="v61Save">保存尺寸 ✓</button></div>
+    <div class="v5-home-decor" id="v5HomeDecor" aria-hidden="true"></div><div class="v5-home-cover" id="v5HomeCover"><div class="v5-cover-hint">✦ OUR LITTLE UNIVERSE · 🍎 🍏</div></div><div id="v61Panel" class="v61-panel" hidden><b>首页图片框尺寸</b><button type="button" id="v61Close">×</button><label>宽度 <span id="v61WidthText"></span><input id="v61Width" type="range" min="50" max="100" value="100"></label><label>高度 <span id="v61HeightText"></span><input id="v61Height" type="range" min="180" max="850" step="10" value="420"></label><button type="button" id="v61Reset">重置</button><button type="button" id="v61Save">保存尺寸 ✓</button></div>
     <div class="hero" id="v5SecretHero" title="我们的秘密基地"><div class="hero-copy"><div class="eyebrow">A LITTLE UNIVERSE OF OUR OWN</div><h3>把我们的<br>共同经历好好收藏。</h3><p>就好像我们的秘密基地一样，收藏和存档着一切。</p></div><div class="hero-symbol">☾✧</div></div>
   <div class="dream-room">
     <p class="room-sub">✧ TUNE INTO OUR LITTLE UNIVERSE ✧</p>
@@ -1007,7 +1008,7 @@ v56ArchiveRestore();
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function toast(s){const t=document.getElementById("toast");t.textContent=s;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2500)}
 const pageNames={letters:"书信",home:"欢迎回来",aus:"AU ",calendar:"日历",dreams:"梦图",merch:"谷子",settings:"档案",writing:"文稿",divination:"梦占存档",gacha:"抽卡存档",characters:"角色档案",appearance:"外观设置"};
-function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));document.getElementById("pageTitle").textContent=(getAppearance().sections?.[page]?.title||V5_SECTION_DEFAULTS[page]?.[0]||pageNames[page]||page);renderAll();window.scrollTo({top:0,behavior:"smooth"})}
+function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));const coverEdit=document.getElementById("v61Open");if(coverEdit){coverEdit.hidden=page!=="home";if(page!=="home"){const coverPanel=document.getElementById("v61Panel");if(coverPanel&&!coverPanel.hidden){coverPanel.hidden=true;coverEdit.setAttribute("aria-expanded","false");applyAppearance();}}}document.getElementById("pageTitle").textContent=(getAppearance().sections?.[page]?.title||V5_SECTION_DEFAULTS[page]?.[0]||pageNames[page]||page);renderAll();window.scrollTo({top:0,behavior:"smooth"})}
 document.getElementById("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-page]");if(b)go(b.dataset.page)});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-goto]");if(b)go(b.dataset.goto)});
 function updateStats(){renderV5Progress();document.getElementById("statAus").textContent=db.aus.length;document.getElementById("statEvents").textContent=db.events.length;document.getElementById("statDreams").textContent=db.dreams.length;document.getElementById("statWriting").textContent=db.writing.length}
@@ -1703,7 +1704,7 @@ document.getElementById('v60ResetCoverLayout').onclick=()=>{db.appearance={...ge
  }
  open.addEventListener('click',()=>{
   if(!panel.hidden){hide(true);return;}
-  restore();panel.hidden=false;open.setAttribute('aria-expanded','true');
+  restore();panel.hidden=false;open.setAttribute('aria-expanded','true');panel.scrollIntoView({behavior:'smooth',block:'center'});
  });
  close.addEventListener('click',()=>hide(true));
  width.addEventListener('input',preview);
