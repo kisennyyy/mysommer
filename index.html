@@ -623,6 +623,14 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 <style id="v52-styles">.v52-chapter-manager{margin:12px 0;padding:12px;border:1px solid #d8c9e7;border-radius:12px}.v52-chapter-manager select{width:100%;margin:7px 0}.v52-chapter-actions,.v52-chapter-tabs{display:flex;flex-wrap:wrap;gap:7px;margin:10px 0}.v52-chapter-actions button{padding:7px 10px;border:1px solid #d8c9e7;background:#faf6ff;color:#614579;border-radius:9px}.v52-word-count{font-size:12px;color:#816b98;margin:12px 0}.v5-writing-article img,.v5-edit-surface img{max-width:100%;height:auto;border-radius:8px;display:block;margin:14px auto}.v52-chapter-tabs button.primary{background:#8260a5;color:white}</style>
 <style id="v53-styles">
 .v53-character-stage{background:linear-gradient(145deg,#fcf9ff,#eee4f5);border:1px solid #d7c6e6;border-radius:25px;padding:clamp(16px,4vw,30px);margin-bottom:25px;overflow:hidden}.v53-duo-title{text-align:center;color:#71578b}.v53-duo-title span{font-size:11px;letter-spacing:.4em}.v53-duo-title h2{font-family:Georgia,serif;letter-spacing:.19em;font-size:clamp(22px,5vw,38px);margin:8px}.v53-duo-switch{display:flex;justify-content:center;gap:12px;margin:20px 0}.v53-person-choice{padding:11px 25px;border-radius:40px;border:1px solid #bda5d2;background:white;color:#69507e;cursor:pointer}.v53-person-choice.active{background:#8060a4;color:white;box-shadow:0 5px 16px #8060a43b}.v53-person-panel{display:flex;align-items:center;gap:24px;background:#ffffffa8;padding:22px;border-radius:20px;min-height:210px}.v53-person-photo{width:150px;height:150px;border:2px solid #b9a1d3;border-radius:50%;overflow:hidden;flex-shrink:0;display:flex;flex-direction:column;justify-content:center;align-items:center;background:#eee7f8;cursor:pointer;color:#9c7ab8;font-size:46px;position:relative}.v53-person-photo img{width:100%;height:100%;object-fit:cover}.v53-person-photo small{position:absolute;bottom:4px;font-size:10px;background:#fff9;padding:2px 8px;border-radius:20px;color:#604776}.v53-person-summary h2{font-size:32px;color:#68477e}.v53-person-summary p{white-space:pre-wrap}.v53-world-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:22px 0 12px}.v53-world-head select{max-width:190px}.v53-world-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px;margin-bottom:16px}.v53-world-card{background:#fff;border:1px solid #d8c7e8;border-radius:16px;padding:18px;transition:transform .2s}.v53-world-card:hover{transform:translateY(-4px)}.v53-world-card small{color:#9679ac}.v53-world-card p{font-size:13px;color:#756583;min-height:35px}.v53-world-empty{text-align:center;padding:28px;color:#897299;grid-column:1/-1}.v53-legacy-character-tools,#characterGrid{display:none!important}.v53-period{margin:20px 0}.v53-period-controls{display:flex;gap:12px;flex-wrap:wrap;align-items:end}.v53-period-controls label{display:flex;flex-direction:column;gap:5px;flex:1 1 155px}.v53-period-controls input{width:100%}.v53-period-entry{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:12px 0;border-bottom:1px solid #e7dbea}.v53-period-empty{color:#8c779e}.calendar-grid .day.v53-period-day{background:#f2dbe8!important;color:#873f71!important;box-shadow:inset 0 0 0 2px #d8a5c2}@media(max-width:520px){.v53-person-panel{flex-direction:column;text-align:center}.v53-person-photo{width:130px;height:130px}.v53-world-head{flex-direction:column;align-items:stretch}}
+</style><style id="v54-period-style">
+.v54-period-dialogue{display:flex;align-items:flex-start;gap:14px;margin-top:22px;padding:18px 20px;border:1px solid #dfc9e6;border-radius:20px;background:linear-gradient(120deg,#f9f1fb,#fff9fb);box-shadow:0 8px 24px #8c668a0c;position:relative;overflow:hidden}
+.v54-period-dialogue:after{content:'✧';position:absolute;right:20px;top:10px;color:#cba5c9;font-size:25px;pointer-events:none}
+.v54-period-dialogue-icon{width:49px;height:49px;flex:none;display:grid;place-items:center;background:#f0deed;border:1px solid #dfc6dd;border-radius:50%;font-size:22px}
+.v54-period-dialogue-main{min-width:0;flex:1}.v54-period-dialogue-name{font-size:12px;color:#947196;letter-spacing:.12em}
+.v54-period-dialogue p{font-size:clamp(14px,3.4vw,17px);line-height:1.85;color:#6d507d;white-space:pre-wrap;margin:10px 0 13px}
+.v54-period-dialogue button{font-size:12px}.v54-period-dialogue button:hover{transform:translateY(-1px)}
+@media(max-width:480px){.v54-period-dialogue{padding:15px;gap:10px}.v54-period-dialogue-icon{width:39px;height:39px}}
 </style></head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
@@ -719,7 +727,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 <circle cx="100" cy="100" r="96" fill="none" stroke="#e4d9ee" stroke-width="1.5"/><ellipse cx="66" cy="47" rx="48" ry="26" fill="#fff" opacity=".075" transform="rotate(-25 66 47)"/>
 </svg></div><strong>INFINITE<br> MOMENTS</strong></div><div class="orbit-window orbit-window-front"><span>✦  CALENDAR / ARCHIVE</span><strong>THE DAYS<br>WE KEEP</strong><small>THE DAYS WE CHOOSE TO REMEMBER</small><div class="orbit-window-stars">✧　·　✦　·　✧</div></div></div><div class="orbit-hero-bottom"><span>✧ EVERY MOMENT IS A LITTLE UNIVERSE</span><span>EST. 02.01</span></div></div>
     <div class="section-head"><div><h3>纪念日历</h3><p>纪念日、生日、计划日与倒数日都可以放在这里。</p></div><button class="btn primary" id="addEvent">＋ 添加日期</button></div>
-    <div class="v5-month-journal panel"><div class="section-head"><div><h3>☾ 月度纪事</h3><p>每个月收藏一段共同经历，不影响 AU 内部时间线。</p></div><button class="btn soft" id="v5EditMonth">✎ 编辑本月</button></div><div id="v5MonthJournal"></div></div><div class="v53-period panel"><div class="section-head"><div><h3>✿ 经期手账</h3><p>随网站档案同步到 Puter · 不提供医疗预测。</p></div><button class="btn soft" id="v53PeriodExport">导出经期备份</button></div><div class="v53-period-controls"><label>开始日期 <input type="date" id="v53PeriodStart"></label><label>结束日期 <input type="date" id="v53PeriodEnd"></label><label>备注 <input id="v53PeriodNote" placeholder="可选：状态、感受…"></label><button class="btn primary" id="v53PeriodSave">＋ 保存经期</button></div><div id="v53PeriodList"></div></div><div class="calendar-layout">
+    <div class="v5-month-journal panel"><div class="section-head"><div><h3>☾ 月度纪事</h3><p>每个月收藏一段共同经历，不影响 AU 内部时间线。</p></div><button class="btn soft" id="v5EditMonth">✎ 编辑本月</button></div><div id="v5MonthJournal"></div></div><div class="v53-period panel"><div class="section-head"><div><h3>✿ 经期手账</h3><p>随网站档案同步到 Puter · 不提供医疗预测。</p></div><button class="btn soft" id="v53PeriodExport">导出经期备份</button></div><div class="v53-period-controls"><label>开始日期 <input type="date" id="v53PeriodStart"></label><label>结束日期 <input type="date" id="v53PeriodEnd"></label><label>备注 <input id="v53PeriodNote" placeholder="可选：状态、感受…"></label><button class="btn primary" id="v53PeriodSave">＋ 保存经期</button></div><div id="v53PeriodList"></div><div class="v54-period-dialogue" id="v54PeriodDialogue"><div class="v54-period-dialogue-icon">🍎</div><div class="v54-period-dialogue-main"><span class="v54-period-dialogue-name">夏以昼 · 一点悄悄话</span><p id="v54PeriodLine" aria-live="polite"></p><button class="btn soft" id="v54PeriodNext" type="button">✧ 再听一句</button></div></div></div><div class="calendar-layout">
       <div class="panel"><div class="calendar-head"><button class="btn" id="prevMonth">‹</button><h3 id="monthLabel"></h3><button class="btn" id="nextMonth">›</button></div><div class="calendar-grid" id="calendarGrid"></div></div>
       <div class="panel"><div class="section-head" style="margin:0 0 12px"><div><h3 id="selectedDateTitle">日期记录</h3><p>选择日期查看详情。</p></div></div><div id="selectedEvents"></div><div class="divider"></div><div class="section-head"><div><h3>全部纪念日</h3><p>按日期查看。</p></div></div><div class="list" id="allEvents"></div></div>
     </div>
@@ -924,6 +932,23 @@ function v53RenderCharacterStage(){
  root.querySelector('#v53PhotoInput').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const image=await v52CompressImage(file);db.v53People=db.v53People||{};db.v53People[v53ActivePerson]={...(db.v53People[v53ActivePerson]||{}),image};persist();v53RenderCharacterStage()}catch(err){toast('头像上传失败')}};
  root.querySelector('#v53EditIntro').onclick=()=>{const intro=prompt('人物简介',profile.intro||'');if(intro===null)return;db.v53People=db.v53People||{};db.v53People[v53ActivePerson]={...profile,intro};persist();v53RenderCharacterStage()};
 }
+const V54_PERIOD_LINES=[
+ '说好你经期第一天 我陪着你的，我不会忘记。',
+ '正好，我可以用枕头和毛毯给你搭座城堡，适合我们一起躲进去看冒险电影',
+ '要是哥哥能替你疼就好了。',
+ '干锅馄饨水果捞，汉堡披萨小丸子 ……有没有想吃的?',
+ '毛毯帮你备好了、挑了个印着小豹子图案的，和我一起陪着你',
+ '感觉怎么样？'
+];
+let v54LastLine=-1;
+function v54ShowPeriodLine(){
+ const el=document.getElementById('v54PeriodLine');if(!el)return;
+ let i=Math.floor(Math.random()*V54_PERIOD_LINES.length);
+ if(i===v54LastLine)i=(i+1+Math.floor(Math.random()*(V54_PERIOD_LINES.length-1)))%V54_PERIOD_LINES.length;
+ v54LastLine=i;el.textContent='“'+V54_PERIOD_LINES[i]+'”';
+}
+document.getElementById('v54PeriodNext').onclick=v54ShowPeriodLine;
+v54ShowPeriodLine();
 const V53_PERIOD_KEY='mysommer_v53_private_periods';
 function v53GetPeriods(){return Array.isArray(db.v53Periods)?db.v53Periods:[]}
 function v53LegacyPeriods(){try{const a=JSON.parse(localStorage.getItem(V53_PERIOD_KEY)||'[]');return Array.isArray(a)?a:[]}catch(e){return []}}
