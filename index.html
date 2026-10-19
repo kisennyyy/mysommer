@@ -2165,7 +2165,17 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
  const exists=()=>typeof puter!=='undefined' && puter.auth && puter.fs;
  const snapshot=()=>JSON.parse(JSON.stringify(db));
  const canonical=(v)=>JSON.stringify(v,(key,value)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.fromEntries(Object.entries(value).sort(([a],[b])=>a.localeCompare(b))):value);
- const sameArchive=(a,b)=>canonical(a)===canonical(b);
+ // Player location is device-local UI state, not an archive content conflict.
+ // Preserve musicPosition in the saved archive while excluding it from comparisons.
+ const archiveForConflict=(source)=>{
+  const copy={...source};
+  if(source?.appearance && typeof source.appearance==='object'){
+   copy.appearance={...source.appearance};
+   delete copy.appearance.musicPosition;
+  }
+  return copy;
+ };
+ const sameArchive=(a,b)=>canonical(archiveForConflict(a))===canonical(archiveForConflict(b));
  const conflictStatus=()=>setStatus('本机与云端内容不同 · 已暂停同步，请先备份');
  async function resolveConflict(remote){
   if(!remote)return false;
@@ -2201,6 +2211,10 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
   clearTimeout(timer);saving=true;setStatus('正在上传云端…');const revisionAtStart=editRevision;
   try{
    const remote=await fetchCloud();
+   if(remote && sameArchive(snapshot(),remote.data)){
+    lastCloudStamp=remote.updatedAt;dirty=false;syncError=false;
+    setStatus('档案内容一致 · 播放器位置按本机保留');return;
+   }
    if(remote && lastCloudStamp && remote.updatedAt!==lastCloudStamp){
     dirty=true;setStatus('发现其他设备的更新 · 请先解决冲突');
     toast('云端已变化，已暂停上传。请先下载云端备份');return;
