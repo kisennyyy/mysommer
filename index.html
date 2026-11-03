@@ -1523,10 +1523,114 @@ async function v59Store(id,file){const d=await v59Open();return new Promise((ok,
 async function v59Get(id){const d=await v59Open();return new Promise((ok,fail)=>{const tx=d.transaction(V59_STORE,'readonly'),r=tx.objectStore(V59_STORE).get(id);r.onsuccess=()=>ok(r.result||null);r.onerror=()=>fail(r.error);tx.oncomplete=()=>d.close()})}
 async function v59Delete(id){const d=await v59Open();return new Promise((ok,fail)=>{const tx=d.transaction(V59_STORE,'readwrite');tx.objectStore(V59_STORE).delete(id);tx.oncomplete=()=>{d.close();ok()};tx.onerror=()=>{d.close();fail(tx.error)}})}
 function v59Puter(){return typeof puter!=='undefined'&&puter.auth&&puter.fs&&puter.auth.isSignedIn()}
-async function v59File(track){let blob=await v59Get(track.localId);if(!blob&&v59Puter()){blob=await puter.fs.read(V59_PREFIX+track.localId+'.audio');await v59Store(track.localId,blob)}return blob}
+function v59Path(track){return track.cloudPath||V59_PREFIX+track.localId+'.audio'}
+function v59IsMissing(e){return /not.found|does.not.exist|no.such.file|404|enoent|not_found/.test(String(e?.code||'')+' '+String(e?.message||e))}
+function v59IsQuota(e){return /storage_limit_reached|input_too_large|out.of.storage|not.enough.storage|storage.quota/i.test(String(e?.code||'')+' '+String(e?.message||e))}
 function v59Size(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':Math.round(n/1024)+' KB'}
-async function v59Status(message=''){let local=v5MusicList().filter(t=>t.localId),cloud=local.filter(t=>t.cloudReady).length,usage='';try{const e=await navigator.storage.estimate();usage=' · 浏览器已用 '+v59Size(e.usage||0)+(e.quota?' / 配额 '+v59Size(e.quota):'')}catch(e){}document.getElementById('v59MusicStatus').textContent=(message?message+' · ':'')+'本地歌曲 '+local.length+' 首，Puter 已备份 '+cloud+' 首'+usage+'。清理网站数据可能删除本机音乐，请保留原 MP3。'}
-async function v59Sync(interactive=false){if(v59Busy)return;const list=v5MusicList().filter(t=>t.localId);if(!list.length){if(interactive)toast('还没有本地歌曲');return}if(!v59Puter()){if(!interactive)return;try{if(typeof puter==='undefined')throw Error('Puter unavailable');await puter.auth.signIn()}catch(e){toast('请先连接 Puter');return}}v59Busy=true;let uploaded=0,downloaded=0,errors=0;try{for(const t of list){try{const local=await v59Get(t.localId);if(local&&!t.cloudReady){await puter.fs.write(V59_PREFIX+t.localId+'.audio',local);t.cloudReady=true;uploaded++}else if(!local){const cloud=await puter.fs.read(V59_PREFIX+t.localId+'.audio');await v59Store(t.localId,cloud);t.cloudReady=true;downloaded++}}catch(e){errors++;console.warn('Audio sync',e)}}if(uploaded||downloaded){db.appearance={...getAppearance(),musicPlaylist:v5MusicList()};persist();renderV5MusicSettings(getAppearance())}await v59Status(errors?'部分歌曲同步失败':'云端检查完成');if(interactive)toast(errors?'部分音乐同步失败，请重试':'音乐已同步：上传 '+uploaded+' 首，恢复 '+downloaded+' 首')}finally{v59Busy=false}}
+let v59QuotaPaused=false,v59QuotaMessage='',v59QuotaNotified=false,v59LastSpace=null;
+async function v59Stat(path){try{return await puter.fs.stat(path)}catch(e){if(v59IsMissing(e))return null;throw e}}
+async function v59CheckCapacity(bytes,path,existing,margin=0){
+ if(typeof puter.fs.space!=='function')throw Error('当前 Puter SDK 无法读取存储配额');
+ const space=await puter.fs.space();
+ if(!Number.isFinite(space?.capacity)||!Number.isFinite(space?.used))throw Error('Puter 未返回有效的容量数据');
+ v59LastSpace=space;
+ const previous=existing===undefined?await v59Stat(path):existing;
+ const free=Math.max(0,space.capacity-space.used+(Number(previous?.size)||0));
+ return {ok:free>=bytes+margin,free,capacity:space.capacity,used:space.used};
+}
+async function v59Fingerprint(blob){
+ if(!crypto?.subtle)throw Error('当前浏览器不支持安全的文件校验，已暂停云端上传');
+ const buffer=await blob.arrayBuffer(),digest=await crypto.subtle.digest('SHA-256',buffer);
+ return Array.from(new Uint8Array(digest),b=>b.toString(16).padStart(2,'0')).join('');
+}
+function v59PauseQuota(message,interactive=false){
+ v59QuotaPaused=true;v59QuotaMessage=message;
+ v59Status(message);
+ if(interactive||!v59QuotaNotified){toast(message);v59QuotaNotified=true}
+}
+async function v59File(track){
+ let blob=await v59Get(track.localId);
+ if(!blob&&v59Puter()){blob=await puter.fs.read(v59Path(track));await v59Store(track.localId,blob)}
+ return blob;
+}
+async function v59Status(message=''){
+ const local=v5MusicList().filter(t=>t.localId),cloud=local.filter(t=>t.cloudReady).length;
+ let usage='';
+ try{const e=await navigator.storage.estimate();usage=' · 浏览器已用 '+v59Size(e.usage||0)+(e.quota?' / 配额 '+v59Size(e.quota):'')}catch(e){}
+ const remote=v59LastSpace?' · Puter '+v59Size(v59LastSpace.used)+' / '+v59Size(v59LastSpace.capacity):'';
+ document.getElementById('v59MusicStatus').textContent=(message||v59QuotaMessage?(message||v59QuotaMessage)+' · ':'')+
+ '歌单音频 '+local.length+' 首，Puter 已备份 '+cloud+' 首'+remote+usage+
+ '。清理网站数据可能删除本机音乐，请保留原 MP3。';
+}
+async function v59Sync(interactive=false){
+ if(v59Busy||(!interactive&&v59QuotaPaused))return;
+ const list=v5MusicList().filter(t=>t.localId);
+ if(!list.length){if(interactive)toast('还没有本地歌曲');return}
+ if(!v59Puter()){
+  if(!interactive)return;
+  try{if(typeof puter==='undefined')throw Error('Puter unavailable');await puter.auth.signIn()}
+  catch(e){toast('请先连接 Puter');return}
+ }
+ if(interactive){v59QuotaPaused=false;v59QuotaMessage=''}
+ v59Busy=true;
+ let uploaded=0,downloaded=0,skipped=0,errors=0,changed=false,stopped=false;
+ try{
+  for(const t of list){
+   if(!v5MusicList().some(current=>current.id===t.id))continue;
+   try{
+    const local=await v59Get(t.localId),path=v59Path(t);
+    if(!local){
+     const cloud=await puter.fs.read(path);
+     await v59Store(t.localId,cloud);
+     t.cloudReady=true;t.cloudPath=path;
+     if(!t.cloudRevision)t.cloudRevision=await v59Fingerprint(cloud);
+     t.localRevision=t.cloudRevision;t.size=cloud.size;
+     downloaded++;changed=true;continue;
+    }
+    const revision=await v59Fingerprint(local);
+    if(t.cloudReady&&t.cloudRevision===revision&&t.cloudFileId){
+     skipped++;continue;
+    }
+    const existing=await v59Stat(path);
+    // Old playlists only had cloudReady. Adopt their existing files without uploading again.
+    if(existing&&existing.size===local.size&&(!t.cloudRevision||t.cloudRevision===revision)){
+     if(!t.cloudReady||t.cloudFileId!==existing.id||t.cloudPath!==path||t.cloudRevision!==revision||t.localRevision!==revision){
+      t.cloudReady=true;t.cloudFileId=existing.id||t.cloudFileId||'';
+      t.cloudPath=path;t.cloudRevision=revision;t.localRevision=revision;t.size=local.size;changed=true;
+     }
+     skipped++;continue;
+    }
+    let room;
+    try{room=await v59CheckCapacity(local.size,path,existing,128*1024)}
+    catch(e){
+     v59PauseQuota('无法检查 Puter 剩余容量，已暂停自动上传；本机音乐未受影响。'+(interactive?'请稍后再试。':''),interactive);
+     stopped=true;console.warn('Puter storage preflight failed',e);break;
+    }
+    if(!room.ok){
+     v59PauseQuota('Puter 剩余约 '+v59Size(room.free)+'，当前歌曲需要 '+v59Size(local.size)+'（另预留少量档案空间）。已停止上传，本机音乐仍可播放。',interactive);
+     stopped=true;break;
+    }
+    // Overwriting the same path replaces a changed song; it never creates duplicates.
+    const saved=await puter.fs.write(path,local,{overwrite:true});
+    t.cloudReady=true;t.cloudFileId=saved?.id||existing?.id||'';
+    t.cloudPath=saved?.path||path;t.cloudRevision=revision;t.localRevision=revision;t.size=local.size;
+    uploaded++;changed=true;
+   }catch(e){
+    if(v59IsQuota(e)){
+     v59PauseQuota('Puter 存储容量已不足，已停止自动上传。歌曲仍保存在本机；请清理云端空间后手动重试。',interactive);
+     stopped=true;console.warn('Puter audio quota',e);break;
+    }
+    errors++;console.warn('Audio sync',e);
+   }
+  }
+  if(changed){
+   db.appearance={...getAppearance(),musicPlaylist:v5MusicList()};
+   persist();renderV5MusicSettings(getAppearance());
+  }
+  if(!stopped)await v59Status(errors?'部分歌曲同步失败，之后可手动重试':'已检查音乐变更，未修改的歌曲已跳过');
+  if(interactive&&!stopped)toast(errors?'部分音乐同步失败，请重试':'音乐同步完成：上传 '+uploaded+' 首，恢复 '+downloaded+' 首，跳过 '+skipped+' 首');
+ }finally{v59Busy=false}
+}
 document.getElementById('v59CloudButton').onclick=()=>v59Sync(true);
 window.addEventListener('load',()=>{v59Status();setTimeout(()=>v59Sync(false),2000)});
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)v59Sync(false)});
@@ -1586,7 +1690,7 @@ async function v59RemoveTrack(i){
  let deleteCloud=false;
  if(track.localId&&track.cloudReady){deleteCloud=confirm('是否同时删除 Puter 云端的 MP3 文件？\n\n确定：删除本地与云端文件。\n取消：仅从歌单和本机移除，云端文件保留。');}
  if(deleteCloud&&!v59Puter()){toast('请先连接 Puter，才能安全删除云端文件');return}
- if(deleteCloud){try{await puter.fs.delete(V59_PREFIX+track.localId+'.audio')}catch(err){console.error('Puter audio delete failed',err);toast('Puter 云端删除失败，歌曲仍保留在歌单');return}}
+ if(deleteCloud){try{await puter.fs.delete(v59Path(track))}catch(err){console.error('Puter audio delete failed',err);toast('Puter 云端删除失败，歌曲仍保留在歌单');return}}
  const current=v5MusicList(),idx=current.findIndex(t=>t.id===track.id);if(idx<0)return;
  current.splice(idx,1);db.appearance={...getAppearance(),musicPlaylist:current};v5MusicIndex=0;v5MusicTempTrack=null;persist();v5MusicLoad();
  if(track.localId){try{await v59Delete(track.localId)}catch(err){console.warn('IndexedDB delete failed',err)}}
@@ -2254,7 +2358,17 @@ document.getElementById('v5LetterGrid').addEventListener('click',e=>{const b=e.t
    }
    if(remote && !lastCloudStamp){dirty=true;conflictStatus();return;}
    const stamp=new Date().toISOString();
-   await puter.fs.write(CLOUD_FILE,JSON.stringify({version:1,updatedAt:stamp,data:snapshot()}));
+   const payload=JSON.stringify({version:1,updatedAt:stamp,data:snapshot()});
+    // Check live quota before calling Puter: its SDK may otherwise show an upgrade dialog.
+    let allowance;
+    try{allowance=await v59CheckCapacity(new Blob([payload]).size,CLOUD_FILE)}
+    catch(e){dirty=true;syncError=true;setStatus('无法确认 Puter 剩余容量 · 修改已在本机保存');console.warn('Archive quota preflight',e);return}
+    if(!allowance.ok){
+     dirty=true;syncError=true;setStatus('Puter 空间不足 · 当前档案已保存在本机，未向云端覆盖');
+     if(!v59QuotaNotified){toast('Puter 云端容量不足，档案仍保存在本机。请先导出 JSON 备份。');v59QuotaNotified=true}
+     return;
+    }
+    await puter.fs.write(CLOUD_FILE,payload);
    lastCloudStamp=stamp;dirty=editRevision!==revisionAtStart;syncError=false;
    if(dirty){setStatus('上传期间有新修改 · 继续同步');clearTimeout(timer);timer=setTimeout(()=>push(false),1700)}
    else setStatus('已同步 · '+new Date().toLocaleTimeString('zh-CN',{hour:'2-digit',minute:'2-digit'}));
