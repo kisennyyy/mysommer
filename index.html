@@ -1580,10 +1580,22 @@ document.getElementById('v5MusicFile').onchange=async e=>{
  try{await v59Store(id,file);const list=v5MusicList();db.appearance={...getAppearance(),musicPlaylist:[...list,track]};v5MusicIndex=list.length;v5MusicTempTrack=null;v5MusicPendingCover='';persist();v5MusicLoad();await v59Status('已保存到本机');toast('本地 MP3 已保存，尝试同步 Puter');v59Sync(false)}
  catch(err){console.error(err);toast('保存失败：请检查浏览器可用存储空间')}finally{e.target.value=''}
 };
+async function v59RemoveTrack(i){
+ const list=v5MusicList(),track=list[i];if(!track)return;
+ if(!confirm('确定要从歌单移除「'+(track.name||'未命名歌曲')+'」吗？'))return;
+ let deleteCloud=false;
+ if(track.localId&&track.cloudReady){deleteCloud=confirm('是否同时删除 Puter 云端的 MP3 文件？\\n\\n确定：删除本地与云端文件。\\n取消：仅从歌单和本机移除，云端文件保留。');}
+ if(deleteCloud&&!v59Puter()){toast('请先连接 Puter，才能安全删除云端文件');return}
+ if(deleteCloud){try{await puter.fs.delete(V59_PREFIX+track.localId+'.audio')}catch(err){console.error('Puter audio delete failed',err);toast('Puter 云端删除失败，歌曲仍保留在歌单');return}}
+ const current=v5MusicList(),idx=current.findIndex(t=>t.id===track.id);if(idx<0)return;
+ current.splice(idx,1);db.appearance={...getAppearance(),musicPlaylist:current};v5MusicIndex=0;v5MusicTempTrack=null;persist();v5MusicLoad();
+ if(track.localId){try{await v59Delete(track.localId)}catch(err){console.warn('IndexedDB delete failed',err)}}
+ await v59Status();toast(deleteCloud?'歌曲及 Puter 云端文件已删除':'歌曲已移出歌单'+(track.cloudReady?'，云端副本已保留':''));
+}
 function v5MusicListClick(e){
  const pick=e.target.closest('[data-music-pick]'),del=e.target.closest('[data-music-delete]');
  if(pick){v5MusicSelect(Number(pick.dataset.musicPick));return}
- if(del){const list=v5MusicList(),i=Number(del.dataset.musicDelete),old=list[i];list.splice(i,1);db.appearance={...getAppearance(),musicPlaylist:list};v5MusicIndex=0;v5MusicTempTrack=null;persist();v5MusicLoad();if(old?.localId)v59Delete(old.localId).catch(console.warn);v59Status();toast('歌曲已从歌单移除；云端副本暂保留')}
+ if(del){v59RemoveTrack(Number(del.dataset.musicDelete));return}
 }
 document.getElementById('v5MusicPlaylist').addEventListener('click',v5MusicListClick);
 document.getElementById('v5MusicTracks').addEventListener('click',v5MusicListClick);
