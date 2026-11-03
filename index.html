@@ -1584,7 +1584,7 @@ async function v59RemoveTrack(i){
  const list=v5MusicList(),track=list[i];if(!track)return;
  if(!confirm('确定要从歌单移除「'+(track.name||'未命名歌曲')+'」吗？'))return;
  let deleteCloud=false;
- if(track.localId&&track.cloudReady){deleteCloud=confirm('是否同时删除 Puter 云端的 MP3 文件？\\n\\n确定：删除本地与云端文件。\\n取消：仅从歌单和本机移除，云端文件保留。');}
+ if(track.localId&&track.cloudReady){deleteCloud=confirm('是否同时删除 Puter 云端的 MP3 文件？\n\n确定：删除本地与云端文件。\n取消：仅从歌单和本机移除，云端文件保留。');}
  if(deleteCloud&&!v59Puter()){toast('请先连接 Puter，才能安全删除云端文件');return}
  if(deleteCloud){try{await puter.fs.delete(V59_PREFIX+track.localId+'.audio')}catch(err){console.error('Puter audio delete failed',err);toast('Puter 云端删除失败，歌曲仍保留在歌单');return}}
  const current=v5MusicList(),idx=current.findIndex(t=>t.id===track.id);if(idx<0)return;
