@@ -735,6 +735,77 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 .v5-music-player:not(.compact):not(.expanded) .v5-music-toggle,
 .v5-music-player:not(.compact):not(.expanded) .v5-music-volume{width:25px!important;height:25px!important}
 }
+</style><style id="v61-divination-oracle">
+/* V6.1 dream divination box. Visual-only interactions; all archival fields stay unchanged. */
+#page-divination .v61-divination-scene{position:relative;isolation:isolate;min-height:315px;margin:22px 0 22px;padding:28px 16px 19px;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;overflow:hidden;border:1px solid #e7d8f1;border-radius:29px;background:radial-gradient(ellipse 65% 55% at 50% 57%,#e2d3f0 0%,transparent 100%),radial-gradient(circle at 17% 20%,#ffffffc9 0 2px,transparent 3px),radial-gradient(circle at 84% 28%,#a284c6 0 2px,transparent 3px),linear-gradient(145deg,#fffcff,#f5eefa 70%,#f1e9f7);box-shadow:inset 0 0 25px #fff8,0 12px 30px #69508214}
+#page-divination .v61-divination-scene:before,#page-divination .v61-divination-scene:after{content:"✧   ·  ✦  ·  ☾  ·  ✧";position:absolute;top:22px;left:15px;color:#bca5d4;font-size:17px;letter-spacing:16px;opacity:.65;pointer-events:none}
+#page-divination .v61-divination-scene:after{top:auto;left:auto;right:2px;bottom:25px;transform:rotate(180deg)}
+#page-divination .v61-oracle-box{position:relative;display:block;width:min(280px,80vw);height:205px;padding:0;border:0;background:transparent;cursor:pointer;perspective:700px;filter:drop-shadow(0 18px 16px #64468b39);transition:transform .25s}
+#page-divination .v61-oracle-box:hover{transform:translateY(-4px)}
+#page-divination .v61-oracle-box:focus-visible{outline:3px solid #8357ac;outline-offset:8px;border-radius:12px}
+#page-divination .v61-oracle-halo{position:absolute;top:0;left:13%;width:74%;height:110px;border:1px solid #cbb4df;border-radius:50%;font-size:65px;color:#a181bd;opacity:.65;pointer-events:none}
+#page-divination .v61-oracle-body{position:absolute;z-index:3;bottom:9px;left:6%;width:88%;height:112px;border:3px solid #9773b4;border-radius:9px 9px 21px 21px;background:linear-gradient(125deg,#dfcceb,#a98ac6 48%,#d5bce6 88%);box-shadow:inset 0 3px 0 #faeeff,inset 0 -13px 15px #634b8128,0 9px 0 #775b99;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#65427d}
+#page-divination .v61-oracle-body:before{content:"";position:absolute;inset:9px;border:1px solid #f7ebffb8;border-radius:6px 6px 15px 15px;pointer-events:none}
+#page-divination .v61-oracle-moon{font-size:44px;line-height:1.2;text-shadow:0 2px 6px #fff9}
+#page-divination .v61-oracle-inscription{font:10px Georgia,serif;letter-spacing:.2em}
+#page-divination .v61-oracle-key{font-size:12px;letter-spacing:.3em;margin-top:5px}
+#page-divination .v61-oracle-lid{position:absolute;z-index:4;top:36px;left:4%;width:92%;height:61px;border:3px solid #8863aa;border-radius:15px 15px 6px 6px;background:linear-gradient(135deg,#e9d8f3,#aa8bca 60%,#dbbde9);display:flex;align-items:center;justify-content:space-evenly;color:#6a4a87;box-shadow:inset 0 3px #fff9,0 5px 9px #5e44713d;transform-origin:bottom center;transition:transform .65s cubic-bezier(.2,.8,.2,1)}
+#page-divination .v61-oracle-lid span{font-size:26px}#page-divination .v61-oracle-lid i{font-style:normal;font-size:18px}
+#page-divination .v61-oracle-tray{position:absolute;z-index:2;top:90px;left:8%;width:84%;height:32px;border-radius:50%;background:#5b4477}
+#page-divination .v61-oracle-open-card{position:absolute;z-index:2;top:68px;left:36%;width:28%;height:95px;padding:16px 0;background:linear-gradient(145deg,#fffafd,#decbea);border:2px solid #9a79b3;border-radius:8px;font-size:30px;color:#8d69af;transform:translateY(49px) rotate(-8deg);transition:transform .65s ease}
+#page-divination .v61-open .v61-oracle-lid{transform:translateY(-36px) rotateX(52deg)}
+#page-divination .v61-open .v61-oracle-open-card{transform:translateY(-48px) rotate(-12deg)}
+#page-divination .v61-oracle-invite{font:500 14px/1.6 Georgia,serif;letter-spacing:.12em;color:#73558f;margin:16px 0 5px}
+#page-divination .v61-oracle-tally{font-size:11px;color:#9f85b6;letter-spacing:.1em}
+#page-divination .v61-divination-board[hidden]{display:none!important}
+#page-divination .v61-divination-board{margin:15px 0 38px;animation:v61BoardReveal .5s ease both}
+#page-divination .v61-board-heading{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 3px 15px;color:#795a9b;letter-spacing:.1em;font:500 16px Georgia,serif}
+#page-divination .v61-card-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,215px),1fr));align-items:start;gap:20px;overflow:visible}
+#page-divination .v61-oracle-record{min-width:0;position:relative;animation:v61CardScatter .55s ease both;animation-delay:calc(var(--v61-index)*35ms)}
+#page-divination .v61-card-cover{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;width:100%;min-height:270px;padding:26px 18px 23px;border:2px solid #a889c4;border-radius:18px;background:linear-gradient(155deg,#fdfaff,#e7d8f0 47%,#f8f2ff);box-shadow:0 10px 23px #64458220,inset 0 0 0 6px #fff7,inset 0 0 0 7px #d9c5e8;color:#5a4077;cursor:pointer;transition:transform .25s,box-shadow .25s;overflow-wrap:anywhere}
+#page-divination .v61-card-cover:hover,#page-divination .v61-card-cover:focus-visible{transform:translateY(-5px) rotate(.5deg);box-shadow:0 17px 30px #64458232}
+#page-divination .v61-card-cover:focus-visible{outline:3px solid #8257ab;outline-offset:3px}
+#page-divination .v61-cx .v61-card-cover{border-radius:7px 19px 7px 19px;background:linear-gradient(165deg,#fffdfb,#f3e9f5 55%,#e8d8ed)}
+#page-divination .v61-card-cover:before{content:"";position:absolute;inset:13px;border:1px solid #ba9dd0;border-radius:11px;pointer-events:none}
+#page-divination .v61-card-sigil{font-size:51px;line-height:1.15;text-shadow:0 3px 8px #c3a6d9}
+#page-divination .v61-card-small{font:11px Georgia,serif;letter-spacing:.14em;color:#8c6fa6}
+#page-divination .v61-card-cover strong{font-size:clamp(16px,2vw,20px);line-height:1.5;max-width:100%;overflow-wrap:anywhere}
+#page-divination .v61-card-cover small{color:#937aaa}
+#page-divination .v61-card-foot{margin-top:auto;font-size:11px;letter-spacing:.16em;color:#9b7fb2}
+#page-divination .v61-oracle-record.v61-selected{grid-column:1/-1;display:grid;grid-template-columns:minmax(175px,.7fr) minmax(0,1.9fr);align-items:start;gap:18px;animation:v61Reveal .35s ease both}
+#page-divination .v61-selected .v61-card-cover{min-height:215px}
+#page-divination .v61-record-content{min-width:0;animation:v61Reveal .3s ease both}
+#page-divination .v61-detail-paper{background:linear-gradient(125deg,#fffdfd,#faf5fd);border:1px solid #e4d5eb;border-radius:20px;padding:clamp(17px,3vw,29px);box-shadow:0 8px 24px #65508316}
+#page-divination .v61-detail-paper h3{font-size:clamp(19px,2.4vw,25px);margin:9px 0 20px;color:#42304f;overflow-wrap:anywhere}
+#page-divination .v61-detail-meta{font-size:12px;letter-spacing:.08em;color:#957aac}
+#page-divination .v61-detail-qa{padding:8px 0 11px 16px;margin:14px 0;border-left:3px solid #bb9dd5;white-space:pre-wrap;overflow-wrap:anywhere}
+#page-divination .v61-detail-qa strong{font-size:14px;color:#453451}
+#page-divination .v61-detail-qa p{font-size:14px;line-height:1.85;color:#6c5a79;margin:10px 0 0;white-space:pre-wrap}
+#page-divination .v61-detail-dialogue{font-size:14px;line-height:1.85;white-space:pre-wrap;overflow-wrap:anywhere;color:#60506b}
+#page-divination .v61-detail-extras{margin-top:16px;border-top:1px solid #e8dcef;padding-top:8px}
+#page-divination .v61-detail-extras section{margin-top:13px}#page-divination .v61-detail-extras b{font-size:12px;color:#8666a5}
+#page-divination .v61-detail-extras p{white-space:pre-wrap;overflow-wrap:anywhere;font-size:13px;line-height:1.75;color:#6e5a7c;margin:5px 0}
+#page-divination .v61-record-content .archive-actions{display:flex;gap:8px;flex-wrap:wrap;margin:14px 0}
+@keyframes v61BoardReveal{from{opacity:0;transform:translateY(-11px)}to{opacity:1;transform:none}}
+@keyframes v61CardScatter{from{opacity:0;transform:translateY(-35px) rotate(-5deg) scale(.92)}to{opacity:1;transform:none}}
+@keyframes v61Reveal{from{opacity:.5;transform:translateY(9px)}to{opacity:1;transform:none}}
+@media(max-width:650px){
+ #page-divination .v61-divination-scene{min-height:290px;margin:18px 0;padding:22px 9px 15px}
+ #page-divination .v61-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+ #page-divination .v61-card-cover{min-height:215px;padding:20px 9px 18px;gap:8px;border-radius:14px}
+ #page-divination .v61-card-cover strong{font-size:14px}
+ #page-divination .v61-card-sigil{font-size:39px}
+ #page-divination .v61-card-small,#page-divination .v61-card-foot{font-size:10px;letter-spacing:.05em}
+ #page-divination .v61-board-heading{font-size:14px}
+ #page-divination .v61-oracle-record.v61-selected{grid-template-columns:1fr}
+ #page-divination .v61-selected .v61-card-cover{min-height:110px;gap:5px}
+ #page-divination .v61-selected .v61-card-sigil{font-size:27px}
+ #page-divination .v61-selected .v61-card-foot{display:none}
+ #page-divination .v61-detail-paper{padding:17px}
+}
+@media(prefers-reduced-motion:reduce){
+ #page-divination .v61-oracle-lid,#page-divination .v61-oracle-open-card,#page-divination .v61-oracle-record,#page-divination .v61-divination-board,#page-divination .v61-record-content{animation:none!important;transition:none!important}
+}
 </style><style id="v60-tarot-mailbox">
 #v60QASection[hidden],#v60ChatSection[hidden]{display:none!important}
 .v60-qa-row{padding:14px;margin:10px 0;border:1px solid #d8c5e8;border-radius:16px;background:#fbf8ff}
@@ -934,7 +1005,21 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
   <section class="page" id="page-divination">
     <div class="section-head"><div><h3>梦占存档</h3><p>收藏抽牌提问与传讯对话，自由记录每一次回应。</p></div><button class="btn primary" id="addDivination">＋ 新建梦占</button></div>
     <div class="toolbar"><input class="search" id="divinationSearch" placeholder="搜索问题、牌阵、牌面或解读…"><select id="divinationType" style="max-width:170px"><option value="">全部类型</option><option>抽牌提问</option><option>传讯对话</option></select><select id="v5DivinationOrder" aria-label="梦占排序"><option value="new">日期最新</option><option value="old">日期最早</option><option value="title">按标题</option></select><div class="grow"></div><span id="divinationCount" class="au-meta"></span></div>
-    <div class="archive-records" id="divinationGrid"></div>
+    <div class="v61-divination-scene" id="v61DivinationScene">
+      <button class="v61-oracle-box" id="v61OracleBox" type="button" aria-expanded="false" aria-controls="divinationGrid" aria-label="打开梦占匣，查看梦占记录">
+        <span class="v61-oracle-halo" aria-hidden="true">✧</span>
+        <span class="v61-oracle-lid" aria-hidden="true"><span>☾</span><i>✦</i><span>☼</span></span>
+        <span class="v61-oracle-body" aria-hidden="true"><span class="v61-oracle-moon">☽</span><span class="v61-oracle-inscription">ORACLE ARCHIVE</span><span class="v61-oracle-key">✧ ✦ ✧</span></span>
+        <span class="v61-oracle-tray" aria-hidden="true"></span>
+        <span class="v61-oracle-open-card" aria-hidden="true">✧</span>
+      </button>
+      <div class="v61-oracle-invite" id="v61OracleInvite">轻触占卜匣，翻阅保存的回应</div>
+      <div class="v61-oracle-tally" id="v61OracleTally">✧ 所有记忆，静候启封 ✧</div>
+    </div>
+    <div class="v61-divination-board" id="v61DivinationBoard" hidden>
+      <div class="v61-board-heading"><span>✦ 桌上的回响</span><button class="btn soft" type="button" id="v61CloseOracle">收起占卜匣 ↑</button></div>
+      <div class="archive-records v61-card-grid" id="divinationGrid"></div>
+    </div>
   </section>
 
   <section class="page" id="page-gacha">
@@ -1235,13 +1320,72 @@ function archiveRecordCard(x,bucket){
  const img=x.image?`<img class="archive-record-photo" src="${x.image}" alt="${esc(x.title)} 的存档图片">`:`<div class="archive-record-photo archive-record-placeholder">${icon}</div>`;
  return `<article class="archive-record">${img}<div class="archive-record-body"><h4>${esc(x.title||'未命名记录')}</h4><div class="au-meta">${esc(details)}</div><p>${esc(summary)}</p>${isD&&x.cards?`<div class="tag-row"><span class="tag">${esc(x.cards.slice(0,60))}</span></div>`:''}${isD&&x.v5Answer?`<p><strong>回答：</strong>${esc(x.v5Answer.slice(0,180))}</p>`:''}<div class="card-actions"><button class="btn soft" onclick="editSpecialRecord('${bucket}','${x.id}')">查看 / 编辑</button><button class="btn danger" onclick="deleteItem('${bucket}','${x.id}')">删除</button></div></div></article>`;
 }
+/* Interactive oracle archive: presentation state only, no persisted data changes. */
+let v61OracleOpen=false,v61SelectedDivination='';
+function v61SetOracle(open){
+ v61OracleOpen=!!open;
+ const box=document.getElementById('v61OracleBox'),board=document.getElementById('v61DivinationBoard'),scene=document.getElementById('v61DivinationScene');
+ box.setAttribute('aria-expanded',String(v61OracleOpen));
+ box.setAttribute('aria-label',v61OracleOpen?'收起梦占匣':'打开梦占匣，查看梦占记录');
+ board.hidden=!v61OracleOpen;
+ scene.classList.toggle('v61-open',v61OracleOpen);
+ document.getElementById('v61OracleInvite').textContent=v61OracleOpen?'占卜匣已经开启，点选一张卡牌':'轻触占卜匣，翻阅保存的回应';
+ if(!v61OracleOpen)v61SelectedDivination='';
+}
+function v61DivinationDetail(x){
+ const dialogue=x.type==='传讯对话'||(x.v5Dialogue&&(!Array.isArray(x.qa)||!x.qa.length));
+ const qa=Array.isArray(x.qa)&&x.qa.length?x.qa:[{q:x.question||'',a:x.v5Answer||x.interpretation||''}];
+ const pairs=qa.map((p,i)=>'<div class="v61-detail-qa"><strong>Q'+(i+1)+' · '+esc(p.q||'未填写问题')+'</strong><p>'+esc(p.a||'')+'</p></div>').join('');
+ const extras=[['关联 AU',x.au],['牌阵 / 抽牌方式',x.spread],['牌面记录',x.cards],['解读与感想',x.interpretation],['得到的回答',x.v5Answer],['备注',x.note]].filter(([key,v])=>v&&!(key==='解读与感想'&&!x.qa?.length&&x.interpretation===qa[0]?.a)&&!(key==='得到的回答'&&!x.qa?.length&&x.v5Answer===qa[0]?.a));
+ return '<div class="v61-detail-paper"><div class="v61-detail-meta">'+esc(x.date||'')+' · '+esc(x.type||'抽牌提问')+'</div>'+
+ '<h3>'+esc(x.title||'未命名梦占')+'</h3>'+
+ (x.image?'<img class="v60-tarot-image" src="'+esc(x.image)+'" alt="记录图片">':'')+
+ (dialogue?'<div class="v61-detail-dialogue">'+esc(x.v5Dialogue||x.interpretation||'尚未填写对话')+'</div>':pairs)+
+ (extras.length?'<div class="v61-detail-extras">'+extras.map(([key,val])=>'<section><b>'+esc(key)+'</b><p>'+esc(val)+'</p></section>').join('')+'</div>':'')+
+ '</div>';
+}
 function renderDivinations(){
  const q=(document.getElementById('divinationSearch').value||'').toLowerCase();
  const type=document.getElementById('divinationType').value;
- const list=db.divinations.filter(x=>(!type||x.type===type)&&[x.title,x.question,x.spread,x.cards,x.interpretation,x.v5Answer,x.v5Dialogue,x.note,x.au,...(x.qa||[]).flatMap(p=>[p.q,p.a])].join(' ').toLowerCase().includes(q));const order=document.getElementById('v5DivinationOrder').value;if(order==='title')list.sort((a,b)=>(a.title||'').localeCompare(b.title||'','zh'));else list.sort((a,b)=>order==='old'?String(a.date||'').localeCompare(String(b.date||'')):String(b.date||'').localeCompare(String(a.date||'')));
- document.getElementById('divinationGrid').innerHTML=list.map(x=>'<article class="archive-record-card v60-tarot-card"><div class="v60-tarot-type">'+esc(x.type==='传讯对话'?'☾ 传讯对话':'✧ 抽牌提问')+'</div><h3>'+esc(x.title||'未命名梦占')+'</h3><p>'+esc(x.date||'')+'</p>'+(x.image?'<img class="v60-tarot-image" src="'+esc(x.image)+'" alt="记录图片">':'')+(x.type==='传讯对话'?'<p class="v60-tarot-preview">'+esc((x.v5Dialogue||'').slice(0,150))+'</p>':(x.qa||[{q:x.question||'',a:x.v5Answer||x.interpretation||''}]).map((p,i)=>'<div class="v60-tarot-qa"><strong>Q'+(i+1)+' · '+esc(p.q||'未填写问题')+'</strong><p>'+esc(p.a||'')+'</p></div>').join(''))+'<div class="archive-actions"><button class="btn soft" onclick="editSpecialRecord(\'divinations\',\''+esc(x.id)+'\')">查看 / 编辑</button><button class="btn danger" onclick="deleteItem(\'divinations\',\''+esc(x.id)+'\')">删除</button></div></article>').join('')||empty('还没有梦占记录，添加一次抽牌提问或传讯对话吧。','☽');
- document.getElementById('divinationCount').textContent=`${list.length} 条记录`;
+ const list=db.divinations.filter(x=>(!type||x.type===type)&&[x.title,x.question,x.spread,x.cards,x.interpretation,x.v5Answer,x.v5Dialogue,x.note,x.au,...(x.qa||[]).flatMap(p=>[p.q,p.a])].join(' ').toLowerCase().includes(q));
+ const order=document.getElementById('v5DivinationOrder').value;
+ if(order==='title')list.sort((a,b)=>(a.title||'').localeCompare(b.title||'','zh'));
+ else list.sort((a,b)=>order==='old'?String(a.date||'').localeCompare(String(b.date||'')):String(b.date||'').localeCompare(String(a.date||'')));
+ if(v61SelectedDivination&&!list.some(x=>String(x.id)===v61SelectedDivination))v61SelectedDivination='';
+ document.getElementById('divinationGrid').innerHTML=list.map((x,i)=>{
+  const dialogue=x.type==='传讯对话',selected=String(x.id)===v61SelectedDivination;
+  const name=esc(x.title||'未命名梦占'),recordId=esc(x.id),typeLabel=dialogue?'☾ 传讯对话':'✧ 抽牌提问';
+  const preview=dialogue?(x.v5Dialogue||''):(x.qa?.[0]?.q||x.question||'');
+  return '<article class="v61-oracle-record '+(dialogue?'v61-cx':'v61-tarot')+(selected?' v61-selected':'')+'" style="--v61-index:'+Math.min(i,8)+'">'+
+   '<button type="button" class="v61-card-cover" data-v61-open="'+recordId+'" aria-expanded="'+selected+'" aria-label="'+(selected?'收起':'翻开')+' '+name+' 的梦占记录">'+
+   '<span class="v61-card-sigil" aria-hidden="true">'+(dialogue?'✉':'☽')+'</span>'+
+   '<span class="v61-card-small">'+esc(typeLabel)+'</span><strong>'+name+'</strong>'+
+   '<small>'+esc(x.date||'未标注日期')+'</small><span class="v61-card-foot">✦ '+(dialogue?'开启传讯':'翻开卡牌')+' ✦</span></button>'+
+   (selected?'<div class="v61-record-content">'+v61DivinationDetail(x)+
+   '<div class="archive-actions"><button type="button" class="btn soft" data-v61-edit="'+recordId+'">编辑记录</button><button type="button" class="btn danger" data-v61-delete="'+recordId+'">删除记录</button><button type="button" class="btn" data-v61-close="'+recordId+'">合上卡牌</button></div></div>':'')+
+   '</article>';
+ }).join('')||empty('这里还没有符合条件的梦占记录，可以新建一条。','☽');
+ document.getElementById('divinationCount').textContent=list.length+' 条记录';
+ document.getElementById('v61OracleTally').textContent='✧ 已珍藏 '+db.divinations.length+' 则梦占 ✧';
+ v61SetOracle(v61OracleOpen);
 }
+document.getElementById('v61OracleBox').addEventListener('click',()=>v61SetOracle(!v61OracleOpen));
+document.getElementById('v61CloseOracle').addEventListener('click',()=>v61SetOracle(false));
+document.getElementById('divinationGrid').addEventListener('click',event=>{
+ const trigger=event.target.closest('[data-v61-open],[data-v61-close],[data-v61-edit],[data-v61-delete]');
+ if(!trigger)return;
+ const id=trigger.dataset.v61Open||trigger.dataset.v61Close||trigger.dataset.v61Edit||trigger.dataset.v61Delete;
+ const entry=db.divinations.find(x=>String(x.id)===id);
+ if(!entry)return;
+ if(trigger.hasAttribute('data-v61-edit')){editSpecialRecord('divinations',id);return}
+ if(trigger.hasAttribute('data-v61-delete')){deleteItem('divinations',id);return}
+ v61SelectedDivination=trigger.hasAttribute('data-v61-close')||v61SelectedDivination===id?'':id;
+ renderDivinations();
+ if(v61SelectedDivination){
+  const active=document.querySelector('.v61-oracle-record.v61-selected');
+  if(active)active.scrollIntoView({behavior:window.matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth',block:'nearest'});
+ }
+});
 function renderGacha(){
  const q=(document.getElementById('gachaSearch').value||'').toLowerCase();
  const rarity=document.getElementById('gachaRarity').value;
