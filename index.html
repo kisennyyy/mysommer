@@ -736,82 +736,34 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 .v5-music-player:not(.compact):not(.expanded) .v5-music-volume{width:25px!important;height:25px!important}
 }
 </style><style id="v61-divination-oracle">
-/* V6.2 Antique oracle cabinet, preserves the original records and their editor. */
-#page-divination .v61-divination-scene{position:relative;isolation:isolate;margin:15px 0 18px;padding:15px 14px;display:flex;align-items:center;justify-content:center;gap:clamp(14px,3vw,40px);min-height:222px;border:1px solid #d8c4db;border-radius:22px;background:radial-gradient(ellipse at 68% 40%,#f8f1f8 0,transparent 62%),linear-gradient(135deg,#fcf9fbdd,#ede4f3d9);box-shadow:0 12px 30px #54405a18;overflow:visible}
-/* V6.4: same nostalgic lavender-metal aesthetic as the original mailbox and XA cassette radio. */
-#page-divination .v62-cabinet{
- position:relative;flex:0 0 auto;width:clamp(162px,24vw,218px);height:195px;padding:0 9px 11px;
- border:5px solid #a99abc;border-radius:12px 12px 17px 17px;
- background:linear-gradient(122deg,#c4b5d3 0%,#f5eaf7 19%,#b7a4ca 43%,#e8daec 66%,#a48ebc 100%);
- box-shadow:inset 2px 2px 0 #fff9,inset -3px -5px 9px #65557c25,0 6px 0 #86739e,0 12px 0 #645577,0 19px 24px #56436847;
-}
-#page-divination .v62-cabinet:before{
- content:"";position:absolute;inset:7px;border:2px solid #f7ecff87;border-radius:7px 7px 12px 12px;pointer-events:none
-}
-#page-divination .v62-cabinet:after{
- content:"";position:absolute;bottom:-16px;left:8%;width:84%;height:8px;border-radius:0 0 6px 6px;
- background:linear-gradient(180deg,#8c799d,#5d506e);box-shadow:0 3px 4px #4c3d6240;pointer-events:none
-}
-#page-divination .v62-cabinet-top{
- display:flex;align-items:center;justify-content:center;gap:9px;height:48px;
- color:#5b4877;border-bottom:2px solid #9180a7aa;
- font:10px Georgia,serif;letter-spacing:.17em;white-space:nowrap;
- text-shadow:0 1px #fff8
-}
-#page-divination .v62-cabinet-top span{font-size:21px;line-height:1;color:#745993}
-#page-divination .v62-cabinet-glass{
- position:relative;height:57px;margin:5px 4px 6px;display:flex;align-items:center;justify-content:center;gap:8px;
- border:4px solid #a69ab7;border-radius:9px 9px 5px 5px;
- background:
-  linear-gradient(125deg,#ffffff2d 0%,transparent 31%,#ffffff1a 47%,transparent 67%),
-  linear-gradient(150deg,#4d435f,#6e607f 55%,#393648);
- box-shadow:inset 0 0 0 2px #5b516d,inset 0 3px 8px #211e3b9c,0 2px 0 #e4d4f2;
- color:#efe4fb;overflow:hidden;text-shadow:0 1px 2px #21172e
-}
-#page-divination .v62-cabinet-glass:after{
- content:"";position:absolute;inset:3px;border-top:1px solid #ffffff78;border-radius:5px;pointer-events:none
-}
-#page-divination .v62-cabinet-glass span{font:18px Georgia,serif;opacity:.9;color:#e1cefa}
-#page-divination .v62-cabinet-glass i{font:11px Georgia,serif;letter-spacing:.1em;color:#f6eaff}
-#page-divination .v62-cabinet-drawers{
- position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 3px
-}
-#page-divination .v62-drawer{
- position:relative;min-width:0;min-height:49px;border:3px solid #ac99c1;border-radius:6px;
- background:linear-gradient(165deg,#fcf6ff,#d5c1e4 58%,#b7a1cd);
- color:#654e80;
- box-shadow:inset 0 2px 0 #fff9,inset 0 -5px 8px #866c9c20,0 3px 0 #7c6895;
- text-shadow:0 1px 0 #fff6;
- cursor:pointer;transition:transform .25s,box-shadow .25s,filter .25s
-}
-#page-divination .v62-drawer strong{display:block;font:10px/1.3 Georgia,serif;letter-spacing:.04em}
-#page-divination .v62-drawer .v62-handle{
- display:block;width:17px;height:12px;margin:3px auto 1px;border:2px solid #9781b1;border-radius:50%;
- background:linear-gradient(145deg,#fcf4ff,#baa4d1 60%,#8e79aa);
- box-shadow:inset 0 1px 1px #fff9,0 2px 2px #58486b40
-}
-#page-divination .v62-drawer:hover,
-#page-divination .v62-drawer:focus-visible,
-#page-divination .v62-drawer[aria-pressed="true"]{
- transform:translateY(4px);box-shadow:inset 0 3px 6px #644e7e3f,0 1px 0 #80699a;filter:brightness(1.03)
-}
-#page-divination .v62-drawer:focus-visible,#page-divination .v61-oracle-box:focus-visible{outline:3px solid #6d4c93;outline-offset:3px}
-#page-divination .v61-oracle-box{
- position:absolute;inset:0 auto auto 0;width:100%;height:49px;
- border:0;background:transparent;color:transparent;cursor:pointer;z-index:2
-}
-#page-divination .v61-oracle-box:focus-visible{border-radius:8px}
-#page-divination .v62-cabinet-figure{
- pointer-events:none;position:absolute;z-index:3;top:9px;right:19px;
- color:#8c74a7;text-shadow:0 1px #fff9;font-size:13px
-}
-#page-divination .v62-oracle-copy{max-width:320px;display:flex;flex-direction:column;gap:9px;align-items:flex-start;color:#624b68;text-align:left}
-#page-divination .v62-oracle-eyebrow{font:11px Georgia,serif;color:#a48790;letter-spacing:.2em}
-#page-divination .v62-oracle-copy h4{margin:0;font:500 clamp(18px,2.3vw,26px)/1.35 Georgia,serif;color:#634660;letter-spacing:.07em}
-#page-divination .v61-oracle-invite{font-size:13px;line-height:1.6;color:#88738a;letter-spacing:.02em}
-#page-divination .v61-oracle-tally{font-size:11px;color:#a18695}
-#page-divination .v62-open-all{border:1px solid #cbb2c8;background:#fff9;color:#6c4b6c;border-radius:20px;padding:8px 15px;cursor:pointer;font-size:12px;transition:background .2s}
-#page-divination .v62-open-all:hover{background:#f0e4f2}
+/* V6.5 Retro lilac oracle cabinet: shared visual vocabulary with mailbox and XA radio. */
+#page-divination .v61-divination-scene{position:relative;isolation:isolate;margin:16px 0 18px;min-height:242px;padding:27px 20px 18px;display:flex;justify-content:center;align-items:center;gap:clamp(18px,3vw,48px);border-radius:28px;background:radial-gradient(ellipse at 38% 65%,#e8d9f4 0,transparent 62%),linear-gradient(135deg,#fcfaff,#f5effb);box-shadow:inset 0 0 0 1px #e6d9f0,0 13px 26px #65507913}
+#page-divination .v62-cabinet{width:clamp(168px,24vw,222px);height:188px;padding:0 9px 10px;flex:none;position:relative;margin-top:15px;border:5px solid #a69ab9;border-radius:62px 62px 13px 13px;background:linear-gradient(112deg,#f4edf7 0%,#c4b3d1 24%,#e9dfea 48%,#bba9cc 78%,#f4e9f8 100%);box-shadow:inset 0 3px 0 #fff9,inset 4px 0 9px #fff7,inset -5px -5px 12px #69587c28,0 6px 0 #8c7b9f,0 11px 0 #60546f,0 21px 24px #4b385b42;transition:filter .25s,transform .25s}
+#page-divination .v62-cabinet:before{content:"";position:absolute;inset:7px;border:2px solid #faf5ffb8;border-radius:53px 53px 8px 8px;pointer-events:none}
+#page-divination .v62-cabinet:after{content:"";position:absolute;bottom:-17px;left:15%;width:70%;height:9px;background:linear-gradient(#a89bb5,#6e607e);border-radius:0 0 5px 5px;box-shadow:0 3px 5px #473b5740;pointer-events:none}
+#page-divination .v62-cabinet-top{height:56px;padding-top:13px;display:flex;align-items:center;justify-content:center;gap:8px;color:#604e76;font:600 10px Georgia,serif;letter-spacing:.17em;border-bottom:0;text-shadow:0 1px #fff9}
+#page-divination .v62-cabinet-top span{font-size:22px;color:#785e98}
+#page-divination .v62-cabinet-glass{height:51px;margin:1px 4px 7px;display:flex;align-items:center;justify-content:center;gap:7px;border:4px solid #afa2bd;border-radius:7px;background:linear-gradient(120deg,#f8f2ff34 0,transparent 32%,#ffffff2c 46%,transparent 60%),linear-gradient(145deg,#62536e,#393748 70%,#51475e);box-shadow:inset 0 0 0 2px #40374f,inset 0 4px 8px #201c2b,0 2px 0 #fff9;color:#f0e6fa;overflow:hidden;text-shadow:0 1px 2px #241d2d}
+#page-divination .v62-cabinet-glass:after{content:"";position:absolute;pointer-events:none;left:14%;right:14%;top:67px;height:1px;background:#fff9}
+#page-divination .v62-cabinet-glass span{font:18px Georgia,serif;color:#d8c8ea}
+#page-divination .v62-cabinet-glass i{font:11px Georgia,serif;letter-spacing:.07em;color:#f5eafa}
+#page-divination .v62-cabinet-drawers{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;margin:0 3px;position:relative}
+#page-divination .v62-drawer{position:relative;min-width:0;min-height:46px;border:3px solid #b5a5c8;border-radius:5px;background:linear-gradient(180deg,#fff9ff 0%,#e9dcf0 45%,#cbb6dc 100%);box-shadow:inset 0 2px 1px #fff,0 3px 0 #857394;color:#66517d;text-shadow:0 1px #fff9;cursor:pointer;transition:transform .22s,box-shadow .22s}
+#page-divination .v62-drawer strong{font:600 10px/1.3 Georgia,serif}
+#page-divination .v62-drawer .v62-handle{display:block;width:20px;height:8px;margin:4px auto 0;border:2px solid #8c79a2;border-radius:50%;background:linear-gradient(180deg,#fffafd,#b9a6c8);box-shadow:inset 0 1px #fff,0 1px 2px #5f4b733b}
+#page-divination .v62-drawer:hover,#page-divination .v62-drawer:focus-visible,#page-divination .v62-drawer[aria-pressed="true"]{transform:translateY(3px);box-shadow:inset 0 3px 6px #68517f33,0 1px 0 #857394;background:linear-gradient(#ede1f6,#c2add6)}
+#page-divination .v62-drawer:focus-visible,#page-divination .v61-oracle-box:focus-visible{outline:3px solid #735395;outline-offset:3px}
+#page-divination .v61-oracle-box{position:absolute;top:0;left:0;width:100%;height:57px;background:transparent;border:0;color:transparent;cursor:pointer;z-index:2}
+#page-divination .v62-cabinet-figure{pointer-events:none;position:absolute;right:21px;top:19px;z-index:3;color:#8169a0;font-size:13px}
+#page-divination .v62-oracle-copy{display:flex;flex-direction:column;align-items:flex-start;gap:9px;max-width:330px;min-width:0;text-align:left;color:#65527c}
+#page-divination .v62-oracle-eyebrow{color:#957cb0;font:11px Georgia,serif;letter-spacing:.15em}
+#page-divination .v62-oracle-copy h4{margin:0;color:#624a83;font:500 clamp(20px,2.5vw,27px)/1.35 Georgia,serif;letter-spacing:.1em}
+#page-divination .v61-oracle-invite{color:#8c7a9d;font-size:13px;line-height:1.6}
+#page-divination .v61-oracle-tally{font-size:11px;color:#a18cb4}
+#page-divination .v62-open-all{border:1px solid #d6c5e4;border-radius:12px;padding:9px 14px;background:linear-gradient(#fff,#eee4f6);color:#6c5489;font-size:12px;cursor:pointer;box-shadow:0 3px 0 #ded0ea}
+#page-divination .v62-open-all:hover{background:#e9d9f2}
+#page-divination .v62-cabinet[aria-hidden="false"]{filter:brightness(1.06)}
+#page-divination .v62-cabinet-version{font:9px Georgia,serif;color:#ae9abb;letter-spacing:.14em}
 #page-divination .v61-divination-board[hidden]{display:none!important}
 #page-divination .v61-divination-board{margin:5px 0 28px;animation:v62-reveal .34s ease both}
 #page-divination .v61-board-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:4px 2px 13px;color:#72536f;font:500 15px Georgia,serif;letter-spacing:.07em}
@@ -844,24 +796,24 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 @keyframes v62-reveal{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
 @keyframes v62-card-in{from{opacity:0;transform:translateY(-22px) rotate(-3deg)}to{opacity:1;transform:none}}
 @media(max-width:700px){
- #page-divination .v61-divination-scene{min-height:198px;gap:13px;padding:12px 11px;margin:12px 0 13px;border-radius:16px}
- #page-divination .v62-cabinet{width:158px;height:179px;padding:0 7px 10px}
- #page-divination .v62-cabinet-top{height:43px;font-size:9px}
- #page-divination .v62-cabinet-glass{height:48px;margin:4px 3px 6px}
- #page-divination .v62-drawer{min-height:46px}
- #page-divination .v62-oracle-copy{flex:1;min-width:0;gap:6px}
- #page-divination .v62-oracle-copy h4{font-size:17px}
- #page-divination .v62-oracle-eyebrow{font-size:9px}
- #page-divination .v61-oracle-invite{font-size:12px}
- #page-divination .v61-oracle-tally{font-size:10px}
- #page-divination .v62-open-all{padding:7px 10px;font-size:11px}
- #page-divination .v61-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
- #page-divination .v61-card-cover{min-height:185px;padding:16px 8px;gap:7px}
- #page-divination .v61-card-cover strong{font-size:14px}
- #page-divination .v61-oracle-record.v61-selected{grid-template-columns:1fr}
- #page-divination .v61-selected .v61-card-cover{min-height:100px}
- #page-divination .v61-selected .v61-card-sigil{font-size:25px}
- #page-divination .v61-selected .v61-card-foot{display:none}
+#page-divination .v61-divination-scene{min-height:198px;gap:13px;padding:12px 11px;margin:12px 0 13px;border-radius:16px}
+#page-divination .v62-cabinet{width:158px;height:179px;padding:0 7px 10px}
+#page-divination .v62-cabinet-top{height:49px;font-size:9px}
+#page-divination .v62-cabinet-glass{height:47px;margin:3px 3px 6px}
+#page-divination .v62-drawer{min-height:46px}
+#page-divination .v62-oracle-copy{flex:1;min-width:0;gap:6px}
+#page-divination .v62-oracle-copy h4{font-size:17px}
+#page-divination .v62-oracle-eyebrow{font-size:9px}
+#page-divination .v61-oracle-invite{font-size:12px}
+#page-divination .v61-oracle-tally{font-size:10px}
+#page-divination .v62-open-all{padding:7px 10px;font-size:11px}
+#page-divination .v61-card-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+#page-divination .v61-card-cover{min-height:185px;padding:16px 8px;gap:7px}
+#page-divination .v61-card-cover strong{font-size:14px}
+#page-divination .v61-oracle-record.v61-selected{grid-template-columns:1fr}
+#page-divination .v61-selected .v61-card-cover{min-height:100px}
+#page-divination .v61-selected .v61-card-sigil{font-size:25px}
+#page-divination .v61-selected .v61-card-foot{display:none}
 }
 @media(max-width:390px){#page-divination .v62-cabinet{width:142px}#page-divination .v61-divination-scene{gap:9px;padding:10px 7px}#page-divination .v62-oracle-copy h4{font-size:15px}}
 @media(prefers-reduced-motion:reduce){#page-divination .v61-oracle-record,#page-divination .v61-divination-board,#page-divination .v61-record-content{animation:none!important}#page-divination .v62-drawer,#page-divination .v61-card-cover{transition:none!important}}
@@ -1076,7 +1028,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         </div>
       </div>
       <div class="v62-oracle-copy">
-        <span class="v62-oracle-eyebrow">THE ORACLE CABINET</span>
+        <span class="v62-oracle-eyebrow">THE ORACLE CABINET</span><span class="v62-cabinet-version" aria-label="新版外观编号">LILAC · 6.5</span>
         <h4>封存的回响</h4>
         <div class="v61-oracle-invite" id="v61OracleInvite">打开柜门，或挑选一格抽屉</div>
         <div class="v61-oracle-tally" id="v61OracleTally">✧ 所有记忆，静候启封 ✧</div>
