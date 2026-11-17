@@ -1,0 +1,93 @@
+/* V6.9 Appearance: compact unified archive wording editor and discreet period backup tools.
+   Keeps all prior appearance fields, stored values, and existing period interactions. */
+#page-appearance .v69-section-shell{
+  margin:22px 0 0;border:1px solid #dfd2e9;border-radius:21px;
+  background:linear-gradient(155deg,#fdfbff,#f3ecf9);
+  box-shadow:0 12px 28px rgba(93,66,119,.08);overflow:hidden;
+}
+#page-appearance .v69-section-shell>summary{
+  display:flex;gap:12px;align-items:center;padding:17px 19px;
+  cursor:pointer;list-style:none;user-select:none;
+}
+#page-appearance .v69-section-shell>summary::-webkit-details-marker,
+#page-appearance .v69-secondary-list>summary::-webkit-details-marker,
+#page-appearance .v69-page-mini>summary::-webkit-details-marker{display:none}
+#page-appearance .v69-summary-icon{
+  display:grid;place-items:center;border-radius:13px;width:41px;height:41px;flex:0 0 41px;
+  font-size:20px;color:#fff;background:linear-gradient(135deg,#b49ad0,#80619c);
+  box-shadow:0 5px 10px rgba(91,64,124,.16);
+}
+#page-appearance .v69-summary-copy{min-width:0;display:grid;gap:3px;flex:1}
+#page-appearance .v69-summary-copy strong{font-size:15px;color:#624b79;letter-spacing:.03em}
+#page-appearance .v69-summary-copy small{font-size:11px;color:#9884a9;line-height:1.5}
+#page-appearance .v69-summary-arrow{color:#8f72a5;transition:transform .18s ease}
+#page-appearance .v69-section-shell[open]>.v69-section-summary .v69-summary-arrow{transform:rotate(180deg)}
+#page-appearance .v69-section-body{border-top:1px solid #e7ddef;padding:16px clamp(12px,3vw,21px) 20px}
+#page-appearance .v69-section-tip{color:#8d789d;font-size:12px;margin:0 1px 13px;line-height:1.65}
+#page-appearance .v69-featured-card{
+  border:1px solid #dcccE8;border-radius:15px;padding:14px;
+  background:linear-gradient(145deg,#fff,#f6effb);margin-bottom:11px;
+}
+#page-appearance .v69-featured-header{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+#page-appearance .v69-featured-header strong{font-size:14px;color:#674e80}
+#page-appearance .v69-featured-header span{border-radius:99px;padding:3px 8px;background:#e9dbf3;color:#795d92;font-size:10px}
+#page-appearance .v69-archive-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px}
+#page-appearance .v69-archive-fields>.field{min-width:0}
+#page-appearance .v69-archive-fields label,#page-appearance .v69-page-mini label{font-size:11px;color:#8e779e;margin-bottom:5px}
+#page-appearance .v69-archive-fields input,#page-appearance .v69-page-mini input{
+  width:100%;min-width:0;border-radius:11px;background:#fff;border:1px solid #dfd0e9;
+  padding:10px 11px;font-size:13px;color:#5f476f;
+}
+#page-appearance .v69-secondary-list{
+  border:1px solid #e4d9eb;border-radius:13px;background:#fff9ff;margin-top:11px;
+}
+#page-appearance .v69-secondary-list>summary{
+  display:flex;align-items:center;gap:9px;cursor:pointer;list-style:none;
+  padding:13px 14px;color:#775c91;font-size:13px;font-weight:600;
+}
+#page-appearance .v69-secondary-list>summary:after,
+#page-appearance .v69-page-mini>summary:after{
+  content:'⌄';margin-left:auto;color:#a08aaf;font-size:18px;line-height:1;
+  transition:transform .18s ease;
+}
+#page-appearance .v69-secondary-list[open]>summary:after,
+#page-appearance .v69-page-mini[open]>summary:after{transform:rotate(180deg)}
+#page-appearance .v69-small-count{
+  color:#a58eb5;background:#f1e9f6;border-radius:99px;
+  font-size:10px;font-weight:400;padding:3px 8px;
+}
+#page-appearance .v69-secondary-pages{padding:0 10px 11px;display:grid;gap:7px}
+#page-appearance .v69-page-mini{
+  border:1px solid #e9dfee;border-radius:12px;background:#fff;overflow:hidden;
+}
+#page-appearance .v69-page-mini>summary{
+  display:flex;align-items:center;gap:8px;padding:11px 13px;
+  color:#735b89;font-size:12px;cursor:pointer;list-style:none;
+}
+#page-appearance .v69-page-mini[open]>summary{background:#f8f2fb}
+#page-appearance .v69-page-mini .v69-page-fields{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;
+  padding:11px 13px 13px;border-top:1px solid #efe5f2;
+}
+#page-appearance .v69-page-fields .field{min-width:0}
+#page-appearance .v69-section-footnote{
+  font-size:11px;color:#9a86a5;margin:12px 2px 0;
+}
+#page-calendar .v69-period-tools{
+  display:flex;justify-content:flex-end;align-items:center;margin:8px 0 2px;
+}
+#page-calendar .v69-period-tools #v53PeriodExport{
+  border:1px solid #e3d4ec;background:#faf6fc;color:#806992;
+  font-size:11px;border-radius:11px;padding:7px 11px;
+}
+@media(max-width:650px){
+ #page-appearance .v69-section-shell>summary{padding:14px 13px}
+ #page-appearance .v69-archive-fields,#page-appearance .v69-page-mini .v69-page-fields{grid-template-columns:1fr}
+ #page-appearance .v69-featured-card{padding:12px}
+ #page-appearance .v69-summary-copy strong{font-size:14px}
+}
+@media(prefers-reduced-motion:reduce){
+ #page-appearance .v69-summary-arrow,
+ #page-appearance .v69-secondary-list>summary:after,
+ #page-appearance .v69-page-mini>summary:after{transition:none}
+}
