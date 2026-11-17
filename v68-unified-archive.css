@@ -30,7 +30,8 @@
 .v68-file-prompt{background:#f1e9f6;border:1px solid #e6d9eb;border-radius:13px;padding:13px;color:#78608d;font-size:12px;line-height:1.65}
 #page-au-detail.v68-unified #v5AuDetail{display:none}
 #page-au-detail.v68-unified.v68-show-old #v5AuDetail{display:block}
-#page-au-detail.v68-unified.v68-show-old #v68AuDetail{display:none}
+#page-au-detail.v68-unified.v68-show-old #v68AuDetail{display:block}
+#page-au-detail.v68-unified.v68-show-old #v68AuDetail>.v68-au-detail{display:none}
 .v68-au-detail{border:1px solid #e4d7eb;border-radius:23px;background:#fffafd;overflow:hidden;box-shadow:0 12px 32px #5b417118}
 .v68-au-hero{min-height:190px;background:radial-gradient(circle at 82% 18%,#b69bd37a,transparent 47%),linear-gradient(140deg,#745792,#43315c);color:#fff;padding:28px clamp(17px,4vw,36px);display:flex;flex-direction:column;justify-content:end;gap:10px;background-position:center;background-size:cover}
 .v68-au-hero small{font:11px Georgia,serif;letter-spacing:.21em;color:#eadcf6}
