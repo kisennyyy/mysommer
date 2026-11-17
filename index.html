@@ -1083,7 +1083,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         <div class="field"><label>首页横幅封面</label><input id="appearanceHeroFile" type="file" accept="image/*"><button class="btn" id="removeHeroImage">移除封面照片</button></div>
       </div>
       <div class="v5-section-editor"><h3>♫ 迷你音乐播放器</h3><p>支持链接和本地音频。本地 MP3 保存于 IndexedDB，并可备份至 Puter。不会自动播放。</p><div class="appearance-grid"><div class="field full"><label>音乐直链（https:// 音频文件地址）</label><input id="v5MusicUrl" type="url" placeholder="https://example.com/music.mp3"></div><div class="field"><label>音乐名称</label><input id="v5MusicName" placeholder="我们的歌"></div><div class="field"><label>导入本地 MP3 / 音频</label><input id="v5MusicFile" type="file" accept="audio/*"></div></div><button class="btn soft" id="v5MusicSave">添加链接到歌单</button><button class="btn soft" id="v59CloudButton" type="button">☁ 同步音乐到 Puter</button><p id="v59MusicStatus" style="font-size:11px;color:var(--muted)">正在检查存储空间…</p><div class="field full"><label>唱片封面（可上传照片）</label><input id="v5MusicCoverFile" type="file" accept="image/*"></div><div id="v5MusicPlaylist"></div></div><div class="v5-section-editor"><h3>✦ 首页装饰贴图</h3><p>可上传两张装饰图片，分别放在首页左右两侧。透明背景 PNG 更适合做贴纸。</p><div class="appearance-grid"><div class="field"><label>左侧装饰</label><input id="v5DecorLeftFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorLeftRemove">移除左侧装饰</button></div><div class="field"><label>右侧装饰</label><input id="v5DecorRightFile" type="file" accept="image/*"><button class="btn soft" id="v5DecorRightRemove">移除右侧装饰</button></div></div></div><div class="v5-section-editor"><h3>☁ 天气台词自定义</h3><p>首页 TODAY 卡片会按实时天气自动显示对应台词。留空时使用默认台词。</p><div class="appearance-grid" id="v52WeatherFields"></div><button class="btn soft" id="v52ResetWeather" type="button">恢复默认天气台词</button></div><div class="v5-section-editor"><h3>🍎 夏以昼 · 经期互动台词</h3><p>每行一句，保存后在经期限定卡片中随机出现。可以添加、修改或删除台词；全部留空时恢复默认六句。</p><textarea id="v55PeriodQuotes" rows="9" style="width:100%;resize:vertical" placeholder="每行一句台词"></textarea><button class="btn soft" id="v55ResetPeriodQuotes" type="button">恢复默认六句</button></div><div class="v5-section-editor"><h3>☾ 导航顺序</h3><p>点击上下箭头调整侧边栏顺序，保存后下次打开仍会保留。</p><div id="v5NavOrder"></div></div><details class="v69-section-shell" id="v69SectionEditor">
-  <summary class="v69-section-summary"><span class="v69-summary-icon" aria-hidden="true">✧</span><span class="v69-summary-copy"><strong>页面标题与说明</strong><small>统一档案设置 · 其他页面按需展开</small></span><span class="v69-summary-arrow" aria-hidden="true">⌄</span></summary>
+  <summary class="v69-section-summary"><span class="v69-summary-icon" aria-hidden="true">✧</span><span class="v69-summary-copy"><strong>页面标题与说明</strong><small>各页面独立展开 · 修改标题与说明</small></span><span class="v69-summary-arrow" aria-hidden="true">⌄</span></summary>
   <div class="v69-section-body"><p class="v69-section-tip">每个页面均可修改标题与介绍。原有记录和功能不受影响。</p><div id="v5SectionFields"></div><p class="v69-section-footnote">修改完成后，请点击下方「保存文字设置」。</p></div>
 </details>
       <div class="appearance-actions"><button class="btn primary" id="saveAppearance">保存文字设置</button><button class="btn danger" id="resetAppearance">恢复默认外观</button></div>
@@ -2137,18 +2137,15 @@ function applyV5Sections(a){
  const fields=document.getElementById('v5SectionFields');if(!fields)return;
  const previousOpen=fields.dataset.v69Rendered==='1'
    ?new Set([...fields.querySelectorAll('details[open][data-v69-key]')].map(d=>d.dataset.v69Key))
-   :new Set(['archive']);
+   :new Set();
  const input=(page,field,label,value)=>'<div class="field"><label>'+esc(label)+'</label><input data-v5-page="'+page+'" data-v5-field="'+field+'" value="'+esc(value)+'"></div>';
  const card=(page,defaults)=>{
   const item=values[page]||{},title=item.title||defaults[0],subtitle=item.subtitle??defaults[1];
   const controls=input(page,'title','页面标题',title)+input(page,'subtitle','小字说明',subtitle);
-  if(page==='archive')return '<section class="v69-featured-card"><div class="v69-featured-header"><strong>❖ 档案</strong><span>AU 世界与原储藏室已合并</span></div><div class="v69-archive-fields">'+controls+'</div></section>';
-  return '<details class="v69-page-mini" data-v69-key="'+page+'" '+(previousOpen.has(page)?'open':'')+'><summary><span>✧ '+esc(defaults[0])+'</span></summary><div class="v69-page-fields">'+controls+'</div></details>';
+  return '<details class="v69-page-mini" data-v69-key="'+page+'" '+(previousOpen.has(page)?'open':'')+'><summary><span>✧ '+esc(page==='archive'?'档案':defaults[0])+'</span></summary><div class="v69-page-fields">'+controls+'</div></details>';
  };
- const others=Object.entries(V5_SECTION_DEFAULTS).filter(([page])=>!['archive','aus','settings'].includes(page));
- fields.innerHTML=card('archive',V5_SECTION_DEFAULTS.archive)+
-  '<details class="v69-secondary-list" data-v69-key="others" '+(previousOpen.has('others')?'open':'')+'><summary>其他独立页面 <span class="v69-small-count">'+others.length+' 项</span></summary><div class="v69-secondary-pages">'+
-  others.map(([page,defaults])=>card(page,defaults)).join('')+'</div></details>';
+ const pages=Object.entries(V5_SECTION_DEFAULTS).filter(([page])=>!['aus','settings'].includes(page));
+ fields.innerHTML='<div class="v69-page-list">'+pages.map(([page,defaults])=>card(page,defaults)).join('')+'</div>';
  fields.dataset.v69Rendered='1';
 }
 function applyV5NavOrder(a){
