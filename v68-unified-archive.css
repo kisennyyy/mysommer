@@ -1,0 +1,72 @@
+/* mysommer V6.8 UNIFIED ARCHIVE. All prior data containers and handlers remain. */
+#nav button[data-page="aus"],#nav button[data-page="settings"]{display:none!important}
+.v5-home-links [data-goto="aus"],.v5-home-links [data-goto="settings"]{display:none!important}
+#page-archive{--v68-plum:#684c83;--v68-faint:#f3edf7;--v68-line:#e2d5eb}
+.v68-head{border-radius:24px;padding:23px clamp(17px,3vw,29px);background:radial-gradient(circle at 90% 17%,#dcc8ef77,transparent 43%),linear-gradient(130deg,#faf7fc,#efe5f5);border:1px solid #e8dbed;margin-bottom:16px;display:flex;align-items:center;justify-content:space-between;gap:15px}
+.v68-eyebrow{font:10px Georgia,serif;letter-spacing:.25em;color:#9879a9}
+.v68-head h3{margin:7px 0 4px;font:600 clamp(29px,4vw,39px)/1.2 Georgia,"Songti SC",serif;letter-spacing:.2em;color:#5e4078}
+.v68-head p{margin:0;font-size:12px;color:#947da0}
+.v68-head-icon{display:grid;place-items:center;flex:0 0 66px;height:66px;border-radius:20px;background:linear-gradient(140deg,#c5a4da,#8864a4);color:#fff;font:36px Georgia,serif;box-shadow:0 9px 17px #8e6bb03e}
+.v68-tabs{display:flex;gap:8px;background:#efe7f5;padding:6px;border-radius:16px;border:1px solid #e7d9ee;max-width:670px;margin-bottom:18px}
+.v68-tabs button{font:600 13px/1.4 inherit;color:#765d8d;background:transparent;padding:12px 14px;flex:1;border:0;border-radius:12px;cursor:pointer;transition:background .2s,color .2s}
+.v68-tabs button[aria-selected="true"]{color:#fff;background:linear-gradient(130deg,#8e6dad,#6c5088);box-shadow:0 4px 9px #5d397333}
+.v68-subtabs{max-width:660px;margin:0 0 19px}
+.v68-pane[hidden],.v68-subpane[hidden]{display:none!important}
+.v68-pane-title{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:7px 0 14px}
+.v68-pane-title h4{margin:5px 0 2px;font:500 23px Georgia,"Songti SC",serif;color:#634980}
+.v68-pane-title p{color:#95809e;font-size:12px;margin:2px 0}
+.v68-pane-title .btn{white-space:nowrap}
+#page-archive #v68AuMount>.toolbar{margin:13px 0}
+#page-archive #v68AuMount #auGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,275px),1fr));gap:14px}
+#page-archive #archive-settings{display:block!important}
+#page-archive #archive-settings>.section-head{margin-top:0}
+#page-archive .v53-character-stage{margin-top:4px}
+.v68-legacy-files{margin:19px 0;padding:10px 13px;background:#f6f1f8;border:1px solid #e7d9ed;border-radius:15px}
+.v68-legacy-files>summary{cursor:pointer;font-size:12px;color:#816b91;font-weight:600;padding:5px}
+.v68-legacy-files #archive-characters{display:block!important;margin-top:15px}
+.v68-legacy-files .v53-legacy-character-tools{display:flex}
+.v68-legacy-files .note-grid{display:grid}
+.v68-legacy-files #addCharacter{display:none!important}
+.v68-file-prompt{background:#f1e9f6;border:1px solid #e6d9eb;border-radius:13px;padding:13px;color:#78608d;font-size:12px;line-height:1.65}
+#page-au-detail.v68-unified #v5AuDetail{display:none}
+#page-au-detail.v68-unified.v68-show-old #v5AuDetail{display:block}
+#page-au-detail.v68-unified.v68-show-old #v68AuDetail{display:none}
+.v68-au-detail{border:1px solid #e4d7eb;border-radius:23px;background:#fffafd;overflow:hidden;box-shadow:0 12px 32px #5b417118}
+.v68-au-hero{min-height:190px;background:radial-gradient(circle at 82% 18%,#b69bd37a,transparent 47%),linear-gradient(140deg,#745792,#43315c);color:#fff;padding:28px clamp(17px,4vw,36px);display:flex;flex-direction:column;justify-content:end;gap:10px;background-position:center;background-size:cover}
+.v68-au-hero small{font:11px Georgia,serif;letter-spacing:.21em;color:#eadcf6}
+.v68-au-hero h2{font:500 clamp(27px,4vw,41px)/1.2 Georgia,"Songti SC",serif;color:#fff9ff;margin:0}
+.v68-au-hero p{color:#f4e7fc;margin:0;font-size:13px}
+.v68-au-layout{padding:18px clamp(13px,3.6vw,28px) 25px;display:grid;grid-template-columns:1.15fr .85fr;align-items:start;gap:15px}
+.v68-card{background:#f8f3fb;border:1px solid #e8deee;border-radius:16px;padding:16px;min-width:0;margin-bottom:12px}
+.v68-card h3{margin:0 0 10px;color:#654c80;font:600 16px/1.45 Georgia,"Songti SC",serif}
+.v68-card p{color:#72627c;font-size:13px;line-height:1.8;white-space:pre-wrap;overflow-wrap:anywhere;margin:6px 0 12px}
+.v68-card .v68-actions{display:flex;gap:7px;flex-wrap:wrap}
+.v68-card .v68-actions button,.v68-card .v68-item button,.v68-legacy-toggle{font:12px/1.4 inherit;border:1px solid #d7c5e3;border-radius:10px;padding:8px 11px;background:#f0e5f8;color:#6d5185;cursor:pointer}
+.v68-card .v68-actions button:hover,.v68-card .v68-item button:hover{background:#e3d2f0}
+.v68-duo{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.v68-person{padding:15px 11px;display:flex;flex-direction:column;gap:6px;justify-content:center;align-items:center;border:1px solid #dccbe9;border-radius:13px;background:linear-gradient(145deg,#efe1f6,#e3d4ed);color:#6c4d82;cursor:pointer;min-height:125px}
+.v68-person-icon{width:41px;height:41px;border:1px solid #b99acb;border-radius:50%;display:grid;place-items:center;background:#fff7ff;color:#8565a0;font:26px Georgia,serif;overflow:hidden}
+.v68-person-icon img{width:100%;height:100%;object-fit:cover}
+.v68-person strong{font-size:14px}
+.v68-person small{font-size:11px;color:#9477a7}
+.v68-item{padding:12px 0;border-top:1px solid #e9e0ee;display:flex;align-items:center;justify-content:space-between;gap:10px;min-width:0}
+.v68-item:first-of-type{border-top:none}
+.v68-item-body{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+.v68-item-body strong{font-size:13px;color:#674c7e;overflow-wrap:anywhere}
+.v68-item-body small{font-size:11px;color:#9480a0;overflow-wrap:anywhere}
+.v68-item button{white-space:nowrap;flex-shrink:0}
+.v68-empty{color:#a28caf;font-size:12px;padding:14px 0}
+.v68-timeline-list{border-left:2px solid #c6aad7;margin:8px 4px 13px 3px;padding-left:12px}
+.v68-timeline-entry{padding:6px 0 12px 1px;border-bottom:1px solid #ebdfef}
+.v68-timeline-entry small{color:#a38bb1;font-size:11px}
+.v68-timeline-entry strong{display:block;color:#674c7f;font-size:13px}
+.v68-timeline-entry p{margin:3px 0;font-size:12px}
+.v68-timeline-entry button{background:#f0e4f6;color:#775691;border:1px solid #dcc9e5;padding:5px 9px;border-radius:8px;font-size:11px}
+.v68-legacy-toggle{margin:4px 16px 17px;background:transparent}
+.v68-context-return{margin-bottom:12px;border:1px solid #e2d3ed;border-radius:12px;background:#f5ecf9;padding:10px 13px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.v68-context-return[hidden]{display:none}
+.v68-context-return span{color:#846a96;font-size:12px;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.v68-context-return button{color:#684c82;border:1px solid #c8acd8;border-radius:9px;padding:8px 11px;background:#fff7ff;font-size:12px}
+.v68-assoc-link{padding:5px 9px;border-radius:9px;border:1px solid #bda7d0;background:#e5d6ef;color:#674980;font-size:11px;cursor:pointer}
+@media(max-width:780px){.v68-au-layout{grid-template-columns:1fr}.v68-au-hero{min-height:160px}.v68-card{padding:13px}.v68-duo{gap:7px}.v68-head-icon{flex-basis:51px;height:51px;font-size:26px}}
+@media(max-width:560px){.v68-head{padding:18px 14px}.v68-head h3{font-size:30px}.v68-tabs button{padding:11px 8px;font-size:12px}.v68-au-hero{padding:22px 15px}.v68-card .v68-actions button,.v68-item button{font-size:11px;padding:7px 9px}#page-archive #v68AuMount #auGrid{grid-template-columns:1fr}.v68-context-return{flex-wrap:wrap}}
