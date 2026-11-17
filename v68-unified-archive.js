@@ -31,11 +31,13 @@ function chooseView(tab,sub){
  if(state.tab==='records'&&state.sub==='people')v53RenderCharacterStage();
 }
 function updateSelectors(){
- const select=$('v68WritingAu');if(!select)return;
- const old=select.value,signature=db.aus.map(a=>a.id+':'+a.name).join('|');
- if(select.dataset.signature!==signature){
-  select.innerHTML='<option value="">全部 AU</option>'+db.aus.map(a=>'<option value="'+text(a.id)+'">'+text(a.name)+'</option>').join('');
-  select.dataset.signature=signature;select.value=old;if(select.value!==old)select.value='';
+ for(const key of ['v68WritingAu','v68SettingsAu']){
+  const select=$(key);if(!select)continue;
+  const old=select.value,signature=db.aus.map(a=>a.id+':'+a.name).join('|');
+  if(select.dataset.signature!==signature){
+   select.innerHTML='<option value="">全部 AU</option>'+db.aus.map(a=>'<option value="'+text(a.id)+'">'+text(a.name)+'</option>').join('');
+   select.dataset.signature=signature;select.value=old;if(select.value!==old)select.value='';
+  }
  }
 }
 function renderArchive(){
@@ -48,6 +50,10 @@ function renderArchive(){
 window.v68RenderArchive=renderArchive;
 function openArchive(tab,sub,auId,person){
  chooseView(tab,sub);go('archive');
+ if(auId&&state.tab==='records'&&state.sub==='other'){
+  updateSelectors();const select=$('v68SettingsAu');if(select)select.value=auId;
+  renderNotes('settings','settingGrid','settingSearch','settingType');
+ }
  if(auId&&people.includes(person)){
   const a=db.aus.find(x=>x.id===auId);
   v53SelectedAu=a?a.name:'';
@@ -154,7 +160,7 @@ auView.addEventListener('click',function(e){
  const au=db.aus.find(a=>a.id===v5CurrentAu);if(!au)return;
  const action=btn.dataset.v68Action,id=btn.dataset.v68Id;
  if(action==='person'){openArchive('records','people',au.id,id);return;}
- if(action==='other-files'){openArchive('records','other');return;}
+ if(action==='other-files'){openArchive('records','other',au.id);return;}
  if(action==='edit-au'){editAu(au.id);return;}
  if(action==='edit-setting'){window.editRecord('settings',id);return;}
  if(action==='new-setting'){window.editRecord('settings',null,{title:au.name+' · 新设定',type:'世界观',au:au.name,auId:au.id,content:''});return;}
@@ -163,7 +169,7 @@ auView.addEventListener('click',function(e){
  if(action==='browse-dreams'){openDreamForAu(au);return;}
  if(action==='read-writing'){openWritingRecord(id,au);return;}
  if(action==='new-dream'){editPhoto('dreams',null);requestAnimationFrame(()=>{const sel=$('v67DreamAssoc');if(sel)sel.value=au.name;});return;}
- if(action==='see-dream'){state.returnAu=au.id;state.returnScroll=window.scrollY;openDreamForAu(au);requestAnimationFrame(()=>{const film=$('v67FilmStage');film?.scrollIntoView({block:'start',behavior:'smooth'});});return;}
+ if(action==='see-dream'){openDreamForAu(au);window.requestAnimationFrame(()=>window.v67OpenDream?.(id));return;}
  if(action==='cover-clear'){if(!confirm('移除这个 AU 的封面图片？其他内容保持不变。'))return;au.v5Cover='';persist();renderV5AuDetail();return;}
  if(action==='timeline-add'){const title=$('v68TimelineTitle')?.value.trim();if(!title){toast('请填写时间节点标题');return;}au.v5Timeline??=[];au.v5Timeline.push({title,date:$('v68TimelineDate').value.trim(),note:$('v68TimelineNote').value.trim()});persist();renderV5AuDetail();return;}
  if(action==='timeline-remove'){if(!confirm('删除这个时间节点？'))return;au.v5Timeline.splice(Number(id),1);persist();renderV5AuDetail();return;}
@@ -201,7 +207,13 @@ if(writingControls&&!$('v68WritingAu')){
 }
 const auToolbar=$('page-aus')?.querySelector('.toolbar'),auGrid=$('auGrid');
 if(auToolbar&&auGrid){$('v68AuMount').appendChild(auToolbar);$('v68AuMount').appendChild(auGrid);}
-const settingPane=$('archive-settings');if(settingPane)$('v68SettingsMount').appendChild(settingPane);
+const settingPane=$('archive-settings');if(settingPane){$('v68SettingsMount').appendChild(settingPane);
+ const toolbar=settingPane.querySelector('.toolbar');if(toolbar&&!$('v68SettingsAu')){
+  const label=document.createElement('label');label.style.cssText='display:flex;align-items:center;gap:6px;color:#806691;font-size:12px;';
+  label.innerHTML='所属 AU <select id="v68SettingsAu" style="max-width:150px;padding:7px;border:1px solid #d9c7e5;border-radius:9px;background:#fff;color:#6c5285"><option value="">全部 AU</option></select>';
+  toolbar.prepend(label);label.querySelector('select').addEventListener('change',()=>renderNotes('settings','settingGrid','settingSearch','settingType'));
+ }
+}
 const peopleStage=$('v53CharacterStage');if(peopleStage)$('v68PeopleMount').appendChild(peopleStage);
 const characterPane=$('archive-characters');if(characterPane)$('v68LegacyCharactersMount').appendChild(characterPane);
 chooseView('worlds','people');renderArchive();renderContextBars();
