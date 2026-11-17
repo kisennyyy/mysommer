@@ -91,3 +91,10 @@
  #page-appearance .v69-secondary-list>summary:after,
  #page-appearance .v69-page-mini>summary:after{transition:none}
 }
+
+/* V6.9.1: one-level accordion rows, archive included with identical styling. */
+#page-appearance .v69-page-list{display:grid;gap:9px}
+#page-appearance .v69-page-list>.v69-page-mini{margin:0;box-shadow:0 2px 8px rgba(83,57,112,.035)}
+#page-appearance .v69-page-list>.v69-page-mini>summary{min-height:48px;padding:13px 15px;font-size:13px}
+#page-appearance .v69-page-list>.v69-page-mini[open]{border-color:#c6addb;background:#fff}
+#page-appearance .v69-page-list>.v69-page-mini>summary:focus-visible{outline:2px solid #9975b7;outline-offset:-2px;border-radius:12px}
