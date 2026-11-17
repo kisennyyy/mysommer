@@ -143,6 +143,7 @@
    '<div class="v67-film-meta">✧ '+String(list.length)+' DREAM TICKETS · 紫色电影票珍藏 ✧</div>';
  }
  window.v67RenderDream=renderDream;
+ window.v67OpenDream=function(id){showDreamDetail(id);};
  window.v67ShowDreamsForAu=function(au){
   filmState.mode='roll';filmState.opened=true;
   var selector=document.getElementById('v67DreamAu');updateAuChoices();selector.value=au||'';
