@@ -2108,7 +2108,7 @@ document.getElementById('resetAppearance').onclick=()=>{if(!confirm('恢复默�
 
 /* V5 Phase 1: editable section headings and homepage */
 const V5_SECTION_DEFAULTS={
- archive:['档案','AU 世界、角色与其他设定。'],
+ archive:['档案','一个入口，记录每个世界里两个人的故事。'],
  aus:['AU 索引','管理世界观、关系设定与创作进度。'],
  calendar:['纪念日历','纪念日、生日、计划日与倒数日都可以放在这里。'],
  dreams:['梦图分类','收纳梦图、约稿、截图与视觉灵感。'],
@@ -2123,7 +2123,7 @@ const V5_SECTION_DEFAULTS={
 function applyV5Sections(a){
  const values=a.sections||{};
  for(const [page,defaults] of Object.entries(V5_SECTION_DEFAULTS)){
-  const section=document.getElementById('page-'+page),heading=section?.querySelector('.section-head h3'),desc=section?.querySelector('.section-head p');
+  const section=document.getElementById('page-'+page),heading=section?.querySelector(page==='archive'?'.v68-head h3':'.section-head h3'),desc=section?.querySelector(page==='archive'?'.v68-head p':'.section-head p');
   const custom=values[page]||{},title=custom.title||defaults[0],subtitle=custom.subtitle??defaults[1];
   if(heading)heading.textContent=title;if(desc)desc.textContent=subtitle;
   const nav=document.querySelector('#nav button[data-page="'+page+'"]');
@@ -2134,7 +2134,7 @@ function applyV5Sections(a){
  fields.innerHTML=Object.entries(V5_SECTION_DEFAULTS).map(([page,defaults])=>{
  const item=values[page]||{};
  return '<div class="field"><label>'+esc(defaults[0])+' · 标题</label><input data-v5-page="'+page+'" data-v5-field="title" value="'+esc(item.title||defaults[0])+'"></div>'+
- '<div class="field"><label>'+esc(defaults[0])+' · 小字说明</label><input data-v5-page="'+page+'" data-v5-field="subtitle" value="'+esc(item.subtitle??defaults[1])+'"></div>';
+ '<div class="field"><label>'+esc(page==='archive'?'档案页顶部介绍文字':defaults[0]+' · 小字说明')+'</label><input data-v5-page="'+page+'" data-v5-field="subtitle" value="'+esc(item.subtitle??defaults[1])+'"></div>';
  }).join('');
 }
 function applyV5NavOrder(a){
