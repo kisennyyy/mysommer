@@ -109,6 +109,7 @@ function renderContextBars(){
 function renderAuDetail(){
  const au=db.aus.find(a=>a.id===v5CurrentAu);
  if(!au)return;
+ if(state.currentAu!==au.id){state.currentAu=au.id;state.legacy=false;}
  auPage.classList.add('v68-unified');
  auPage.classList.toggle('v68-show-old',state.legacy);
  const settings=listFor('settings',au),writing=listFor('writing',au),dreams=listFor('dreams',au);
