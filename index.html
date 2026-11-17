@@ -889,6 +889,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 /* On narrow screens, fit the cover frame to the actual image; leave tablets unchanged. */
 @media(max-width:760px){#page-home .v5-home-cover{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:var(--mysommer-mobile-cover-ratio,4 / 5)}}
 </style><style>.v5-home-cover{position:relative}.v61-side-edit{display:block;width:100%;margin-top:10px;padding:9px 12px;border:1px solid var(--line);border-radius:13px;background:#fff9;color:var(--muted);font-size:11px;line-height:1.4;text-align:left;cursor:pointer;transition:background .18s,border-color .18s,color .18s}.v61-side-edit:hover{background:var(--panel);border-color:var(--accent2);color:var(--deep)}.v61-side-edit:focus-visible{outline:2px solid var(--accent);outline-offset:2px}.v61-side-edit[hidden]{display:none!important}@media(max-width:760px){.v61-side-edit{display:none!important}}.v61-panel{max-width:440px;margin:12px auto;padding:17px;border-radius:20px;background:#f8f0fbee;border:1px solid #dac6e8;color:#694d80}.v61-panel[hidden]{display:none!important}.v61-panel label{display:block;margin:14px 0}.v61-panel label span{float:right}.v61-panel input{display:block;width:100%;margin-top:10px;accent-color:#946db3}.v61-panel button{border:1px solid #c7b2d8;border-radius:14px;padding:8px 13px;margin-right:7px;background:white;color:#694d80}.v61-panel #v61Save{background:#8b69ac;color:white}.v61-panel #v61Close{float:right}</style><link rel="stylesheet" href="./v67-books-tickets.css?v=20261117">
+<link rel="stylesheet" href="./v68-unified-archive.css?v=20261117b">
 </head>
 <body>
 <div class="intro" id="introScreen" aria-label="网站开屏">
@@ -903,6 +904,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
   <div class="brand"><div class="brand-mark">✧</div><div><h1>🍎 🍏</h1><p>MY AU UNIVERSE</p></div></div>
   <div class="nav" id="nav">
     <button class="active" data-page="home"><span class="nav-icon">⌂</span>首页</button>
+    <button data-page="archive"><span class="nav-icon">❖</span>档案</button>
     <button data-page="aus"><span class="nav-icon">✦</span>AU 索引</button>
     <button data-page="calendar"><span class="nav-icon">♡</span>日历</button>
     <button data-page="dreams"><span class="nav-icon">☾</span>合照</button>
@@ -932,7 +934,7 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
       
     </div>
     <div class="room-drawer" id="roomDrawer" hidden><button class="room-close" id="roomClose" type="button" aria-label="关闭菜单">×</button><h3>合集</h3><p>✦ TUNE INTO OUR LITTLE UNIVERSE ✦</p>
-      <div class="v5-home-links"><button data-goto="aus">✦ AU 宇宙</button><button data-goto="settings">❖ 档案室</button><button data-goto="dreams">☾ 梦图收藏</button><button data-goto="writing">✎ 文稿</button><button data-goto="letters">✉ 书信</button><button data-goto="divination">☽ 梦占</button><button data-goto="gacha">✧ 抽卡</button><button data-goto="calendar">♡ 日历</button><button data-goto="merch">✧ 谷子</button><button data-goto="appearance">✿ 外观设置</button></div>
+      <div class="v5-home-links"><button data-goto="archive">❖ 档案</button><button data-goto="dreams">☾ 梦图收藏</button><button data-goto="writing">✎ 文稿</button><button data-goto="letters">✉ 书信</button><button data-goto="divination">☽ 梦占</button><button data-goto="gacha">✧ 抽卡</button><button data-goto="calendar">♡ 日历</button><button data-goto="merch">✧ 谷子</button><button data-goto="appearance">✿ 外观设置</button></div>
     </div>    <button class="room-calendar today-card" type="button" data-goto="calendar" aria-label="打开纪念日历"><span class="today-top"><b>T O D A Y</b><span id="todayWeek">星期日</span></span><span class="today-middle"><span class="today-date"><em id="roomDay">18</em><strong id="roomMonth">OCT</strong></span><span class="today-weather"><span id="todayWeatherIcon" aria-hidden="true">☁</span><span id="todayWeatherText">正在读取天气…</span></span></span><span class="today-quote" id="todayQuote">今天也要好好照顾自己，妹妹。</span><span class="today-flower" aria-hidden="true">✿</span></button>
 
   </div>
@@ -945,13 +947,43 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
     <div class="footer">Made for stories, memories & little universes · 🍎 🍏</div>
   </section>
 
+  <section class="page" id="page-archive">
+    <div class="v68-head"><div><div class="v68-eyebrow">PERSONAL ARCHIVE / OUR UNIVERSES</div><h3>档案</h3><p>一个入口，记录每个世界里两个人的故事。</p></div><div class="v68-head-icon" aria-hidden="true">✧</div></div>
+    <div class="v68-tabs" role="tablist" aria-label="档案模式">
+      <button type="button" data-v68-tab="worlds" role="tab" aria-selected="true" aria-controls="v68WorldPane">✦ AU 世界</button>
+      <button type="button" data-v68-tab="records" role="tab" aria-selected="false" aria-controls="v68RecordPane">❖ 设定资料</button>
+    </div>
+    <section class="v68-pane" id="v68WorldPane" role="tabpanel">
+      <div class="v68-pane-title"><div><div class="v68-eyebrow">OUR PARALLEL UNIVERSES</div><h4>世界索引</h4><p id="v68AuSummary">AU 世界</p></div><button type="button" class="btn primary" id="v68CreateAu">＋ 新建 AU</button></div>
+      <div id="v68AuMount"></div>
+    </section>
+    <section class="v68-pane" id="v68RecordPane" role="tabpanel" hidden>
+      <div class="v68-tabs v68-subtabs" role="tablist" aria-label="设定资料分类">
+        <button type="button" data-v68-sub="people" role="tab" aria-selected="true" aria-controls="v68PeoplePane">♙ 角色设定</button>
+        <button type="button" data-v68-sub="other" role="tab" aria-selected="false" aria-controls="v68OtherPane">❖ 其他设定</button>
+      </div>
+      <section class="v68-subpane" id="v68PeoplePane" role="tabpanel">
+        <div id="v68PeopleMount"></div>
+        <details class="v68-legacy-files">
+          <summary>原有角色记录检索与兼容编辑</summary>
+          <p class="v68-file-prompt">人物主档案固定为夏以昼和锺起。旧版记录按原 ID 保留，无法判断人物归属的旧资料可在此核对。</p>
+          <div id="v68LegacyCharactersMount"></div>
+        </details>
+      </section>
+      <section class="v68-subpane" id="v68OtherPane" role="tabpanel" hidden>
+        <div class="v68-pane-title"><div><h4>其他设定</h4><p id="v68SettingSummary">世界观、时间线、考据与灵感</p></div></div>
+        <div id="v68SettingsMount"></div>
+      </section>
+    </section>
+  </section>
+
   <section class="page" id="page-aus">
     <div class="section-head"><div><h3>AU 索引</h3><p>管理世界观、关系设定与创作进度。</p></div><button class="btn primary" id="addAu">＋ 新建 AU</button></div>
     <div class="toolbar"><input class="search" id="auSearch" placeholder="搜索 AU 名称、关系或标签…"><select id="auStatus" style="max-width:150px"><option value="">全部进度</option><option>已完成</option><option>计划写</option><option>构思中</option><option>待写</option><option>灵感</option><option>待发展</option></select><div class="grow"></div><span id="auCount" class="au-meta"></span></div>
     <div class="cards" id="auGrid"></div>
   </section>
 
-  <section class="page" id="page-au-detail"><div class="section-head"><div><h3 id="v5AuTitle">AU 档案</h3><p id="v5AuSubtitle">属于我们的另一段时空</p></div><button class="btn" id="v5AuBack">← 返回 AU 索引</button></div><div id="v5AuDetail"></div></section>
+  <section class="page" id="page-au-detail"><div class="section-head"><div><h3 id="v5AuTitle">AU 档案</h3><p id="v5AuSubtitle">属于我们的另一段时空</p></div><button class="btn" id="v5AuBack">← 返回 AU 索引</button></div><div id="v68AuDetail"></div><div id="v5AuDetail"></div></section>
   <section class="page" id="page-calendar">
     <div class="orbit-hero" aria-hidden="true"><div class="orbit-hero-top"><span>ARCHIVE / OUR TIME</span><span>01 / ∞</span></div><div class="orbit-hero-art"><div class="orbit-path orbit-path-one"></div><div class="orbit-path orbit-path-two"></div><div class="orbit-path orbit-path-three"></div><div class="orbit-satellite">✦</div><div class="orbit-window orbit-window-left"><span>MEMORY INDEX</span><strong>THE DAYS</strong><em>WE KEEP</em><div class="orbit-window-lines"></div></div><div class="orbit-window orbit-window-right"><span>OUR LITTLE UNIVERSE</span><div class="orbit-earth" aria-hidden="true"><svg class="orbit-earth-svg" viewBox="0 0 200 200" role="img" aria-label="紫色地球，欧洲非洲与亚洲" xmlns="http://www.w3.org/2000/svg">
 <defs><radialGradient id="earthSea" cx="28%" cy="20%" r="90%"><stop offset="0" stop-color="#e6ddf1"/><stop offset=".48" stop-color="#9d86bc"/><stop offset="1" stop-color="#3d2e59"/></radialGradient><linearGradient id="earthLand" x1="0" x2=".8" y1="0" y2="1"><stop stop-color="#f5effa"/><stop offset=".55" stop-color="#cdbbdf"/><stop offset="1" stop-color="#9380ae"/></linearGradient><clipPath id="earthClip"><circle cx="100" cy="100" r="96"/></clipPath></defs>
@@ -1152,8 +1184,8 @@ async function v56ArchiveRestore(){
 v56ArchiveRestore();
 function esc(s=""){return String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
 function toast(s){const t=document.getElementById("toast");t.textContent=s;t.classList.add("show");clearTimeout(toast.timer);toast.timer=setTimeout(()=>t.classList.remove("show"),2500)}
-const pageNames={letters:"书信",home:"欢迎回来",aus:"AU ",calendar:"日历",dreams:"梦图",merch:"谷子",settings:"档案",writing:"文稿",divination:"梦占存档",gacha:"抽卡存档",characters:"角色档案",appearance:"外观设置"};
-function go(page){document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));const coverEdit=document.getElementById("v61Open");if(coverEdit){coverEdit.hidden=page!=="home";if(page!=="home"){const coverPanel=document.getElementById("v61Panel");if(coverPanel&&!coverPanel.hidden){coverPanel.hidden=true;coverEdit.setAttribute("aria-expanded","false");applyAppearance();}}}document.getElementById("pageTitle").textContent=(getAppearance().sections?.[page]?.title||V5_SECTION_DEFAULTS[page]?.[0]||pageNames[page]||page);renderAll();window.scrollTo({top:0,behavior:"smooth"})}
+const pageNames={letters:"书信",home:"欢迎回来",archive:"档案",aus:"AU ",calendar:"日历",dreams:"梦图",merch:"谷子",settings:"档案",writing:"文稿",divination:"梦占存档",gacha:"抽卡存档",characters:"角色档案",appearance:"外观设置"};
+function go(page){if(page==="aus"||page==="settings")page="archive";document.querySelectorAll(".page").forEach(p=>p.classList.toggle("active",p.id==="page-"+page));document.querySelectorAll("#nav button").forEach(b=>b.classList.toggle("active",b.dataset.page===page));const coverEdit=document.getElementById("v61Open");if(coverEdit){coverEdit.hidden=page!=="home";if(page!=="home"){const coverPanel=document.getElementById("v61Panel");if(coverPanel&&!coverPanel.hidden){coverPanel.hidden=true;coverEdit.setAttribute("aria-expanded","false");applyAppearance();}}}document.getElementById("pageTitle").textContent=(getAppearance().sections?.[page]?.title||V5_SECTION_DEFAULTS[page]?.[0]||pageNames[page]||page);renderAll();window.scrollTo({top:0,behavior:"smooth"})}
 document.getElementById("nav").addEventListener("click",e=>{const b=e.target.closest("button[data-page]");if(b)go(b.dataset.page)});
 document.addEventListener("click",e=>{const b=e.target.closest("[data-goto]");if(b)go(b.dataset.goto)});
 function updateStats(){renderV5Progress();document.getElementById("statAus").textContent=db.aus.length;document.getElementById("statEvents").textContent=db.events.length;document.getElementById("statDreams").textContent=db.dreams.length;document.getElementById("statWriting").textContent=db.writing.length}
@@ -1171,16 +1203,16 @@ function val(id){return document.getElementById(id)?.value?.trim()||""}
 function f(id,label,value="",type="text",placeholder=""){return `<div class="field"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${esc(value)}" placeholder="${esc(placeholder)}"></div>`}
 function ta(id,label,value="",placeholder=""){return `<div class="field full"><label for="${id}">${label}</label><textarea id="${id}" placeholder="${esc(placeholder)}">${esc(value)}</textarea></div>`}
 function sel(id,label,opts,value){return `<div class="field"><label for="${id}">${label}</label><select id="${id}">${opts.map(o=>`<option ${o===value?"selected":""}>${esc(o)}</option>`).join("")}</select></div>`}
-function editAu(id){const a=db.aus.find(x=>x.id===id)||{id:uid(),name:"",pair:"",type:"",status:"待写",mark:"",desc:"",icon:"✧",tags:""};openModal(id?"编辑 AU":"新建 AU",`<div class="form-grid">${f("name","AU 名称",a.name)}${f("pair","关系设定",a.pair)}${f("type","类型 / 题材",a.type)}${sel("status","创作进度",["已完成","计划写","构思中","待写","灵感","待发展"],a.status)}${f("mark","主题关键词",a.mark)}${f("icon","卡片符号",a.icon||"✧")}${f("tags","标签（逗号分隔）",a.tags)}${ta("desc","简介 / 核心设定",a.desc)}</div>`,()=>{if(!val("name")){toast("请填写 AU 名称");return false}const data={...a,id:a.id,name:val("name"),pair:val("pair"),type:val("type"),status:val("status"),mark:val("mark"),icon:val("icon")||"✧",tags:val("tags"),desc:val("desc")};const i=db.aus.findIndex(x=>x.id===a.id);if(i>=0)db.aus[i]=data;else db.aus.unshift(data);toast("AU 已保存")})}
+function editAu(id){const a=db.aus.find(x=>x.id===id)||{id:uid(),name:"",pair:"",type:"",status:"待写",mark:"",desc:"",icon:"✧",tags:""};openModal(id?"编辑 AU":"新建 AU",`<div class="form-grid">${f("name","AU 名称",a.name)}${f("pair","关系设定",a.pair)}${f("type","类型 / 题材",a.type)}${sel("status","创作进度",["已完成","计划写","构思中","待写","灵感","待发展"],a.status)}${f("mark","主题关键词",a.mark)}${f("icon","卡片符号",a.icon||"✧")}${f("tags","标签（逗号分隔）",a.tags)}${ta("desc","简介 / 核心设定",a.desc)}</div>`,()=>{if(!val("name")){toast("请填写 AU 名称");return false}const data={...a,id:a.id,v68Aliases:[...(Array.isArray(a.v68Aliases)?a.v68Aliases:[]),...(id&&a.name&&a.name!==val("name")?[a.name]:[])],name:val("name"),pair:val("pair"),type:val("type"),status:val("status"),mark:val("mark"),icon:val("icon")||"✧",tags:val("tags"),desc:val("desc")};const i=db.aus.findIndex(x=>x.id===a.id);if(i>=0)db.aus[i]=data;else db.aus.unshift(data);toast("AU 已保存")})}
 window.editAu=editAu;
 document.getElementById("addAu").onclick=()=>editAu(null);
 window.newSettingFor=id=>{const a=db.aus.find(x=>x.id===id);editRecord("settings",null,{title:a?.name+" · 新设定",type:"世界观",au:a?.name||"",content:""});};
 function editRecord(bucket,id,seed={}){const item=db[bucket].find(x=>x.id===id)||{id:uid(),...seed};const configs={settings:{title:"设定存档",types:["世界观","人物关系","时间线","考据资料","灵感碎片","其他"],body:"内容"},writing:{title:"文稿",types:["正文","片段","大纲","设定草稿","废稿回收","其他"],body:"正文 / 内容"},characters:{title:"角色档案",types:[],body:"详细档案"}};
 const c=configs[bucket];let body=`<div class="form-grid">${f("title","标题 / 角色名",item.title||item.name||"")}`;
-if(bucket==="characters"){body+=`${f("au","所属 AU",item.au||"")}${f("role","身份 / 关系",item.role||"")}${f("appearance","外观关键词",item.appearance||"")}${f("motivation","动机 / 目标",item.motivation||"")}${ta("content","详细档案",item.content||"")} `}
+if(bucket==="characters"){body+=`${sel("v68CharacterPerson","固定角色",["待归档","夏以昼","锺起"],item.personId||(["夏以昼","锺起"].find(p=>(item.title||item.name||"").includes(p))||"待归档"))}${f("au","所属 AU",item.au||"")}${f("role","身份 / 关系",item.role||"")}${f("appearance","外观关键词",item.appearance||"")}${f("motivation","动机 / 目标",item.motivation||"")}${ta("content","详细档案",item.content||"")} `}
 else {body+=`${sel("type","分类",c.types,item.type||c.types[0])}${f("au","所属 AU（可选）",item.au||"")}${ta("content",c.body,item.content||"")}`}
 body+=`</div>`;
-openModal(item.title||item.name?"编辑"+c.title:"新建"+c.title,body,()=>{const title=val("title");if(!title){toast("请填写标题");return false}const data={...item,title,name:bucket==="characters"?title:item.name,type:val("type")||item.type||"",au:val("au"),role:val("role"),appearance:val("appearance"),motivation:val("motivation"),content:val("content"),updated:new Date().toISOString()};const i=db[bucket].findIndex(x=>x.id===item.id);if(i>=0)db[bucket][i]=data;else db[bucket].unshift(data);toast("已保存")})}
+openModal(item.title||item.name?"编辑"+c.title:"新建"+c.title,body,()=>{const title=val("title");if(!title){toast("请填写标题");return false}const data={...item,title,name:bucket==="characters"?title:item.name,type:val("type")||item.type||"",au:val("au"),auId:db.aus.find(a=>a.name===val("au")||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(val("au"))))?.id||"",personId:bucket==="characters"?(val("v68CharacterPerson")==="待归档"?"":val("v68CharacterPerson")):item.personId,role:val("role"),appearance:val("appearance"),motivation:val("motivation"),content:val("content"),updated:new Date().toISOString()};const i=db[bucket].findIndex(x=>x.id===item.id);if(i>=0)db[bucket][i]=data;else db[bucket].unshift(data);toast("已保存")})}
 document.getElementById("addSetting").onclick=()=>editRecord("settings");
 document.getElementById("addWriting").onclick=()=>v5EditWriting(null);
 document.getElementById("addCharacter").onclick=()=>editRecord("characters");
@@ -1188,7 +1220,7 @@ const v5EditRecordCore=editRecord;
 window.editRecord=function(bucket,id,seed){return bucket==="writing"?v5EditWriting(id,seed):v5EditRecordCore(bucket,id,seed)};
 window.deleteItem=(bucket,id)=>{if(confirm("确定删除这条记录吗？此操作无法撤销。")){db[bucket]=db[bucket].filter(x=>x.id!==id);persist();renderAll();toast("已删除")}};
 function noteCard(item,bucket){const title=item.title||item.name||"未命名",snippet=(item.content||item.desc||"").slice(0,170);return `<article class="note-card" onclick="${bucket==='writing'?'v5ReadWriting':'editRecord'}('${bucket}','${item.id}')"><div class="tag-row" style="margin-bottom:8px"><span class="tag">${esc(item.type||item.role||"档案")}</span>${item.au?`<span class="tag">${esc(item.au)}</span>`:""}</div><h4>${esc(title)}</h4><p>${esc(snippet||"点击打开，继续补充内容。")}</p><div class="card-actions"><button class="btn soft" onclick="event.stopPropagation();${bucket==='writing'?'v5EditWriting':'editRecord'}(${bucket==='writing'?'':'\''+bucket+'\','}'${item.id}')">编辑</button><button class="btn danger" onclick="event.stopPropagation();deleteItem('${bucket}','${item.id}')">删除</button></div></article>`}
-function renderNotes(bucket,gridId,searchId,typeId){const q=(document.getElementById(searchId)?.value||"").toLowerCase(),type=document.getElementById(typeId)?.value||"";const list=db[bucket].filter(x=>(!type||x.type===type)&&[x.title,x.name,x.au,x.type,x.content,x.role].join(" ").toLowerCase().includes(q));document.getElementById(gridId).innerHTML=list.map(x=>noteCard(x,bucket)).join("")||empty("这里还没有存档，点右上角添加第一条。");const countId={settings:"settingCount",writing:"writingCount",characters:"characterCount"}[bucket];document.getElementById(countId).textContent=`${list.length} 条记录`;if(bucket==="characters"){const select=document.getElementById("characterAu"),old=select.value;select.innerHTML='<option value="">全部 AU</option>'+db.aus.map(a=>`<option>${esc(a.name)}</option>`).join("");select.value=old;}if(bucket==="writing"&&typeof window.v67RenderWriting==="function")window.v67RenderWriting();}
+function renderNotes(bucket,gridId,searchId,typeId){const q=(document.getElementById(searchId)?.value||"").toLowerCase(),type=document.getElementById(typeId)?.value||"";let list=db[bucket].filter(x=>(!type||x.type===type)&&[x.title,x.name,x.au,x.type,x.content,x.role].join(" ").toLowerCase().includes(q));if(bucket==="writing"){const id=document.getElementById("v68WritingAu")?.value||"";if(id){const a=db.aus.find(x=>x.id===id);list=list.filter(x=>a&&(window.v68MatchesAu?window.v68MatchesAu(x,a):(x.auId===a.id||x.au===a.name)))}}document.getElementById(gridId).innerHTML=list.map(x=>noteCard(x,bucket)).join("")||empty("这里还没有存档，点右上角添加第一条。");const countId={settings:"settingCount",writing:"writingCount",characters:"characterCount"}[bucket];document.getElementById(countId).textContent=`${list.length} 条记录`;if(bucket==="characters"){const select=document.getElementById("characterAu"),old=select.value;select.innerHTML='<option value="">全部 AU</option>'+db.aus.map(a=>`<option>${esc(a.name)}</option>`).join("");select.value=old;}if(bucket==="writing"&&typeof window.v67RenderWriting==="function")window.v67RenderWriting();}
 function imageField(id,label){return `<div class="field full"><label>${label}</label><input id="${id}" type="file" accept="image/*"><small style="color:var(--muted);font-size:10px">建议使用压缩后的图片，较大的图片会占用浏览器本地空间。</small></div>`}
 function editPhoto(bucket,id){const isDream=bucket==="dreams",item=db[bucket].find(x=>x.id===id)||{id:uid(),title:"",category:isDream?"梦稿合照":"周边",status:isDream?"":"想收",date:"",price:"",series:"",note:"",image:""};let body=`<div class="form-grid">${f("title","名称",item.title)}${isDream?sel("category","分类",["梦稿合照","游戏合照","游戏截图","自绘","其他"],item.category):sel("status","收藏状态",["已到手","运输中","预售中","想收"],item.status)}${isDream?f("date","日期",item.date,"date"):f("series","作品 / 系列",item.series)}${!isDream?f("price","单件价格（€）",item.price):""}${!isDream?f("v5MerchQuantity","数量",item.quantity??1,"number"):""}${!isDream?f("v5MerchDate","入手 / 下单日期",item.purchaseDate||"","date"):""}${imageField("imageFile","图片")}${isDream?f("v5DreamTags","标签（逗号分隔）",item.tags||""):""}${isDream?sel("v67DreamAssoc","所属 AU（可选）",["不关联",...db.aus.map(a=>a.name),...(item.au&&!db.aus.some(a=>a.name===item.au)?[item.au]:[])],item.au||"不关联"):""}${ta("note","备注",item.note||"")}</div>`;openModal(isDream?"添加梦图":"添加谷子",body,()=>{if(!val("title")){toast("请填写名称");return false}const file=document.getElementById("imageFile").files[0];const save=image=>{const data={...item,title:val("title"),category:val("category"),status:val("status"),date:val("date"),series:val("series"),price:val("price"),quantity:isDream?item.quantity:Math.max(1,Math.floor(Number(val("v5MerchQuantity"))||1)),purchaseDate:isDream?item.purchaseDate:val("v5MerchDate"),note:val("note"),tags:isDream?val("v5DreamTags"):item.tags,au:isDream?(val("v67DreamAssoc")==="不关联"?"":val("v67DreamAssoc")):item.au,auId:isDream?(db.aus.find(a=>a.name===val("v67DreamAssoc"))?.id||""):item.auId,image:image||item.image};const i=db[bucket].findIndex(x=>x.id===item.id);if(i>=0)db[bucket][i]=data;else db[bucket].unshift(data);persist();closeModal();renderAll();toast("收藏已保存")};if(file){if(file.size>2.5*1024*1024){toast("图片大于 2.5MB，请先压缩后再上传");return false}const reader=new FileReader();reader.onload=()=>save(reader.result);reader.onerror=()=>toast("图片读取失败");reader.readAsDataURL(file);return false}else{save(item.image);return false}})}
 document.getElementById("addDream").onclick=()=>editPhoto("dreams");
@@ -1196,7 +1228,7 @@ document.getElementById("addMerch").onclick=()=>editPhoto("merch");
 function photoCard(item,bucket){const img=item.image?`<img src="${item.image}" alt="${esc(item.title)}" ${bucket==="dreams"?`onclick="v5ViewDream(\'${item.id}\')" style="cursor:zoom-in"`:""}>`:`<div class="photo-placeholder">${bucket==="dreams"?"☾":"✧"}</div>`;return `<article class="photo-card">${img}<div class="photo-info"><strong>${esc(item.title)}</strong><small>${esc(bucket==="dreams"?v5DreamCategory(item.category):(item.series||"未分类"))}${item.status?" · "+esc(item.status):""}</small>${item.price?`<small style="display:block;margin-top:3px">单价：${esc(item.price)}${bucket==="merch"?" · 数量："+esc(item.quantity||1):""}</small>`:""}<div class="card-actions"><button class="btn soft" onclick="editPhoto('${bucket}','${item.id}')">编辑</button><button class="btn danger" onclick="deleteItem('${bucket}','${item.id}')">删除</button></div></div></article>`}
 window.editPhoto=editPhoto;
 function v5DreamCategory(cat){return ({"约稿":"梦稿合照","梦图":"梦稿合照","灵感参考":"其他"}[cat]||cat||"其他")}
-function renderPhotos(bucket,gridId,searchId,filterId){const q=(document.getElementById(searchId)?.value||"").toLowerCase(),filter=document.getElementById(filterId)?.value||"";let list=db[bucket].filter(x=>(!filter||(bucket==="dreams"?v5DreamCategory(x.category)===filter:x.status===filter))&&[x.title,x.category,x.status,x.note,x.series,x.tags,x.au].join(" ").toLowerCase().includes(q));if(bucket==="dreams"){const auFilter=document.getElementById("v67DreamAu")?.value||"";if(auFilter)list=list.filter(x=>x.au===auFilter||db.aus.some(a=>a.name===auFilter&&a.id===x.auId));}if(bucket==="merch"){const sort=document.getElementById("v5MerchSort")?.value||"new";if(sort==="price-high")list.sort((a,b)=>v5MerchPrice(b.price)-v5MerchPrice(a.price));if(sort==="price-low")list.sort((a,b)=>v5MerchPrice(a.price)-v5MerchPrice(b.price));if(sort==="title")list.sort((a,b)=>(a.title||"").localeCompare(b.title||"","zh"));renderV5MerchStats()}document.getElementById(gridId).innerHTML=list.map(x=>photoCard(x,bucket)).join("")||empty("这里还没有收藏，上传一张图片开始整理。",bucket==="dreams"?"☾":"✧");document.getElementById(bucket==="dreams"?"dreamCount":"merchCount").textContent=`${list.length} 件`;if(bucket==="dreams"&&typeof window.v67RenderDream==="function")window.v67RenderDream();}
+function renderPhotos(bucket,gridId,searchId,filterId){const q=(document.getElementById(searchId)?.value||"").toLowerCase(),filter=document.getElementById(filterId)?.value||"";let list=db[bucket].filter(x=>(!filter||(bucket==="dreams"?v5DreamCategory(x.category)===filter:x.status===filter))&&[x.title,x.category,x.status,x.note,x.series,x.tags,x.au].join(" ").toLowerCase().includes(q));if(bucket==="dreams"){const auFilter=document.getElementById("v67DreamAu")?.value||"";if(auFilter)list=list.filter(x=>x.au===auFilter||db.aus.some(a=>a.name===auFilter&&(window.v68MatchesAu?window.v68MatchesAu(x,a):a.id===x.auId)));}if(bucket==="merch"){const sort=document.getElementById("v5MerchSort")?.value||"new";if(sort==="price-high")list.sort((a,b)=>v5MerchPrice(b.price)-v5MerchPrice(a.price));if(sort==="price-low")list.sort((a,b)=>v5MerchPrice(a.price)-v5MerchPrice(b.price));if(sort==="title")list.sort((a,b)=>(a.title||"").localeCompare(b.title||"","zh"));renderV5MerchStats()}document.getElementById(gridId).innerHTML=list.map(x=>photoCard(x,bucket)).join("")||empty("这里还没有收藏，上传一张图片开始整理。",bucket==="dreams"?"☾":"✧");document.getElementById(bucket==="dreams"?"dreamCount":"merchCount").textContent=`${list.length} 件`;if(bucket==="dreams"&&typeof window.v67RenderDream==="function")window.v67RenderDream();}
 function dateOnly(d){return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0")}
 let calDate=new Date();calDate.setDate(1);let selectedDate=dateOnly(new Date());
 function dateDiff(date){const now=new Date();now.setHours(0,0,0,0);const d=new Date(date+"T00:00:00");return Math.round((d-now)/86400000)}
@@ -1222,13 +1254,13 @@ document.getElementById("addEvent").onclick=()=>openModal("添加纪念日",`<di
 // V5.3 fixed duo character gallery: keep legacy records and AU-linked data.
 const V53_PEOPLE=['夏以昼','锺起'];
 let v53ActivePerson='夏以昼',v53SelectedAu='';
-function v53CharacterRecords(person){return (db.characters||[]).filter(c=>(c.title||c.name||'').includes(person));}
+function v53CharacterRecords(person){return (db.characters||[]).filter(c=>c.personId===person||(c.title||c.name||'').includes(person));}
 function v53RenderCharacterStage(){
  const root=document.getElementById('v53CharacterStage');if(!root)return;
  const profile=(db.v53People||{})[v53ActivePerson]||{};
  const aus=[...new Set(db.aus.map(a=>a.name).filter(Boolean))];
  if(v53SelectedAu&&!aus.includes(v53SelectedAu))v53SelectedAu='';
- const records=v53CharacterRecords(v53ActivePerson).filter(x=>!v53SelectedAu||x.au===v53SelectedAu);
+ const records=v53CharacterRecords(v53ActivePerson).filter(x=>!v53SelectedAu||x.au===v53SelectedAu||x.auId===db.aus.find(a=>a.name===v53SelectedAu)?.id);
  const image=profile.image?'<img src="'+profile.image+'" alt="'+esc(v53ActivePerson)+'头像">':'<span>✧</span>';
  root.innerHTML='<div class="v53-duo-title"><span>THE TWO OF US</span><h2>PEOPLE · 角色档案</h2><p>两个固定的名字，无数个平行世界。</p></div>'+
  '<div class="v53-duo-switch">'+V53_PEOPLE.map(n=>'<button class="v53-person-choice '+(n===v53ActivePerson?'active':'')+'" data-v53-person="'+n+'">'+esc(n)+'</button>').join('')+'</div>'+
@@ -1239,7 +1271,7 @@ function v53RenderCharacterStage(){
  root.querySelectorAll('[data-v53-person]').forEach(b=>b.onclick=()=>{v53ActivePerson=b.dataset.v53Person;v53RenderCharacterStage()});
  root.querySelector('#v53WorldSelect').onchange=e=>{v53SelectedAu=e.target.value;v53RenderCharacterStage()};
  root.querySelectorAll('[data-v53-edit]').forEach(b=>b.onclick=()=>editRecord('characters',b.dataset.v53Edit));
- root.querySelector('#v53AddRecord').onclick=()=>editRecord('characters',null,{title:v53ActivePerson,name:v53ActivePerson,au:v53SelectedAu});
+ root.querySelector('#v53AddRecord').onclick=()=>editRecord('characters',null,{title:v53ActivePerson,name:v53ActivePerson,personId:v53ActivePerson,au:v53SelectedAu,auId:db.aus.find(a=>a.name===v53SelectedAu)?.id||''});
  root.querySelector('#v53PhotoTrigger').onclick=()=>root.querySelector('#v53PhotoInput').click();
  root.querySelector('#v53PhotoInput').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{const image=await v52CompressImage(file);db.v53People=db.v53People||{};db.v53People[v53ActivePerson]={...(db.v53People[v53ActivePerson]||{}),image};persist();v53RenderCharacterStage()}catch(err){toast('头像上传失败')}};
  root.querySelector('#v53EditIntro').onclick=()=>{const intro=prompt('人物简介',profile.intro||'');if(intro===null)return;db.v53People=db.v53People||{};db.v53People[v53ActivePerson]={...profile,intro};persist();v53RenderCharacterStage()};
@@ -1283,7 +1315,7 @@ document.getElementById('v53PeriodExport').onclick=()=>v52Download('经期记录
 v53MigratePeriods();
 
 function renderCharacters(){v53RenderCharacterStage();renderNotes("characters","characterGrid","characterSearch","characterAu");const filter=document.getElementById("characterAu").value;if(filter){const list=db.characters.filter(x=>x.au===filter&&[x.title,x.name,x.au,x.content,x.role].join(" ").toLowerCase().includes((document.getElementById("characterSearch").value||"").toLowerCase()));document.getElementById("characterGrid").innerHTML=list.map(x=>noteCard(x,"characters")).join("")||empty("这个 AU 还没有角色档案。")}}
-function renderAll(){if(document.getElementById("page-au-detail").classList.contains("active"))renderV5AuDetail();updateStats();renderAus();renderCalendar();renderPhotos("dreams","dreamGallery","dreamSearch","dreamCategory");renderPhotos("merch","merchGallery","merchSearch","merchStatus");renderNotes("settings","settingGrid","settingSearch","settingType");renderNotes("writing","writingGrid","writingSearch","writingType");renderCharacters();renderDivinations();renderGacha();renderV5Letters()}
+function renderAll(){if(document.getElementById("page-au-detail").classList.contains("active"))renderV5AuDetail();updateStats();renderAus();renderCalendar();renderPhotos("dreams","dreamGallery","dreamSearch","dreamCategory");renderPhotos("merch","merchGallery","merchSearch","merchStatus");renderNotes("settings","settingGrid","settingSearch","settingType");renderNotes("writing","writingGrid","writingSearch","writingType");renderCharacters();renderDivinations();renderGacha();renderV5Letters();if(typeof window.v68RenderArchive==="function")window.v68RenderArchive()}
 ["auSearch","auStatus"].forEach(id=>document.getElementById(id).addEventListener("input",renderAus));
 ["dreamSearch","dreamCategory"].forEach(id=>document.getElementById(id).addEventListener("input",()=>renderPhotos("dreams","dreamGallery","dreamSearch","dreamCategory")));
 ["merchSearch","merchStatus","v5MerchSort"].forEach(id=>document.getElementById(id).addEventListener("input",()=>renderPhotos("merch","merchGallery","merchSearch","merchStatus")));
@@ -2281,7 +2313,7 @@ function v5EditWriting(id,seed={}){
  const get=x=>overlay.querySelector('#'+x);
  get('v5EditorTitle').value=item.title||'';
  get('v5EditorType').value=item.type||'正文';
- get('v5EditorAu').value=item.au||'';
+ get('v5EditorAu').value=db.aus.find(a=>a.id===item.auId||a.name===item.au||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(item.au)))?.name||item.au||'';
  let chapters=v52ChapterList(item).map(c=>({...c,id:c.id||uid(),html:v5SafeHtml(c.html||'')})),activeChapter=0;
  const chapterSelect=get('v52ChapterSelect');
  const countWords=()=>{const current=v5SafeHtml(get('v5EditorBody').innerHTML);get('v52EditorCount').textContent='本章 '+v52Count(current)+' 字 · 全文 '+chapters.reduce((n,c,i)=>n+v52Count(i===activeChapter?current:c.html||''),0)+' 字';};
@@ -2296,7 +2328,7 @@ function v5EditWriting(id,seed={}){
  get('v5EditorBody').addEventListener('input',countWords);
  get('v52ImageFile').onchange=async e=>{const file=e.target.files?.[0];if(!file)return;try{if(file.size>12*1024*1024)throw Error('图片超过 12MB');const url=await v52CompressImage(file);get('v5EditorBody').focus();document.execCommand('insertHTML',false,'<p><img src="'+url+'" alt="插图"></p>');schedule();countWords();}catch(err){toast('插图失败：'+err.message);}e.target.value='';};
  let timer=null,dirty=false,closed=false;
- const snapshot=()=>{stash();return {title:get('v5EditorTitle').value.trim(),type:get('v5EditorType').value,au:get('v5EditorAu').value,v52Chapters:chapters.map(c=>({...c})),v5Html:chapters.map(c=>v5SafeHtml(c.html||'')).join('<br>'),content:chapters.map(c=>v52Plain(c.html||'')).join('\n\n')};};
+ const snapshot=()=>{stash();return {title:get('v5EditorTitle').value.trim(),type:get('v5EditorType').value,au:get('v5EditorAu').value,auId:db.aus.find(a=>a.name===get('v5EditorAu').value)?.id||'',v52Chapters:chapters.map(c=>({...c})),v5Html:chapters.map(c=>v5SafeHtml(c.html||'')).join('<br>'),content:chapters.map(c=>v52Plain(c.html||'')).join('\n\n')};};
  function save(forceVersion=false){
   if(closed||!dirty&&!forceVersion)return true;
   const data=snapshot();
@@ -2372,7 +2404,7 @@ function renderV5AuDetail(){
  document.getElementById('pageTitle').textContent=a.name;
  const cover=a.v5Cover?'background-image:linear-gradient(0deg,#241233aa,#24123320),url('+JSON.stringify(a.v5Cover)+');':'';
  const entries=(bucket,label)=>{
- const list=(db[bucket]||[]).filter(x=>x.au===a.name||x.auId===a.id);
+ const list=(db[bucket]||[]).filter(x=>x.auId===a.id||(!x.auId&&(x.au===a.name||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(x.au)))));
  return '<section class="v5-au-box"><h3>'+label+' ('+list.length+')</h3>'+
  (list.map(x=>'<div class="v5-au-entry"><strong>'+esc(x.title||x.name||'无题')+'</strong><small>'+esc(x.type||x.role||'')+'</small><button class="btn soft" data-v5-record="'+esc(bucket)+'" data-v5-id="'+esc(x.id)+'">查看 / 编辑 ↗</button></div>').join('')||'<p>暂无关联记录</p>')+'</section>';
  };
@@ -2405,6 +2437,7 @@ function renderV5AuDetail(){
  try{a.v5Cover=await compressAppearanceImage(file);persist();renderV5AuDetail()}catch(err){toast(err.message||'图片上传失败')}
  };
  root.querySelector('#v5AuCoverRemove').onclick=()=>{a.v5Cover='';persist();renderV5AuDetail()};
+ if(typeof window.v68RenderAuDetail==='function')window.v68RenderAuDetail();
 }
 
 
@@ -2687,5 +2720,6 @@ applyAppearance();
 })();
 </script>
 <script src="./v67-books-tickets.js?v=20261117"></script>
+<script src="./v68-unified-archive.js?v=20261117b"></script>
 </body>
 </html>
