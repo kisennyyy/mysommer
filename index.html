@@ -822,6 +822,41 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
 }
 @media(max-width:390px){#page-divination .v62-cabinet{width:165px}#page-divination .v61-divination-scene{gap:8px;padding:12px 6px}#page-divination .v62-oracle-copy h4{font-size:15px}}
 @media(prefers-reduced-motion:reduce){#page-divination .v61-oracle-record,#page-divination .v61-divination-board,#page-divination .v61-record-content{animation:none!important}#page-divination .v62-drawer,#page-divination .v61-card-cover{transition:none!important}}
+
+/* V6.8: dominant central tarot case, no competing text/CTA. */
+#page-divination .v61-divination-scene{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;min-height:0;padding:45px 18px 22px;background:radial-gradient(ellipse at 50% 40%,#e5d6f0,transparent 73%),linear-gradient(150deg,#fffafd,#f6effa)}
+#page-divination .v62-cabinet{width:min(350px,86vw);height:251px;flex:none;margin:8px auto 14px;padding:23px 18px 18px;border-radius:19px 19px 23px 23px;box-shadow:inset 0 0 0 3px #f8f0ffae,inset 0 -8px 13px #77628e28,0 8px 0 #8e7ca2,0 17px 23px #5c47714a}
+#page-divination .v62-cabinet:before{top:-36px;height:57px;left:4%;right:4%;border-radius:60% 60% 12px 12px;transform:rotate(0deg)}
+#page-divination .v62-cabinet-top{height:32px;font-size:12px}
+#page-divination .v62-cabinet-top span{font-size:18px}
+#page-divination .v62-cabinet-glass{height:28px;margin:5px 18px 15px}
+#page-divination .v62-cabinet-glass i{font-size:11px}
+#page-divination .v62-cabinet-drawers{gap:13px;margin:0 3px}
+#page-divination .v62-drawer{min-height:123px;padding:13px 5px 8px;border-radius:12px;box-shadow:inset 0 0 0 3px #fff9,inset 0 0 0 4px #c4afd4,0 6px 0 #917ca6}
+#page-divination .v62-drawer:before{font-size:32px;margin-bottom:14px}
+#page-divination .v62-drawer[data-v62-type="传讯对话"]:before{font-size:29px}
+#page-divination .v62-drawer strong{font-size:14px;line-height:1.45}
+#page-divination .v62-drawer .v62-handle{width:36px;height:4px;margin-top:14px}
+#page-divination .v61-oracle-box{height:48px}
+#page-divination .v62-cabinet-figure{right:30px;top:29px}
+#page-divination .v62-oracle-copy{width:100%;max-width:none;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;text-align:center;flex:none}
+#page-divination .v61-oracle-invite{font-size:13px;letter-spacing:.05em;color:#806b94}
+#page-divination .v61-oracle-tally{font-size:11px;color:#a18ab4}
+@media(max-width:700px){
+ #page-divination .v61-divination-scene{padding:44px 10px 18px;gap:9px;margin:15px 0}
+ #page-divination .v62-cabinet{width:min(310px,83vw);height:231px;padding:21px 13px 14px;margin:6px auto 13px}
+ #page-divination .v62-cabinet:before{top:-31px;height:50px}
+ #page-divination .v62-cabinet-top{height:29px;font-size:11px}
+ #page-divination .v62-cabinet-glass{height:25px;margin:4px 15px 13px}
+ #page-divination .v62-drawer{min-height:109px;padding:11px 3px 8px}
+ #page-divination .v62-drawer:before{font-size:29px;margin-bottom:10px}
+ #page-divination .v62-drawer[data-v62-type="传讯对话"]:before{font-size:26px}
+ #page-divination .v62-drawer strong{font-size:13px}
+ #page-divination .v62-drawer .v62-handle{width:29px;height:4px;margin-top:9px}
+ #page-divination .v62-oracle-copy{flex:none;align-items:center;gap:5px}
+ #page-divination .v61-oracle-invite{font-size:12px}
+}
+@media(max-width:390px){#page-divination .v62-cabinet{width:min(295px,85vw)}#page-divination .v61-divination-scene{padding:42px 7px 16px}}
 </style><style id="v60-tarot-mailbox">
 #v60QASection[hidden],#v60ChatSection[hidden]{display:none!important}
 .v60-qa-row{padding:14px;margin:10px 0;border:1px solid #d8c5e8;border-radius:16px;background:#fbf8ff}
@@ -1033,11 +1068,8 @@ body{background-image:linear-gradient(#f7f3fbe6,#f7f3fbe6),var(--custom-bg-image
         </div>
       </div>
       <div class="v62-oracle-copy">
-        <span class="v62-oracle-eyebrow">TAROT ARCHIVE</span><span class="v62-cabinet-version" aria-label="收藏柜版本">KEEPSAKE · 6.6</span>
-        <h4>封存的牌语</h4>
-        <div class="v61-oracle-invite" id="v61OracleInvite">翻开牌匣，或选择一组卡片</div>
+        <div class="v61-oracle-invite" id="v61OracleInvite">轻触卡槽，翻阅梦占记录</div>
         <div class="v61-oracle-tally" id="v61OracleTally">✧ 所有记忆，静候启封 ✧</div>
-        <button class="v62-open-all" id="v62OpenAll" type="button" aria-controls="v61DivinationBoard">✧ 查看全部梦占</button>
       </div>
     </div>
     <div class="v61-divination-board" id="v61DivinationBoard" hidden>
@@ -1353,7 +1385,7 @@ function v61SetOracle(open){
  box.setAttribute('aria-label',v61OracleOpen?'合上占卜柜':'打开占卜柜查看全部梦占');
  board.hidden=!v61OracleOpen;
  scene.classList.toggle('v61-open',v61OracleOpen);
- document.getElementById('v61OracleInvite').textContent=v61OracleOpen?'抽屉已打开，选择一则记录翻阅':'打开柜门，或挑选一格抽屉';
+ document.getElementById('v61OracleInvite').textContent=v61OracleOpen?'选择卡片，阅读保存的回应':'轻触卡槽，翻阅梦占记录';
  const selected=document.getElementById('divinationType').value;
  document.querySelectorAll('#page-divination .v62-drawer').forEach(el=>el.setAttribute('aria-pressed',String(v61OracleOpen&&el.dataset.v62Type===selected)));
  document.getElementById('v62BoardTitle').textContent='✦ '+(selected||'全部')+' · 柜中的记录';
@@ -1404,7 +1436,6 @@ function v62OpenDrawer(type){
  renderDivinations();
 }
 document.getElementById('v61OracleBox').addEventListener('click',()=>v62OpenDrawer(''));
-document.getElementById('v62OpenAll').addEventListener('click',()=>v62OpenDrawer(''));
 document.querySelectorAll('#page-divination [data-v62-type]').forEach(button=>button.addEventListener('click',()=>v62OpenDrawer(button.dataset.v62Type)));
 document.getElementById('v61CloseOracle').addEventListener('click',()=>v61SetOracle(false));
 document.getElementById('divinationGrid').addEventListener('click',event=>{
