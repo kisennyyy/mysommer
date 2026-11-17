@@ -15,9 +15,10 @@
  }
  function filteredWriting(){
   var query=(document.getElementById('writingSearch').value||'').toLowerCase();
-  var type=document.getElementById('writingType').value||'';
+  var type=document.getElementById('writingType').value||'',auId=document.getElementById('v68WritingAu')?.value||'';
+  var linkedAu=auId?db.aus.find(function(a){return a.id===auId;}):null;
   return db.writing.filter(function(item){
-   return (!type||item.type===type)&&[item.title,item.name,item.au,item.type,item.content,item.role].join(' ').toLowerCase().includes(query);
+   return (!type||item.type===type)&&(!auId||(linkedAu&&(window.v68MatchesAu?window.v68MatchesAu(item,linkedAu):(item.au===linkedAu.name||item.auId===linkedAu.id))))&&[item.title,item.name,item.au,item.type,item.content,item.role].join(' ').toLowerCase().includes(query);
   });
  }
  var writeControls=document.createElement('div');
@@ -36,6 +37,7 @@
   writeControls.querySelectorAll('[data-v67-write-mode]').forEach(function(button){button.setAttribute('aria-pressed',String(button.dataset.v67WriteMode===bookState.mode));});
   if(bookState.selected&&selected){
    var c=coverOf(selected),text=c.intro||String(selected.content||'').slice(0,150)||'尚未添加作品简介。';
+   var auLink=db.aus.find(function(a){return a.id===selected.auId||a.name===selected.au||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(selected.au));});
    var image=c.image?'<img class="v67-book-cover-img" src="'+safe(c.image)+'" alt="自定义封面">':'';
    writeStage.innerHTML='<div class="v67-feature"><button type="button" class="v67-feature-return" data-v67-book-back>← BACK TO SHELF</button>'+
     '<div class="v67-feature-layout"><div class="v67-book-stage"><div class="v67-book-object" style="--v67-cover:'+c.cover+';--v67-spine:'+c.spine+'"><div class="v67-book-face">'+image+
@@ -44,7 +46,7 @@
     '<p>'+safe(text)+'</p><p>所属 AU：'+safe(selected.au||'未关联')+' · '+String(Array.isArray(selected.v52Chapters)?selected.v52Chapters.length:1)+' 章</p>'+
     '<div class="v67-feature-actions"><button type="button" data-v67-book-read="'+safe(selected.id)+'">OPEN & READ ↗</button>'+
     '<button type="button" class="v67-feature-secondary" data-v67-book-cover="'+safe(selected.id)+'">封面自定义</button>'+
-    '<button type="button" class="v67-feature-secondary" data-v67-book-edit="'+safe(selected.id)+'">编辑正文</button></div></div></div></div>';
+    '<button type="button" class="v67-feature-secondary" data-v67-book-edit="'+safe(selected.id)+'">编辑正文</button>'+ (auLink?'<button type="button" class="v67-feature-secondary" data-v67-book-au="'+safe(auLink.id)+'">查看所属 AU ↗</button>':'')+'</div></div></div></div>';
   }else{
    var volumes=list.map(function(item,index){
     var c=coverOf(item);
@@ -65,6 +67,7 @@
   if(btn.hasAttribute('data-v67-book-select')){bookState.selected=btn.dataset.v67BookSelect;renderWriting();return;}
   if(btn.hasAttribute('data-v67-book-back')){bookState.selected='';renderWriting();return;}
   if(btn.hasAttribute('data-v67-book-read')){v5ReadWriting('writing',btn.dataset.v67BookRead);return;}
+  if(btn.hasAttribute('data-v67-book-au')){v5OpenAu(btn.dataset.v67BookAu);return;}
   if(btn.hasAttribute('data-v67-book-edit')){v5EditWriting(btn.dataset.v67BookEdit);return;}
   if(btn.hasAttribute('data-v67-book-cover')){showCoverEditor(btn.dataset.v67BookCover);return;}
  });
@@ -107,7 +110,8 @@
  dreamGrid.parentNode.insertBefore(filmStage,dreamGrid);dreamPage.classList.add('v67-ready');
  function matchesDream(item){
   var q=(document.getElementById('dreamSearch').value||'').toLowerCase(),type=document.getElementById('dreamCategory').value||'',au=document.getElementById('v67DreamAu').value||'';
-  return (!type||v5DreamCategory(item.category)===type)&&(!au||item.au===au||item.auId===(db.aus.find(function(a){return a.name===au;})||{}).id)&&
+  var current=db.aus.find(function(a){return a.name===au;});
+  return (!type||v5DreamCategory(item.category)===type)&&(!au||(current?(window.v68MatchesAu?window.v68MatchesAu(item,current):(item.au===au||item.auId===current.id)):item.au===au))&&
    [item.title,item.category,item.status,item.note,item.series,item.tags,item.au].join(' ').toLowerCase().includes(q);
  }
  function updateAuChoices(){
@@ -164,7 +168,7 @@
    '<br>标签：'+safe(item.tags||'未填写')+'</p><p class="v67-dream-note">'+safe(item.note||'')+'</p>'+
    '<div class="v67-modal-actions"><button class="v67-primary" type="button" data-v67-edit>编辑梦图</button>'+
    (item.image?'<button type="button" data-v67-zoom>查看大图</button>':'')+
-   (item.au&&db.aus.some(function(a){return a.name===item.au||a.id===item.auId;})?'<button type="button" data-v67-open-au>打开所属 AU</button>':'')+
+   (db.aus.some(function(a){return a.name===item.au||a.id===item.auId||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(item.au));})?'<button type="button" data-v67-open-au>打开所属 AU</button>':'')+
    '<button type="button" data-v67-delete>删除记录</button></div></div>';
   document.body.appendChild(dialog);
   var img=dialog.querySelector('img.v67-dream-large');if(img)img.src=item.image;
@@ -176,7 +180,7 @@
    if(e.target.closest('[data-v67-edit]')){close();editPhoto('dreams',id);return;}
    if(e.target.closest('[data-v67-zoom]')){v5ViewDream(id);return;}
    if(e.target.closest('[data-v67-delete]')){close();deleteItem('dreams',id);return;}
-   if(e.target.closest('[data-v67-open-au]')){var au=db.aus.find(function(a){return a.id===item.auId||a.name===item.au;});if(au){close();v5OpenAu(au.id);}return;}
+   if(e.target.closest('[data-v67-open-au]')){var au=db.aus.find(function(a){return a.id===item.auId||a.name===item.au||(Array.isArray(a.v68Aliases)&&a.v68Aliases.includes(item.au));});if(au){close();v5OpenAu(au.id);}return;}
   });
  }
  renderWriting();renderDream();
